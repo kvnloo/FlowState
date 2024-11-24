@@ -1,48 +1,20 @@
-import { useEffect, useState } from 'react';
-import { AdaptiveAudioEngine } from '../lib/adaptiveAudioEngine';
-import { Brain, Play, Square, Volume2, Coffee, Moon, Zap } from 'lucide-react';
-import { useBrainwaveStore } from '../store/brainwaveStore';
+import { useState } from 'react';
+import { BinauralBeatsEngine } from '../lib/audioEngine';
+import { Brain, Play, Square, Volume2 } from 'lucide-react';
 
-const audioEngine = new AdaptiveAudioEngine(process.env.VITE_OPENAI_API_KEY || '');
-
-interface UserState {
-  fatigue: number;
-  caffeineLevel: number;
-  lastSleep: number;
-}
+const audioEngine = new BinauralBeatsEngine();
 
 export function Training() {
   const [isPlaying, setIsPlaying] = useState(false);
+  const [baseFreq, setBaseFreq] = useState(200);
+  const [beatFreq, setBeatFreq] = useState(10);
   const [volume, setVolume] = useState(0.1);
-  const [targetState, setTargetState] = useState<'focus' | 'relax' | 'meditate' | 'energize'>('focus');
-  const [userState, setUserState] = useState<UserState>({
-    fatigue: 0.5,
-    caffeineLevel: 0.5,
-    lastSleep: 8,
-  });
-  const { delta, theta, alpha, beta, gamma } = useBrainwaveStore();
 
-  useEffect(() => {
-    if (isPlaying) {
-      // Update brainwave response every 5 seconds
-      const interval = setInterval(() => {
-        audioEngine.updateBrainwaveResponse({
-          alpha: alpha[alpha.length - 1] || 0,
-          theta: theta[theta.length - 1] || 0,
-          beta: beta[beta.length - 1] || 0,
-          gamma: gamma[gamma.length - 1] || 0,
-        });
-      }, 5000);
-
-      return () => clearInterval(interval);
-    }
-  }, [isPlaying, alpha, theta, beta, gamma]);
-
-  const handlePlay = async () => {
+  const handlePlay = () => {
     if (isPlaying) {
       audioEngine.stop();
     } else {
-      await audioEngine.start(targetState, userState);
+      audioEngine.start(baseFreq, beatFreq);
     }
     setIsPlaying(!isPlaying);
   };
@@ -53,19 +25,11 @@ export function Training() {
     audioEngine.setVolume(newVolume);
   };
 
-  const handleStateChange = (newState: typeof targetState) => {
-    setTargetState(newState);
-    if (isPlaying) {
-      audioEngine.stop();
-      audioEngine.start(newState, userState);
-    }
-  };
-
   return (
     <div className="max-w-4xl mx-auto space-y-8">
       <header className="text-center">
         <h1 className="text-4xl font-bold text-gray-900 mb-4">Brain Training</h1>
-        <p className="text-gray-600">Personalized neural entrainment session</p>
+        <p className="text-gray-600">Customize your neural entrainment session</p>
       </header>
 
       <div className="bg-white p-8 rounded-xl shadow-sm">
@@ -73,101 +37,40 @@ export function Training() {
           <div className="space-y-6">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Target State
+                Base Frequency (Hz)
               </label>
-              <div className="grid grid-cols-2 gap-2">
-                {(['focus', 'relax', 'meditate', 'energize'] as const).map((state) => (
-                  <button
-                    key={state}
-                    onClick={() => handleStateChange(state)}
-                    className={`px-4 py-2 rounded-lg capitalize ${
-                      targetState === state
-                        ? 'bg-indigo-600 text-white'
-                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                    }`}
-                  >
-                    {state}
-                  </button>
-                ))}
-              </div>
+              <input
+                type="range"
+                min="100"
+                max="400"
+                value={baseFreq}
+                onChange={(e) => setBaseFreq(Number(e.target.value))}
+                className="w-full"
+              />
+              <span className="text-sm text-gray-600">{baseFreq} Hz</span>
             </div>
 
-            <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
-                  <Moon className="w-4 h-4" />
-                  Fatigue Level
-                </label>
-                <input
-                  type="range"
-                  min="0"
-                  max="1"
-                  step="0.1"
-                  value={userState.fatigue}
-                  onChange={(e) =>
-                    setUserState((prev) => ({
-                      ...prev,
-                      fatigue: parseFloat(e.target.value),
-                    }))
-                  }
-                  className="w-full"
-                />
-                <div className="text-sm text-gray-600">
-                  {(userState.fatigue * 100).toFixed(0)}%
-                </div>
-              </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Beat Frequency (Hz)
+              </label>
+              <input
+                type="range"
+                min="1"
+                max="40"
+                value={beatFreq}
+                onChange={(e) => setBeatFreq(Number(e.target.value))}
+                className="w-full"
+              />
+              <span className="text-sm text-gray-600">{beatFreq} Hz</span>
+            </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
-                  <Coffee className="w-4 h-4" />
-                  Caffeine Level
-                </label>
-                <input
-                  type="range"
-                  min="0"
-                  max="1"
-                  step="0.1"
-                  value={userState.caffeineLevel}
-                  onChange={(e) =>
-                    setUserState((prev) => ({
-                      ...prev,
-                      caffeineLevel: parseFloat(e.target.value),
-                    }))
-                  }
-                  className="w-full"
-                />
-                <div className="text-sm text-gray-600">
-                  {(userState.caffeineLevel * 100).toFixed(0)}%
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
-                  <Zap className="w-4 h-4" />
-                  Hours Since Last Sleep
-                </label>
-                <input
-                  type="range"
-                  min="0"
-                  max="24"
-                  step="0.5"
-                  value={userState.lastSleep}
-                  onChange={(e) =>
-                    setUserState((prev) => ({
-                      ...prev,
-                      lastSleep: parseFloat(e.target.value),
-                    }))
-                  }
-                  className="w-full"
-                />
-                <div className="text-sm text-gray-600">{userState.lastSleep} hours</div>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
-                  <Volume2 className="w-4 h-4" />
-                  Volume
-                </label>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Volume
+              </label>
+              <div className="flex items-center gap-2">
+                <Volume2 className="w-4 h-4 text-gray-500" />
                 <input
                   type="range"
                   min="0"

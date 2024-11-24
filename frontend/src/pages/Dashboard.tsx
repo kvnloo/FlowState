@@ -3,7 +3,6 @@ import { MuseClient } from '../lib/museClient';
 import { ConnectButton } from '../components/ConnectButton';
 import { WaveChart } from '../components/WaveChart';
 import { BrainwaveBanner } from '../components/BrainwaveBanner';
-import { FlowStateAdvisor } from '../components/FlowStateAdvisor';
 import { useBrainwaveStore } from '../store/brainwaveStore';
 import { Activity, Brain, Waves } from 'lucide-react';
 
@@ -50,35 +49,29 @@ export function Dashboard() {
 
       <BrainwaveBanner data={bannerData} />
 
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-        <div className="lg:col-span-3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <div className="bg-white p-6 rounded-xl shadow-sm">
-            <div className="flex items-center gap-2 mb-4">
-              <Brain className="w-5 h-5 text-purple-600" />
-              <h2 className="text-xl font-semibold">Alpha Waves</h2>
-            </div>
-            <WaveChart data={alpha} label="Alpha" color="#9333ea" />
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="bg-white p-6 rounded-xl shadow-sm">
+          <div className="flex items-center gap-2 mb-4">
+            <Brain className="w-5 h-5 text-purple-600" />
+            <h2 className="text-xl font-semibold">Alpha Waves</h2>
           </div>
-
-          <div className="bg-white p-6 rounded-xl shadow-sm">
-            <div className="flex items-center gap-2 mb-4">
-              <Waves className="w-5 h-5 text-blue-600" />
-              <h2 className="text-xl font-semibold">Beta Waves</h2>
-            </div>
-            <WaveChart data={beta} label="Beta" color="#2563eb" />
-          </div>
-
-          <div className="bg-white p-6 rounded-xl shadow-sm">
-            <div className="flex items-center gap-2 mb-4">
-              <Activity className="w-5 h-5 text-green-600" />
-              <h2 className="text-xl font-semibold">Gamma Waves</h2>
-            </div>
-            <WaveChart data={gamma} label="Gamma" color="#16a34a" />
-          </div>
+          <WaveChart data={alpha} label="Alpha" color="#9333ea" />
         </div>
 
-        <div className="lg:col-span-1">
-          <FlowStateAdvisor />
+        <div className="bg-white p-6 rounded-xl shadow-sm">
+          <div className="flex items-center gap-2 mb-4">
+            <Waves className="w-5 h-5 text-blue-600" />
+            <h2 className="text-xl font-semibold">Beta Waves</h2>
+          </div>
+          <WaveChart data={beta} label="Beta" color="#2563eb" />
+        </div>
+
+        <div className="bg-white p-6 rounded-xl shadow-sm">
+          <div className="flex items-center gap-2 mb-4">
+            <Activity className="w-5 h-5 text-green-600" />
+            <h2 className="text-xl font-semibold">Gamma Waves</h2>
+          </div>
+          <WaveChart data={gamma} label="Gamma" color="#16a34a" />
         </div>
       </div>
 

@@ -13,15 +13,12 @@
     "@tanstack/react-query": "^5.24.1",
     "chart.js": "^4.4.1",
     "lucide-react": "^0.344.0",
-    "openai": "^3.3.0",
     "react": "^18.3.1",
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.22.1",
     "tone": "^14.7.77",
-    "zustand": "^4.5.1",
-    "@prisma/client": "^5.22.0",
-    "prisma": "^5.22.0"
+    "zustand": "^4.5.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.1",
