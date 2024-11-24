@@ -9,6 +9,7 @@ interface FrequencyResponse {
   thetaResponse: number;
   betaResponse: number;
   gammaResponse: number;
+  flowScore: number;
   userState: {
     timeOfDay: number;
     fatigue?: number;
@@ -20,6 +21,7 @@ interface FrequencyResponse {
 interface FrequencyRecommendation {
   baseFreq: number;
   beatFreq: number;
+  strobeFreq: number;
   confidence: number;
   reasoning: string;
 }
@@ -33,13 +35,15 @@ export class AdaptiveAudioEngine {
   private currentSession: FrequencyResponse | null = null;
   private sessionStartTime: number = 0;
 
-  // Frequency ranges for different brain states
+  // Optimized frequency ranges for flow states
   private readonly FREQUENCY_RANGES = {
-    delta: { min: 0.5, max: 4 },
-    theta: { min: 4, max: 8 },
-    alpha: { min: 8, max: 13 },
-    beta: { min: 13, max: 30 },
-    gamma: { min: 30, max: 100 },
+    flow: { 
+      alpha: { min: 8, max: 12 },    // Upper alpha band
+      theta: { min: 6, max: 8 },     // Upper theta band
+      beta: { min: 12, max: 15 }     // Low beta band
+    },
+    carrier: { min: 100, max: 400 }, // Carrier frequency range
+    strobe: { min: 4, max: 12 }      // Safe strobe frequency range
   };
 
   constructor(apiKey: string) {
@@ -51,7 +55,6 @@ export class AdaptiveAudioEngine {
     this.leftOsc.connect(this.gainNode);
     this.rightOsc.connect(this.gainNode);
 
-    // Load previous user responses from localStorage
     this.loadUserResponses();
   }
 
@@ -66,13 +69,40 @@ export class AdaptiveAudioEngine {
     localStorage.setItem('frequencyResponses', JSON.stringify(this.userResponses));
   }
 
-  async start(targetState: 'focus' | 'relax' | 'meditate' | 'energize', userState?: {
+  private calculateFlowScore(data: {
+    alpha: number;
+    theta: number;
+    beta: number;
+  }): number {
+    // Enhanced flow state detection algorithm
+    const alphaPower = data.alpha;
+    const thetaPower = data.theta;
+    const betaPower = data.beta;
+
+    // Calculate ratios important for flow state
+    const alphaTheta = alphaPower / (thetaPower || 0.1);  // Alpha/Theta ratio
+    const alphaBeta = alphaPower / (betaPower || 0.1);    // Alpha/Beta ratio
+
+    // Ideal ranges for flow state
+    const idealAlphaTheta = 1.5;  // Slightly more alpha than theta
+    const idealAlphaBeta = 2.0;   // Alpha should be stronger than beta
+
+    // Calculate how close we are to ideal ratios
+    const alphaThetaScore = 1 - Math.min(Math.abs(alphaTheta - idealAlphaTheta) / idealAlphaTheta, 1);
+    const alphaBetaScore = 1 - Math.min(Math.abs(alphaBeta - idealAlphaBeta) / idealAlphaBeta, 1);
+
+    // Combine scores with weights
+    return 0.6 * alphaThetaScore + 0.4 * alphaBetaScore;
+  }
+
+  async start(targetState: 'focus' | 'flow' | 'meditate', userState?: {
     fatigue?: number;
     caffeineLevel?: number;
     lastSleep?: number;
   }) {
     const recommendation = await this.getOptimalFrequencies(targetState, userState);
     
+    // Set audio frequencies
     this.leftOsc.frequency.value = recommendation.baseFreq;
     this.rightOsc.frequency.value = recommendation.baseFreq + recommendation.beatFreq;
     
@@ -85,6 +115,7 @@ export class AdaptiveAudioEngine {
       thetaResponse: 0,
       betaResponse: 0,
       gammaResponse: 0,
+      flowScore: 0,
       userState: {
         timeOfDay: new Date().getHours(),
         ...userState
@@ -94,11 +125,8 @@ export class AdaptiveAudioEngine {
     this.leftOsc.start();
     this.rightOsc.start();
 
-    console.log('Starting session with frequencies:', {
-      base: recommendation.baseFreq,
-      beat: recommendation.beatFreq,
-      reasoning: recommendation.reasoning
-    });
+    // Return strobe frequency for visual synchronization
+    return recommendation.strobeFreq;
   }
 
   stop() {
@@ -124,43 +152,76 @@ export class AdaptiveAudioEngine {
     gamma: number;
   }) {
     if (this.currentSession) {
+      // Update maximum band powers
       this.currentSession.alphaResponse = Math.max(this.currentSession.alphaResponse, data.alpha);
       this.currentSession.thetaResponse = Math.max(this.currentSession.thetaResponse, data.theta);
       this.currentSession.betaResponse = Math.max(this.currentSession.betaResponse, data.beta);
       this.currentSession.gammaResponse = Math.max(this.currentSession.gammaResponse, data.gamma);
+
+      // Calculate and update flow score
+      const flowScore = this.calculateFlowScore({
+        alpha: data.alpha,
+        theta: data.theta,
+        beta: data.beta
+      });
+      this.currentSession.flowScore = Math.max(this.currentSession.flowScore, flowScore);
+
+      // If flow score is high enough, save these frequencies as effective
+      if (flowScore > 0.8) {
+        this.userResponses.push({
+          ...this.currentSession,
+          timestamp: Date.now(),
+          flowScore
+        });
+        this.saveUserResponses();
+      }
     }
   }
 
   private async getOptimalFrequencies(
-    targetState: 'focus' | 'relax' | 'meditate' | 'energize',
+    targetState: 'focus' | 'flow' | 'meditate',
     userState?: { fatigue?: number; caffeineLevel?: number; lastSleep?: number; }
   ): Promise<FrequencyRecommendation> {
+    // Filter for successful flow states in similar conditions
+    const successfulSessions = this.userResponses.filter(session => 
+      session.flowScore > 0.8 &&
+      Math.abs(session.userState.timeOfDay - new Date().getHours()) <= 2
+    );
+
+    // If we have successful sessions, use them to inform our choice
+    if (successfulSessions.length > 0) {
+      const bestSession = successfulSessions.reduce((best, current) => 
+        current.flowScore > best.flowScore ? current : best
+      );
+
+      return {
+        baseFreq: bestSession.baseFreq,
+        beatFreq: bestSession.beatFreq,
+        strobeFreq: bestSession.beatFreq / 2, // Harmonically related to audio
+        confidence: 0.9,
+        reasoning: 'Using previously successful frequency combination'
+      };
+    }
+
+    // Otherwise, use AI advisor with enhanced parameters
     const prompt = `
-      Analyze the user's frequency response history and current state to recommend optimal binaural beat frequencies.
+      Recommend optimal frequencies for neural entrainment targeting flow state.
       
-      Target State: ${targetState}
-      Time of Day: ${new Date().getHours()}
-      User State:
-      - Fatigue Level (0-1): ${userState?.fatigue || 'unknown'}
-      - Caffeine Level (0-1): ${userState?.caffeineLevel || 'unknown'}
-      - Hours Since Last Sleep: ${userState?.lastSleep || 'unknown'}
+      Current Context:
+      - Target State: ${targetState}
+      - Time: ${new Date().getHours()}:00
+      - Fatigue: ${userState?.fatigue || 'unknown'}
+      - Caffeine: ${userState?.caffeineLevel || 'unknown'}
+      - Sleep: ${userState?.lastSleep || 'unknown'}h ago
       
-      Previous Response History:
-      ${JSON.stringify(this.userResponses.slice(-5), null, 2)}
+      Requirements:
+      1. Base frequency should be in carrier range (${this.FREQUENCY_RANGES.carrier.min}-${this.FREQUENCY_RANGES.carrier.max}Hz)
+      2. Beat frequency should target upper alpha/lower beta (${this.FREQUENCY_RANGES.flow.alpha.min}-${this.FREQUENCY_RANGES.flow.beta.min}Hz)
+      3. Strobe frequency should be harmonically related to beat frequency
+      4. Consider circadian rhythms and user state
       
-      Consider:
-      1. Historical effectiveness of frequencies for this user
-      2. Time of day and user's current state
-      3. Latest neuroscience research on binaural beats
-      4. Optimal frequency ranges for target state
-      
-      Provide recommendation in JSON format:
-      {
-        "baseFreq": number (carrier frequency),
-        "beatFreq": number (difference frequency),
-        "confidence": number (0-1),
-        "reasoning": string (explanation)
-      }
+      Previous successful combinations:
+      ${JSON.stringify(successfulSessions.slice(-3), null, 2)}
     `;
 
     try {
@@ -169,68 +230,18 @@ export class AdaptiveAudioEngine {
     } catch (error) {
       console.error('Error getting frequency recommendation:', error);
       
-      // Fallback to default frequencies based on target state
+      // Enhanced default frequencies based on target state
       const defaults = {
-        focus: { base: 200, beat: 10 },      // Alpha
-        relax: { base: 200, beat: 6 },       // Theta
-        meditate: { base: 200, beat: 4 },    // Delta/Theta
-        energize: { base: 200, beat: 20 },   // Beta
+        focus: { base: 200, beat: 10, strobe: 5 },     // Upper alpha
+        flow: { base: 200, beat: 8, strobe: 4 },       // Alpha-theta border
+        meditate: { base: 200, beat: 6, strobe: 3 },   // Theta
       };
 
       return {
-        baseFreq: defaults[targetState].base,
-        beatFreq: defaults[targetState].beat,
+        ...defaults[targetState],
         confidence: 0.5,
-        reasoning: 'Using default frequencies due to AI service unavailability'
+        reasoning: 'Using research-based default frequencies'
       };
-    }
-  }
-
-  // Adjust frequencies in real-time based on brainwave feedback
-  async adjustFrequencies(currentMetrics: {
-    alphaQuality: number;
-    thetaBalance: number;
-    betaSuppression: number;
-    flowScore: number;
-  }) {
-    if (!this.currentSession) return;
-
-    const prompt = `
-      Analyze current brainwave metrics and suggest frequency adjustments:
-      
-      Current Frequencies:
-      - Base: ${this.currentSession.baseFreq}
-      - Beat: ${this.currentSession.beatFreq}
-      
-      Current Metrics:
-      ${JSON.stringify(currentMetrics, null, 2)}
-      
-      Suggest small adjustments to optimize entrainment.
-      Response format:
-      {
-        "adjustBaseFreq": number (adjustment in Hz),
-        "adjustBeatFreq": number (adjustment in Hz),
-        "confidence": number (0-1),
-        "reasoning": string
-      }
-    `;
-
-    try {
-      const adjustment = await this.advisor.getFrequencyAdjustment(prompt);
-      
-      if (adjustment.confidence > 0.7) {
-        this.leftOsc.frequency.value += adjustment.adjustBaseFreq;
-        this.rightOsc.frequency.value = this.leftOsc.frequency.value + 
-          (this.currentSession.beatFreq + adjustment.adjustBeatFreq);
-        
-        console.log('Adjusted frequencies:', {
-          newBase: this.leftOsc.frequency.value,
-          newBeat: this.rightOsc.frequency.value - this.leftOsc.frequency.value,
-          reasoning: adjustment.reasoning
-        });
-      }
-    } catch (error) {
-      console.error('Error adjusting frequencies:', error);
     }
   }
 }

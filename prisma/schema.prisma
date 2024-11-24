@@ -1,0 +1,79 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(uuid())
+  email         String    @unique
+  name          String?
+  sessions      Session[]
+  preferences   UserPreferences?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model UserPreferences {
+  id                  String  @id @default(uuid())
+  userId              String  @unique
+  user                User    @relation(fields: [userId], references: [id])
+  defaultTargetState  String  @default("flow")
+  baseFrequencyRange  Json    // {min: number, max: number}
+  beatFrequencyRange  Json    // {min: number, max: number}
+  strobeEnabled       Boolean @default(true)
+  volume              Float   @default(0.5)
+}
+
+model Session {
+  id            String    @id @default(uuid())
+  userId        String
+  user          User      @relation(fields: [userId], references: [id])
+  startTime     DateTime  @default(now())
+  endTime       DateTime?
+  targetState   String    // 'focus', 'flow', 'meditate'
+  baseFreq      Float
+  beatFreq      Float
+  strobeFreq    Float?
+  flowScore     Float?
+  brainwaves    Brainwave[]
+  userState     UserState?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@index([userId, startTime])
+}
+
+model UserState {
+  id            String   @id @default(uuid())
+  sessionId     String   @unique
+  session       Session  @relation(fields: [sessionId], references: [id])
+  fatigue       Float?
+  caffeineLevel Float?
+  lastSleep     Float?   // hours since last sleep
+  timeOfDay     Int      // hour of day (0-23)
+  createdAt     DateTime @default(now())
+}
+
+model Brainwave {
+  id          String   @id @default(uuid())
+  sessionId   String
+  session     Session  @relation(fields: [sessionId], references: [id])
+  timestamp   DateTime @default(now())
+  alpha       Float
+  beta        Float
+  theta       Float
+  gamma       Float
+  delta       Float?
+  attention   Float?
+  meditation  Float?
+  flowScore   Float?
+
+  @@index([sessionId, timestamp])
+}

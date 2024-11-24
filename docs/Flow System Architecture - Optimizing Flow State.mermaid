@@ -1,0 +1,31 @@
+graph TD
+    subgraph Input Layer
+        A1[Sleep Data] --> P1
+        A2[Heart Rate] --> P1
+        A3[Diet Log] --> P1
+        A4[EEG Data] --> P1
+        A5[Time of Day] --> P1
+    end
+
+    subgraph Processing Layer
+        P1[Data Preprocessor] --> P2
+        P2[State Estimator] --> P3
+        P3[Flow State Optimizer]
+    end
+
+    subgraph Control Layer
+        P3 --> C1[Strobe Controller]
+        P3 --> C2[Audio Controller]
+    end
+
+    subgraph Output Layer
+        C1 --> O1[Strobe Glasses]
+        C2 --> O2[Binaural Beats]
+    end
+
+    subgraph Feedback Loop
+        O1 --> F1[Performance Metrics]
+        O2 --> F1
+        F1 --> ML[ML Optimizer]
+        ML --> P3
+    end
