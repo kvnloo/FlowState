@@ -1,0 +1,186 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FlowState Documentation &mdash; FlowState 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=01f34227"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            FlowState
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">FlowState Documentation</a><ul>
+<li><a class="reference internal" href="#building-documentation">Building Documentation</a><ul>
+<li><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li><a class="reference internal" href="#building-locally">Building Locally</a></li>
+<li><a class="reference internal" href="#viewing-documentation">Viewing Documentation</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#documentation-structure">Documentation Structure</a></li>
+<li><a class="reference internal" href="#contributing">Contributing</a></li>
+<li><a class="reference internal" href="#automated-building">Automated Building</a></li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">FlowState</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">FlowState Documentation</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/README.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section class="tex2jax_ignore mathjax_ignore" id="flowstate-documentation">
+<h1>FlowState Documentation<a class="headerlink" href="#flowstate-documentation" title="Link to this heading"></a></h1>
+<p>This directory contains the unified documentation for the FlowState project, covering both Python backend and JavaScript frontend components.</p>
+<section id="building-documentation">
+<h2>Building Documentation<a class="headerlink" href="#building-documentation" title="Link to this heading"></a></h2>
+<section id="prerequisites">
+<h3>Prerequisites<a class="headerlink" href="#prerequisites" title="Link to this heading"></a></h3>
+<ol class="arabic simple">
+<li><p>Python dependencies:</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>sphinx<span class="w"> </span>sphinx-rtd-theme<span class="w"> </span>myst-parser<span class="w"> </span>sphinx-js
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>Node.js dependencies:</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>npm<span class="w"> </span>install<span class="w"> </span>-g<span class="w"> </span>jsdoc<span class="w"> </span>jsdoc-mermaid
+</pre></div>
+</div>
+</section>
+<section id="building-locally">
+<h3>Building Locally<a class="headerlink" href="#building-locally" title="Link to this heading"></a></h3>
+<p>To build all documentation:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make<span class="w"> </span>all
+</pre></div>
+</div>
+<p>To build only Python documentation:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make<span class="w"> </span>html
+</pre></div>
+</div>
+<p>To build only JavaScript documentation:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make<span class="w"> </span>js
+</pre></div>
+</div>
+</section>
+<section id="viewing-documentation">
+<h3>Viewing Documentation<a class="headerlink" href="#viewing-documentation" title="Link to this heading"></a></h3>
+<p>After building, open <code class="docutils literal notranslate"><span class="pre">_build/html/index.html</span></code> in your browser to view the documentation.</p>
+</section>
+</section>
+<section id="documentation-structure">
+<h2>Documentation Structure<a class="headerlink" href="#documentation-structure" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">/docs/</span></code>: Main documentation source</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">index.rst</span></code>: Main entry point</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">features/</span></code>: Feature documentation</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">architecture/</span></code>: System architecture</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">api/</span></code>: API documentation</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">python/</span></code>: Python API docs</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">javascript/</span></code>: JavaScript API docs</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">algorithms/</span></code>: Algorithm documentation</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="contributing">
+<h2>Contributing<a class="headerlink" href="#contributing" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p>Follow the established documentation format for both Python and JavaScript files</p></li>
+<li><p>Update implementation status with dates</p></li>
+<li><p>Include dependencies and integration points</p></li>
+<li><p>Provide clear examples</p></li>
+<li><p>Run <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">all</span></code> locally to verify changes</p></li>
+</ol>
+</section>
+<section id="automated-building">
+<h2>Automated Building<a class="headerlink" href="#automated-building" title="Link to this heading"></a></h2>
+<p>Documentation is automatically built and deployed to GitHub Pages when changes are pushed to the main branch. See <code class="docutils literal notranslate"><span class="pre">.github/workflows/docs.yml</span></code> for details.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, FlowState Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
