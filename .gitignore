@@ -2,3 +2,4 @@ backend/attention_test.pynode_modules
 **/node_modules/
 
 Pipfile.lock
+.DS_Store
