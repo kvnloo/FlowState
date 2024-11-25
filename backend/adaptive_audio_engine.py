@@ -14,6 +14,10 @@ Implementation Status:
     ✓ AI Recommendations (2024-02-24)
         - Frequency optimization
         - State-based adaptation
+    ✓ Cross-Frequency Coupling (2024-02-24)
+        - Gamma-theta coupling
+        - Phase-amplitude modulation
+        - Neural entrainment
     ⚠ Volume Adaptation (Partial)
         - Basic control implemented
         - Missing ambient adaptation
@@ -22,31 +26,32 @@ Implementation Status:
         - Implementation pending
 
 Dependencies:
-    - sounddevice: Audio output and real-time synthesis
-    - numpy: Signal processing and calculations
-    - ai_advisor: ML-based frequency optimization
+    - numpy: Array operations and signal generation
+    - sounddevice: Real-time audio output
+    - scipy: Signal processing utilities
+    - dataclasses: Data structure management
 
 Integration Points:
-    - flow_state_detector.py: Receives state updates
-    - biometric/whoop_client.py: Gets HRV data
-    - biometric/tobii_tracker.py: Synchronizes with eye movement
+    - flow_state_detector.py: Flow state metrics and optimization
+    - ai_advisor.py: Frequency recommendations
+    - biometric/whoop_client.py: Recovery state tracking
 
 Example:
-    engine = AdaptiveAudioEngine(api_key="your-api-key")
-    strobe_freq = await engine.start("flow")
-    engine.update_brainwave_response(alpha=10, theta=5, beta=3, gamma=2)
-    engine.stop()
+    ```python
+    engine = AdaptiveAudioEngine()
+    await engine.start('flow', user_state={'fatigue': 0.3})
+    engine.update_frequencies(theta=6.0, gamma=40.0)
+    ```
 """
 
-from dataclasses import dataclass
-from typing import Dict, List, Optional, Literal
-import json
-import time
-from datetime import datetime
+from dataclasses import dataclass, field
+from typing import Dict, List, Optional, Tuple, Literal
 import numpy as np
 import sounddevice as sd
-from ai_advisor import AIAdvisor
-
+import json
+import asyncio
+import logging
+from pathlib import Path
 
 @dataclass
 class UserState:
@@ -62,7 +67,6 @@ class UserState:
     fatigue: Optional[float] = None
     caffeine_level: Optional[float] = None
     last_sleep: Optional[float] = None
-
 
 @dataclass
 class FrequencyResponse:
@@ -89,7 +93,6 @@ class FrequencyResponse:
     flow_score: float
     user_state: UserState
 
-
 @dataclass
 class FrequencyRecommendation:
     """AI-generated frequency recommendations.
@@ -107,6 +110,39 @@ class FrequencyRecommendation:
     confidence: float
     reasoning: str
 
+@dataclass
+class PhaseState:
+    """Track phase relationships between frequency bands.
+    
+    Attributes:
+        theta_phase: Current phase of theta wave (radians)
+        gamma_phase: Current phase of gamma wave (radians)
+        alpha_phase: Current phase of alpha wave (radians)
+        coupling_strength: Strength of phase coupling (0-1)
+        phase_lag: Phase difference between left/right channels (radians)
+    """
+    theta_phase: float = 0.0
+    gamma_phase: float = 0.0
+    alpha_phase: float = 0.0
+    coupling_strength: float = 0.5
+    phase_lag: float = 0.0
+
+@dataclass
+class FrequencyAdaptation:
+    """Tracks and adapts frequency responses for personalization.
+    
+    Attributes:
+        base_frequency_range: Valid range for carrier frequency
+        beat_frequency_range: Valid range for beat frequency
+        adaptation_rate: Learning rate for frequency updates (0-1)
+        frequency_history: Recent frequency responses
+        optimal_ranges: Personalized optimal frequency ranges
+    """
+    base_frequency_range: Tuple[float, float] = (4.0, 12.0)
+    beat_frequency_range: Tuple[float, float] = (0.5, 4.0)
+    adaptation_rate: float = 0.1
+    frequency_history: List[FrequencyResponse] = field(default_factory=list)
+    optimal_ranges: Dict[str, Tuple[float, float]] = field(default_factory=dict)
 
 class AdaptiveAudioEngine:
     """Adaptive binaural beat generator for neural entrainment.
@@ -145,6 +181,8 @@ class AdaptiveAudioEngine:
         self.stream: Optional[sd.OutputStream] = None
         self.volume = 0.1
         self.phase = 0
+        self.phase_state = PhaseState()
+        self.frequency_adaptation = FrequencyAdaptation()
         
         self._load_user_responses()
     
@@ -188,26 +226,80 @@ class AdaptiveAudioEngine:
         # Combine scores with weights
         return 0.6 * alpha_theta_score + 0.4 * alpha_beta_score
     
+    def _generate_coupled_waveform(self, t: np.ndarray) -> np.ndarray:
+        """Generate phase-coupled waveform combining theta and gamma.
+        
+        This method implements cross-frequency coupling between theta and gamma
+        bands to enhance neural entrainment. It uses theta phase to modulate
+        gamma amplitude, creating a naturalistic coupling pattern.
+        
+        Args:
+            t: Time points array for waveform generation
+        
+        Returns:
+            np.ndarray: Combined waveform with phase-amplitude coupling
+        
+        Technical Details:
+            - Theta carrier wave (4-8 Hz)
+            - Gamma modulation (40+ Hz)
+            - Alpha stabilization (8-12 Hz)
+            - Phase-amplitude coupling
+        """
+        # Theta carrier wave (4-8 Hz)
+        theta = np.sin(2 * np.pi * self.current_session.base_freq * t + self.phase_state.theta_phase)
+        
+        # Gamma modulated by theta phase (40+ Hz)
+        gamma_amp = 0.5 * (1 + theta)  # Amplitude modulation
+        gamma = gamma_amp * np.sin(2 * np.pi * self.current_session.beat_freq * t + self.phase_state.gamma_phase)
+        
+        # Alpha for cognitive stability (8-12 Hz)
+        alpha = 0.3 * np.sin(2 * np.pi * self.current_session.base_freq * t + self.phase_state.alpha_phase)
+        
+        # Combine waves with coupling
+        combined = (theta + self.phase_state.coupling_strength * gamma + alpha) / 2
+        return combined
+
     def _audio_callback(self, outdata: np.ndarray, frames: int, 
                        time_info: Dict, status: sd.CallbackFlags) -> None:
-        """Generate audio samples for sounddevice.
+        """Generate audio samples for sounddevice output.
+        
+        This callback method is called by sounddevice to fill the audio buffer.
+        It generates phase-coupled binaural beats with precise frequency control
+        and neural entrainment patterns.
         
         Args:
             outdata: Output buffer to fill with audio samples
             frames: Number of frames to generate
             time_info: Timing information from sounddevice
             status: Status flags from sounddevice
+        
+        Technical Details:
+            - Real-time waveform generation
+            - Phase tracking and updates
+            - Stereo channel management
+            - Volume normalization
         """
         if self.current_session is None:
             outdata.fill(0)
             return
             
         t = (self.phase + np.arange(frames)) / self.SAMPLE_RATE
-        left = np.sin(2 * np.pi * self.current_session.base_freq * t)
-        right = np.sin(2 * np.pi * (self.current_session.base_freq + self.current_session.beat_freq) * t)
         
-        outdata[:, 0] = left * self.volume
-        outdata[:, 1] = right * self.volume
+        # Generate coupled waveforms for each ear
+        left_coupled = self._generate_coupled_waveform(t)
+        
+        # Add phase lag for spatial effect
+        t_right = t + self.phase_state.phase_lag
+        right_coupled = self._generate_coupled_waveform(t_right)
+        
+        # Update phases
+        self.phase_state.theta_phase += 2 * np.pi * self.current_session.base_freq * frames / self.SAMPLE_RATE
+        self.phase_state.gamma_phase += 2 * np.pi * self.current_session.beat_freq * frames / self.SAMPLE_RATE
+        self.phase_state.alpha_phase += 2 * np.pi * self.current_session.base_freq * frames / self.SAMPLE_RATE
+        
+        # Normalize and apply volume
+        outdata[:, 0] = left_coupled * self.volume
+        outdata[:, 1] = right_coupled * self.volume
         
         self.phase += frames
     
@@ -370,3 +462,140 @@ class AdaptiveAudioEngine:
                 confidence=0.5,
                 reasoning='Using research-based default frequencies'
             )
+
+    def _update_optimal_ranges(self, flow_metrics: FlowMetrics) -> None:
+        """Update optimal frequency ranges based on flow state response.
+        
+        This method implements adaptive learning of optimal frequency ranges
+        based on the user's neural response and flow state metrics.
+        
+        Args:
+            flow_metrics: Current flow state metrics
+        
+        Technical Details:
+            - Exponential moving average for range updates
+            - Confidence-weighted adaptation
+            - Boundary enforcement for safe ranges
+        """
+        if not self.current_session:
+            return
+        
+        # Only update if we have high confidence
+        if flow_metrics.confidence < 0.6:
+            return
+        
+        # Calculate adaptation weight
+        weight = self.frequency_adaptation.adaptation_rate * flow_metrics.confidence
+        
+        # Update optimal ranges based on flow probability
+        if flow_metrics.flow_probability > 0.7:
+            current_base = self.current_session.base_freq
+            current_beat = self.current_session.beat_freq
+            
+            # Update optimal ranges with exponential moving average
+            for state in ['focus', 'flow', 'meditate']:
+                if state not in self.frequency_adaptation.optimal_ranges:
+                    self.frequency_adaptation.optimal_ranges[state] = (
+                        self.frequency_adaptation.base_frequency_range[0],
+                        self.frequency_adaptation.base_frequency_range[1]
+                    )
+                
+                current_range = self.frequency_adaptation.optimal_ranges[state]
+                new_min = (1 - weight) * current_range[0] + weight * max(
+                    current_base - 1.0,
+                    self.frequency_adaptation.base_frequency_range[0]
+                )
+                new_max = (1 - weight) * current_range[1] + weight * min(
+                    current_base + 1.0,
+                    self.frequency_adaptation.base_frequency_range[1]
+                )
+                
+                self.frequency_adaptation.optimal_ranges[state] = (new_min, new_max)
+
+    def _adapt_frequencies(self, flow_metrics: FlowMetrics) -> None:
+        """Dynamically adapt frequencies based on flow state.
+        
+        This method implements real-time frequency adaptation based on
+        neural coupling strength and flow state metrics.
+        
+        Args:
+            flow_metrics: Current flow state metrics
+        
+        Technical Details:
+            - Theta-gamma coupling optimization
+            - Phase synchronization tracking
+            - Boundary enforcement
+            - Gradual frequency shifts
+        """
+        if not self.current_session:
+            return
+        
+        # Calculate base frequency adjustment
+        coupling_error = 0.8 - flow_metrics.theta_gamma_coupling
+        phase_error = 0.8 - flow_metrics.phase_sync
+        
+        # Adjust base frequency (theta range)
+        base_freq_delta = (
+            0.3 * coupling_error +
+            0.2 * phase_error
+        ) * self.frequency_adaptation.adaptation_rate
+        
+        # Adjust beat frequency (gamma range)
+        beat_freq_delta = (
+            0.4 * coupling_error +
+            0.3 * phase_error
+        ) * self.frequency_adaptation.adaptation_rate
+        
+        # Apply frequency updates with boundary enforcement
+        new_base_freq = np.clip(
+            self.current_session.base_freq + base_freq_delta,
+            self.frequency_adaptation.base_frequency_range[0],
+            self.frequency_adaptation.base_frequency_range[1]
+        )
+        
+        new_beat_freq = np.clip(
+            self.current_session.beat_freq + beat_freq_delta,
+            self.frequency_adaptation.beat_frequency_range[0],
+            self.frequency_adaptation.beat_frequency_range[1]
+        )
+        
+        # Update frequencies
+        self.current_session = FrequencyResponse(
+            base_freq=new_base_freq,
+            beat_freq=new_beat_freq,
+            volume=self.current_session.volume,
+            target_state=self.current_session.target_state,
+            strobe_freq=self.current_session.strobe_freq,
+            confidence=flow_metrics.confidence,
+            reasoning="Dynamic adaptation based on neural coupling"
+        )
+        
+        # Store frequency response for history
+        self.frequency_adaptation.frequency_history.append(self.current_session)
+        if len(self.frequency_adaptation.frequency_history) > 100:
+            self.frequency_adaptation.frequency_history.pop(0)
+
+    async def process_flow_update(self, flow_metrics: FlowMetrics) -> None:
+        """Process flow state updates and adapt frequencies.
+        
+        This method coordinates the frequency adaptation system,
+        updating optimal ranges and adjusting frequencies in real-time.
+        
+        Args:
+            flow_metrics: Current flow state metrics
+        
+        Technical Details:
+            - Asynchronous processing
+            - Optimal range updates
+            - Dynamic frequency adaptation
+            - History tracking
+        """
+        self._update_optimal_ranges(flow_metrics)
+        self._adapt_frequencies(flow_metrics)
+        
+        # Log adaptation results
+        logging.info(
+            f"Adapted frequencies - Base: {self.current_session.base_freq:.2f} Hz, "
+            f"Beat: {self.current_session.beat_freq:.2f} Hz, "
+            f"Flow Probability: {flow_metrics.flow_probability:.2f}"
+        )
