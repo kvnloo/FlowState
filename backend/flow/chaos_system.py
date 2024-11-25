@@ -1,15 +1,73 @@
 """Chaos System for Neural Entrainment.
 
 This module introduces controlled chaos into various stimulation parameters
-to explore novel neural entrainment patterns. It uses various chaos/randomness
-algorithms that can be tuned via a global chaos level setting.
+to explore novel neural entrainment patterns. It uses deterministic chaos algorithms
+to generate unpredictable but bounded variations in stimulation parameters.
 
-Features:
-    - Global chaos level control
-    - Parameter-specific chaos injection
-    - Safe bounds enforcement
-    - Pattern emergence detection
-    - Effectiveness tracking
+Implementation Status:
+    ✓ Global Chaos Control (2024-02-24)
+        - Level-based chaos injection
+        - Safe bounds enforcement
+        - Real-time adaptation
+    ✓ Pattern Generation (2024-02-24)
+        - Strobe pattern variation
+        - Binaural beat modulation
+        - Duty cycle adaptation
+    ✓ Chaos Algorithms (2024-02-24)
+        - Logistic map
+        - Henon map
+        - Lorenz system
+    ⚠ Pattern Learning (Partial)
+        - Basic effectiveness tracking
+        - Needs: Long-term optimization
+    ☐ Multi-dimensional Chaos (Planned)
+        - Design complete
+        - Implementation pending
+
+Dependencies:
+    - numpy: Array operations and chaos calculations
+    - scipy: Signal processing utilities
+    - dataclasses: Configuration data structures
+    - typing: Type hint support
+    - random: Initialization randomization
+    - datetime: Timestamp management
+
+Integration Points:
+    - flow_state_detector.py: Provides feedback for pattern effectiveness
+    - adaptive_audio_engine.py: Receives chaotic frequency modulations
+    - visual/visual_processor.py: Receives strobe pattern variations
+
+Example:
+    ```python
+    # Initialize chaos system with moderate chaos
+    system = ChaosSystem(global_chaos=0.3)
+    
+    # Configure chaos parameters
+    config = ChaosConfig(
+        base_value=10.0,
+        min_value=8.0,
+        max_value=12.0,
+        volatility=0.2,
+        pattern_length=100,
+        mutation_rate=0.1
+    )
+    
+    # Generate chaotic strobe pattern
+    pattern = system.get_strobe_pattern(
+        base_freq=10.0,
+        duration_ms=1000,
+        config=config
+    )
+    ```
+
+Performance Considerations:
+    - Chaos generation is computationally lightweight
+    - Pattern history storage grows linearly with usage
+    - Real-time generation suitable for audio/visual feedback
+
+Configuration:
+    No external configuration required. All parameters are passed
+    through the ChaosConfig dataclass or constructor arguments.
 """
 
 import numpy as np
@@ -21,7 +79,42 @@ from datetime import datetime
 
 @dataclass
 class ChaosConfig:
-    """Configuration for chaos injection."""
+    """Configuration for chaos injection.
+
+    Defines the parameters and constraints for chaos injection into a specific
+    stimulation parameter (frequency, timing, etc.).
+
+    Attributes:
+        base_value (float): Starting value for the parameter
+        min_value (float): Minimum allowed value
+        max_value (float): Maximum allowed value
+        volatility (float): Maximum allowed change per step (0.0-1.0)
+        pattern_length (int): Number of steps before potential pattern change
+        mutation_rate (float): Probability of pattern mutation per step (0.0-1.0)
+
+    Class Invariants:
+        - min_value <= base_value <= max_value
+        - 0.0 <= volatility <= 1.0
+        - pattern_length > 0
+        - 0.0 <= mutation_rate <= 1.0
+
+    Example:
+        ```python
+        config = ChaosConfig(
+            base_value=10.0,
+            min_value=8.0,
+            max_value=12.0,
+            volatility=0.2,
+            pattern_length=100,
+            mutation_rate=0.1
+        )
+        ```
+
+    Note:
+        Volatility and mutation_rate together determine how quickly and
+        dramatically patterns can change. Higher values lead to more
+        unpredictable behavior.
+    """
     base_value: float
     min_value: float
     max_value: float
@@ -31,24 +124,98 @@ class ChaosConfig:
 
 @dataclass
 class EffectivePattern:
-    """Record of patterns that produced interesting results."""
+    """Record of patterns that produced interesting results.
+
+    Stores patterns that led to positive neural entrainment effects,
+    along with their measured impact and effectiveness score.
+
+    Attributes:
+        pattern (np.ndarray): The successful stimulation pattern
+        eeg_effect (Dict[str, float]): Measured EEG band power changes
+        timestamp (datetime): When the pattern was recorded
+        score (float): Effectiveness score (0.0-1.0)
+
+    Example:
+        ```python
+        pattern = EffectivePattern(
+            pattern=np.array([1.0, 1.2, 0.8, 1.1]),
+            eeg_effect={'alpha': 0.5, 'theta': 0.3},
+            timestamp=datetime.now(),
+            score=0.85
+        )
+        ```
+
+    Note:
+        Patterns are stored for future optimization and machine learning
+        applications. Higher scores indicate more effective patterns.
+    """
     pattern: np.ndarray
     eeg_effect: Dict[str, float]
     timestamp: datetime
     score: float
 
 class ChaosSystem:
-    """Manages chaos injection across the system."""
+    """Manages chaos injection across the system.
+
+    This class implements various chaos generation algorithms to create
+    controlled unpredictability in stimulation parameters. It tracks
+    effective patterns and adapts its behavior based on feedback.
+
+    Attributes:
+        global_chaos (float): Master chaos level (0.0-1.0)
+        rng (np.random.Generator): Random number generator
+        effective_patterns (List[EffectivePattern]): History of successful patterns
+        generators (Dict): Available chaos generation algorithms
+        generator_states (Dict): Current state of each generator
+
+    Class Invariants:
+        - 0.0 <= global_chaos <= 1.0
+        - At least one chaos generator must be available
+        - Generator states must match generator algorithms
+
+    Example:
+        ```python
+        system = ChaosSystem(global_chaos=0.3)
+        pattern = system.get_strobe_pattern(
+            base_freq=10.0,
+            duration_ms=1000,
+            config=config
+        )
+        ```
+
+    Note:
+        The system uses deterministic chaos to ensure reproducibility
+        while maintaining apparent randomness. This allows for pattern
+        tracking and optimization over time.
+    """
     
     def __init__(self, 
                  global_chaos: float = 0.0,
                  seed: Optional[int] = None):
         """Initialize the chaos system.
         
+        Sets up the chaos generation system with specified global chaos level
+        and optional random seed for reproducibility.
+
         Args:
-            global_chaos: Global chaos level (0.0 - 1.0)
+            global_chaos: Global chaos level (0.0-1.0)
             seed: Random seed for reproducibility
+
+        Raises:
+            ValueError: If global_chaos is outside [0.0, 1.0] range
+
+        Example:
+            ```python
+            # Create system with moderate chaos
+            system = ChaosSystem(global_chaos=0.3)
+            
+            # Create reproducible system
+            system = ChaosSystem(global_chaos=0.3, seed=42)
+            ```
         """
+        if not 0.0 <= global_chaos <= 1.0:
+            raise ValueError("global_chaos must be between 0.0 and 1.0")
+            
         self.global_chaos = global_chaos
         self.rng = np.random.default_rng(seed)
         
@@ -59,7 +226,20 @@ class ChaosSystem:
         self._init_chaos_generators()
         
     def _init_chaos_generators(self):
-        """Initialize various chaos generation methods."""
+        """Initialize various chaos generation methods.
+
+        Sets up the available chaos generators and their initial states.
+        Each generator produces values in the [0, 1] range.
+
+        Technical Details:
+            - Logistic map: r * x * (1 - x)
+            - Henon map: 1 - a*x^2 + y, b*x
+            - Lorenz system: dx/dt = s(y-x), dy/dt = x(r-z)-y, dz/dt = xy-bz
+
+        Note:
+            Generator parameters are chosen to ensure chaotic behavior
+            while maintaining bounded outputs.
+        """
         self.generators = {
             'logistic': lambda x, r: r * x * (1 - x),
             'henon': lambda x, y, a=1.4, b=0.3: (1 - a*x*x + y, b*x),
@@ -75,8 +255,25 @@ class ChaosSystem:
         }
         
     def set_global_chaos(self, level: float):
-        """Set global chaos level (0.0 - 1.0)."""
-        self.global_chaos = np.clip(level, 0.0, 1.0)
+        """Set global chaos level.
+
+        Updates the system-wide chaos level that scales all chaos effects.
+
+        Args:
+            level: New chaos level (0.0-1.0)
+
+        Raises:
+            ValueError: If level is outside [0.0, 1.0] range
+
+        Example:
+            ```python
+            # Increase chaos level
+            system.set_global_chaos(0.5)
+            ```
+        """
+        if not 0.0 <= level <= 1.0:
+            raise ValueError("Chaos level must be between 0.0 and 1.0")
+        self.global_chaos = level
         
     def get_strobe_pattern(self, 
                           base_freq: float,
@@ -84,14 +281,41 @@ class ChaosSystem:
                           config: ChaosConfig) -> np.ndarray:
         """Generate chaotic strobe pattern.
         
+        Creates a sequence of strobe timings with controlled chaos injection.
+        The pattern maintains the average frequency while introducing timing
+        variations.
+
         Args:
-            base_freq: Base frequency in Hz
-            duration_ms: Duration in milliseconds
+            base_freq: Base frequency in Hz (1.0-60.0)
+            duration_ms: Duration in milliseconds (>0)
             config: Chaos configuration for this parameter
             
         Returns:
-            Array of strobe timings with chaos injected
+            np.ndarray: Array of strobe timings with chaos injected
+
+        Raises:
+            ValueError: If base_freq or duration_ms are invalid
+
+        Example:
+            ```python
+            pattern = system.get_strobe_pattern(
+                base_freq=10.0,
+                duration_ms=1000,
+                config=config
+            )
+            ```
+
+        Technical Details:
+            - Maintains average frequency over time
+            - Applies bounded random walks to timing
+            - Uses chaos sequence for variation
+            - Ensures safe frequency bounds
         """
+        if base_freq <= 0 or base_freq > 60:
+            raise ValueError("base_freq must be between 1.0 and 60.0 Hz")
+        if duration_ms <= 0:
+            raise ValueError("duration_ms must be positive")
+
         # Calculate number of strobes
         num_strobes = int(base_freq * duration_ms / 1000)
         
@@ -127,14 +351,40 @@ class ChaosSystem:
                                config: ChaosConfig) -> Tuple[np.ndarray, np.ndarray]:
         """Generate chaotic binaural beat frequencies.
         
+        Creates frequency patterns for left and right audio channels to produce
+        binaural beats with controlled chaos injection.
+
         Args:
-            base_freq: Base frequency in Hz
-            duration_ms: Duration in milliseconds
+            base_freq: Base frequency in Hz (20.0-500.0)
+            duration_ms: Duration in milliseconds (>0)
             config: Chaos configuration for this parameter
             
         Returns:
-            Tuple of (left_ear_freq, right_ear_freq) arrays
+            Tuple[np.ndarray, np.ndarray]: Left and right ear frequency arrays
+
+        Raises:
+            ValueError: If base_freq or duration_ms are invalid
+
+        Example:
+            ```python
+            left_freq, right_freq = system.get_binaural_frequencies(
+                base_freq=100.0,
+                duration_ms=1000,
+                config=config
+            )
+            ```
+
+        Technical Details:
+            - Maintains frequency difference for beat
+            - Applies coupled chaos to both channels
+            - Ensures frequencies stay in audible range
+            - Optimizes for neural entrainment
         """
+        if base_freq < 20 or base_freq > 500:
+            raise ValueError("base_freq must be between 20.0 and 500.0 Hz")
+        if duration_ms <= 0:
+            raise ValueError("duration_ms must be positive")
+
         num_samples = int(duration_ms * 44.1)  # 44.1 kHz sampling
         
         if self.global_chaos < 0.01:
@@ -163,13 +413,36 @@ class ChaosSystem:
                       config: ChaosConfig) -> float:
         """Generate chaotic duty cycle.
         
+        Creates a modified duty cycle with controlled chaos injection
+        for visual or other stimulation patterns.
+
         Args:
-            base_duty: Base duty cycle (0.0 - 1.0)
+            base_duty: Base duty cycle (0.0-1.0)
             config: Chaos configuration for this parameter
             
         Returns:
-            Modified duty cycle
+            float: Modified duty cycle
+
+        Raises:
+            ValueError: If base_duty is outside [0.0, 1.0]
+
+        Example:
+            ```python
+            duty = system.get_duty_cycle(
+                base_duty=0.5,
+                config=config
+            )
+            ```
+
+        Technical Details:
+            - Maintains average duty cycle
+            - Uses single chaos value per call
+            - Ensures bounds for safe operation
+            - Smooth transitions between values
         """
+        if not 0.0 <= base_duty <= 1.0:
+            raise ValueError("base_duty must be between 0.0 and 1.0")
+
         if self.global_chaos < 0.01:
             return base_duty
             
@@ -188,11 +461,35 @@ class ChaosSystem:
                                score: float):
         """Record patterns that produced interesting results.
         
+        Stores patterns that led to positive neural entrainment effects
+        for future optimization and analysis.
+
         Args:
             pattern: The pattern that was used
             eeg_data: Resulting EEG measurements
-            score: Effectiveness score (0.0 - 1.0)
+            score: Effectiveness score (0.0-1.0)
+
+        Raises:
+            ValueError: If score is outside [0.0, 1.0]
+
+        Example:
+            ```python
+            system.record_effective_pattern(
+                pattern=strobe_pattern,
+                eeg_data={'alpha': 0.5, 'theta': 0.3},
+                score=0.85
+            )
+            ```
+
+        Technical Details:
+            - Maintains sorted history
+            - Limits storage to top 100 patterns
+            - Uses timestamps for aging
+            - Optimizes for memory usage
         """
+        if not 0.0 <= score <= 1.0:
+            raise ValueError("score must be between 0.0 and 1.0")
+
         if score > 0.7:  # Only store notably effective patterns
             self.effective_patterns.append(EffectivePattern(
                 pattern=pattern,
@@ -209,12 +506,27 @@ class ChaosSystem:
     def _generate_chaos_sequence(self, length: int) -> np.ndarray:
         """Generate sequence of chaos values.
         
+        Creates a sequence of chaos values using one of the available
+        chaos generators.
+
         Args:
-            length: Length of sequence to generate
+            length: Length of sequence to generate (>0)
             
         Returns:
-            Array of chaos values between 0 and 1
+            np.ndarray: Array of chaos values between 0 and 1
+
+        Raises:
+            ValueError: If length is not positive
+
+        Technical Details:
+            - Randomly selects generator type
+            - Maintains generator state
+            - Ensures bounded output
+            - Optimizes for sequence length
         """
+        if length <= 0:
+            raise ValueError("length must be positive")
+
         # Randomly select a chaos generator
         generator_type = random.choice(list(self.generators.keys()))
         
@@ -254,5 +566,17 @@ class ChaosSystem:
         return sequence
         
     def _get_next_chaos_value(self) -> float:
-        """Get next single chaos value between 0 and 1."""
+        """Get next single chaos value.
+        
+        Generates a single chaos value using the current generator state.
+
+        Returns:
+            float: Chaos value between 0 and 1
+
+        Technical Details:
+            - Uses current generator state
+            - Updates state after generation
+            - Ensures value bounds
+            - Optimizes for single value
+        """
         return self._generate_chaos_sequence(1)[0]

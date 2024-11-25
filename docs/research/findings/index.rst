@@ -4,7 +4,7 @@ Research Findings
 This section contains our research findings and analysis related to flow state optimization.
 
 Algorithm Development
--------------------
+---------------------
 
 .. toctree::
    :maxdepth: 2
@@ -13,7 +13,7 @@ Algorithm Development
    algorithm_design
 
 Key Findings
------------
+------------
 
 1. Flow State Characteristics
    - Optimal frequency ranges for neural entrainment
@@ -31,7 +31,7 @@ Key Findings
    - User experience factors
 
 Future Research
--------------
+--------------
 
 Areas identified for further investigation:
 

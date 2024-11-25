@@ -6,8 +6,8 @@ Chaos System
 The Chaos System module introduces controlled randomness into neural entrainment parameters
 to prevent habituation and maintain optimal stimulation levels.
 
-Key Features:
-------------
+Key Features
+-----------
 
 * Global chaos level control (0.0 - 1.0)
 * Parameter-specific chaos injection
@@ -28,7 +28,7 @@ ChaosSystem
    .. automethod:: __init__
 
 ChaosGenerator
-~~~~~~~~~~~~~
+~~~~~~~~~~~~
 
 .. autoclass:: ChaosGenerator
    :members:
@@ -38,27 +38,26 @@ ChaosGenerator
    .. automethod:: __init__
 
 Functions
----------
+--------
 
 .. autofunction:: apply_chaos
 .. autofunction:: generate_chaos_sequence
 .. autofunction:: calculate_lyapunov_exponent
 
 Usage Example
-------------
+-----------
 
 .. code-block:: python
 
-    from flow.chaos_system import ChaosSystem
-    
-    # Initialize the chaos system
-    chaos = ChaosSystem(initial_chaos_level=0.3)
-    
+    # Create a chaos system with default parameters
+    chaos = ChaosSystem(global_chaos_level=0.3)
+
+    # Generate a chaotic sequence
+    sequence = chaos.generate_sequence(length=100)
+
     # Apply chaos to a parameter
-    original_value = 0.5
-    chaotic_value = chaos.apply_chaos(
-        value=original_value,
-        parameter_name="frequency",
-        min_value=0.1,
-        max_value=0.9
-    )
+    original_value = 440  # Hz
+    chaotic_value = chaos.apply_chaos(original_value, parameter_name='frequency')
+
+    # Calculate Lyapunov exponent for stability analysis
+    lyap = chaos.calculate_lyapunov_exponent()

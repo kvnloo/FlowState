@@ -38,8 +38,14 @@ myst_enable_extensions = [
 ]
 
 # Mermaid configuration
-mermaid_version = ""  # Latest version
-mermaid_init_js = "mermaid.initialize({startOnLoad:true});"
+mermaid_version = "10.6.1"  # Specify a stable version
+mermaid_init_js = """
+    mermaid.initialize({
+        startOnLoad: true,
+        theme: 'default',
+        securityLevel: 'loose',
+    });
+"""
 
 templates_path = ['_templates']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
@@ -67,6 +73,13 @@ html_context = {
     'style': 'default',  # Provide a fallback value
 }
 
+# HTML output options
+html_show_sourcelink = True
+html_show_sphinx = True
+html_show_copyright = True
+
+# Syntax highlighting
+pygments_style = 'sphinx'
 
 # Napoleon settings
 napoleon_google_docstring = True

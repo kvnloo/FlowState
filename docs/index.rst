@@ -1,5 +1,5 @@
 FlowState Documentation
-=====================
+======================
 
 Welcome to FlowState's documentation. This documentation covers the architecture, features, and development process of the Neural Performance Platform.
 
@@ -15,7 +15,7 @@ Welcome to FlowState's documentation. This documentation covers the architecture
    api/index
 
 Development Process
------------------
+------------------
 .. toctree::
    :maxdepth: 1
 
@@ -23,7 +23,7 @@ Development Process
    development/priority_queue
 
 System Architecture
------------------
+------------------
 .. toctree::
    :maxdepth: 1
 
@@ -48,7 +48,6 @@ API Reference
 
 Indices and tables
 ==================
-
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
