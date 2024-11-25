@@ -19,3 +19,4 @@ echo "Building the documentation with Sphinx..."
 pipenv run sphinx-build -b html "$DOCS_DIR" "$DOCS_DIR/_build/html"
 
 echo "Documentation successfully built!"
+open "$DOCS_DIR"/_build/html/index.html

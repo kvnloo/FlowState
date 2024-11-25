@@ -1,5 +1,5 @@
 FlowState Documentation
-======================
+=======================
 
 Welcome to FlowState's documentation. This documentation covers the architecture, features, and development process of the Neural Performance Platform.
 
@@ -7,47 +7,8 @@ Welcome to FlowState's documentation. This documentation covers the architecture
    :maxdepth: 2
    :caption: Contents:
 
-   development/llm_workflow
-   architecture/system_overview
-   architecture/flow_optimization
-   architecture/Enhanced_Flow_Optimization
+   README
+   development/index
+   architecture/index
    research/index
    api/index
-
-Development Process
-------------------
-.. toctree::
-   :maxdepth: 1
-
-   development/llm_workflow
-   development/priority_queue
-
-System Architecture
-------------------
-.. toctree::
-   :maxdepth: 1
-
-   architecture/system_overview
-   architecture/flow_optimization
-   architecture/Enhanced_Flow_Optimization
-   architecture/quantum
-
-Research
---------
-.. toctree::
-   :maxdepth: 1
-
-   research/findings/index
-
-API Reference
-------------
-.. toctree::
-   :maxdepth: 1
-
-   api/index
-
-Indices and tables
-==================
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`

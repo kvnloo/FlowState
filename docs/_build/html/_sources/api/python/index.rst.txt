@@ -1,5 +1,5 @@
 Python API Reference
-===================
+====================
 
 This section provides detailed documentation for the FlowState Python API.
 
@@ -12,10 +12,9 @@ Core Systems
    flow_state_detector
    adaptive_audio_engine
    ai_advisor
-   api
 
 Flow Systems
--------------
+------------
 
 .. toctree::
    :maxdepth: 2
@@ -25,7 +24,7 @@ Flow Systems
    flow/stability_system
 
 Research & Analysis
-------------------
+-------------------
 
 .. toctree::
    :maxdepth: 2
@@ -34,7 +33,7 @@ Research & Analysis
    attention/attention_maximizer
 
 Biometric Integration
---------------------
+---------------------
 
 .. toctree::
    :maxdepth: 2
@@ -44,18 +43,10 @@ Biometric Integration
    eeg/realtime_processor
 
 Hardware Interface
------------------
+------------------
 
 .. toctree::
    :maxdepth: 2
 
    hardware/strobe_glasses
    visual/visual_processor
-
-Utilities
----------
-
-.. toctree::
-   :maxdepth: 2
-
-   utils

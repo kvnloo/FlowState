@@ -1,63 +1,60 @@
 Chaos System
-============
+------------
 
-.. module:: flow.chaos_system
-
-The Chaos System module introduces controlled randomness into neural entrainment parameters
-to prevent habituation and maintain optimal stimulation levels.
+This module implements a chaos-based system for introducing controlled variability in flow state optimization.
 
 Key Features
------------
+------------
 
-* Global chaos level control (0.0 - 1.0)
-* Parameter-specific chaos injection
-* Multiple chaos generators (Logistic, Hénon, Lorenz maps)
-* Pattern learning and effectiveness tracking
+* Lorenz attractor-based chaos generation
+* Controlled entropy injection
+* Dynamic system parameter adaptation
+* Lyapunov exponent calculation
 
 Classes
 -------
 
 ChaosSystem
-~~~~~~~~~~
+~~~~~~~~~~~
 
-.. autoclass:: ChaosSystem
+.. autoclass:: flow.chaos_system.ChaosSystem
    :members:
    :undoc-members:
    :show-inheritance:
-
-   .. automethod:: __init__
 
 ChaosGenerator
-~~~~~~~~~~~~
+~~~~~~~~~~~~~~
 
-.. autoclass:: ChaosGenerator
+.. autoclass:: flow.chaos_system.ChaosGenerator
    :members:
    :undoc-members:
    :show-inheritance:
 
-   .. automethod:: __init__
-
 Functions
---------
+---------
 
-.. autofunction:: apply_chaos
-.. autofunction:: generate_chaos_sequence
-.. autofunction:: calculate_lyapunov_exponent
+.. autofunction:: flow.chaos_system.apply_chaos
+.. autofunction:: flow.chaos_system.generate_chaos_sequence
+.. autofunction:: flow.chaos_system.calculate_lyapunov_exponent
 
-Usage Example
------------
+Example Usage
+-------------
 
 .. code-block:: python
 
-    # Create a chaos system with default parameters
-    chaos = ChaosSystem(global_chaos_level=0.3)
+    from flow.chaos_system import ChaosSystem, generate_chaos_sequence
 
-    # Generate a chaotic sequence
-    sequence = chaos.generate_sequence(length=100)
+    # Initialize the chaos system
+    chaos_system = ChaosSystem()
+
+    # Generate a chaos sequence
+    sequence = generate_chaos_sequence(
+        length=1000,
+        initial_conditions=[0.1, 0.1, 0.1]
+    )
 
     # Apply chaos to a parameter
-    original_value = 440  # Hz
-    chaotic_value = chaos.apply_chaos(original_value, parameter_name='frequency')
-
-    # Calculate Lyapunov exponent for stability analysis
-    lyap = chaos.calculate_lyapunov_exponent()
+    modified_param = chaos_system.apply_chaos(
+        param_value=0.5,
+        chaos_strength=0.1
+    )
