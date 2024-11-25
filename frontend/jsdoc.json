@@ -1,0 +1,25 @@
+{
+    "source": {
+        "include": ["src"],
+        "exclude": ["node_modules"],
+        "includePattern": ".+\\.js(x)?$",
+        "excludePattern": "(^|\\/|\\\\)_"
+    },
+    "plugins": [
+        "plugins/markdown",
+        "jsdoc-mermaid"
+    ],
+    "opts": {
+        "destination": "../docs/_build/js",
+        "recurse": true,
+        "template": "templates/default"
+    },
+    "templates": {
+        "cleverLinks": true,
+        "monospaceLinks": true
+    },
+    "markdown": {
+        "hardwrap": false,
+        "idInHeadings": true
+    }
+}

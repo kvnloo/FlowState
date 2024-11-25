@@ -1,0 +1,39 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+# Web and API
+fastapi = "==0.104.1"
+uvicorn = "==0.24.0"
+websockets = "==12.0"
+pydantic = "==2.5.1"
+python-multipart = "==0.0.6"
+aiohttp = "==3.9.1"
+torch = "*"
+scikit-learn = "*"
+scipy = "*"
+
+# Data Processing and Audio
+numpy = "==1.26.2"
+sounddevice = ">=0.4.6"
+pylsl = "==1.16.1"
+
+# Browser Automation
+selenium = "*"
+
+[dev-packages]
+# Documentation
+sphinx = ">=7.1.2"
+sphinx-rtd-theme = ">=1.3.0"
+mkdocs = ">=1.5.3"
+mkdocs-material = ">=9.4.6"
+pdoc3 = ">=0.10.0"
+
+[requires]
+python_version = "3.11"
+
+[scripts]
+start = "uvicorn main:app --reload"
+docs = "sphinx-build -b html docs docs/_build/html"
