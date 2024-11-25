@@ -10,9 +10,7 @@ Welcome to FlowState's documentation. This documentation covers the architecture
    development/llm_workflow
    architecture/system_overview
    architecture/flow_optimization
-   features/implementation_status
-   features/completed
-   features/planned
+   architecture/Enhanced_Flow_Optimization
    research/index
    api/index
 
@@ -31,22 +29,14 @@ System Architecture
 
    architecture/system_overview
    architecture/flow_optimization
-
-Features
---------
-.. toctree::
-   :maxdepth: 1
-
-   features/implementation_status
-   features/completed
-   features/planned
+   architecture/Enhanced_Flow_Optimization
+   architecture/quantum
 
 Research
 --------
 .. toctree::
    :maxdepth: 1
 
-   research/papers/index
    research/findings/index
 
 API Reference
@@ -55,3 +45,10 @@ API Reference
    :maxdepth: 1
 
    api/index
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
