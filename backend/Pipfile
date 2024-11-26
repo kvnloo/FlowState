@@ -4,39 +4,38 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-# Web and API
+pandas = "*"
+numpy = "*"
+google-auth-oauthlib = "*"
+google-auth = "*"
+google-api-python-client = "*"
+healthkit = "*"
+boto3 = "*"
 fastapi = "*"
 uvicorn = "*"
-websockets = "*"
+python-dotenv = "*"
 pydantic = "*"
+requests = "*"
+sqlalchemy = "*"
+psycopg2-binary = "*"
+python-jose = {extras = ["cryptography"], version = "*"}
+passlib = {extras = ["bcrypt"], version = "*"}
 python-multipart = "*"
 aiohttp = "*"
-torch = "*"
-scikit-learn = "*"
-scipy = "*"
-
-# Data Processing and Audio
-numpy = "*"
-sounddevice = "*"
-pylsl = "*"
-
-# Browser Automation
-selenium = "*"
+asyncio = "*"
+pytest = "*"
+pytest-asyncio = "*"
+pytest-cov = "*"
+black = "*"
+isort = "*"
+mypy = "*"
+flake8 = "*"
+pre-commit = "*"
 
 [dev-packages]
-# Documentation
-sphinx = "*"
-sphinx-rtd-theme = "*"
-mkdocs = "*"
-mkdocs-material = "*"
-myst-parser = "*"
-sphinxcontrib-mermaid = "*"
-revitron-sphinx-theme = {git = "https://github.com/revitron/revitron-sphinx-theme.git"}
-linkify-it-py = "*"
+ipython = "*"
+jupyter = "*"
+notebook = "*"
 
 [requires]
 python_version = "3.11"
-
-[scripts]
-start = "uvicorn main:app --reload"
-docs = "sphinx-build -b html docs docs/_build/html"
