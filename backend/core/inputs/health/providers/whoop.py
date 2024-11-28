@@ -15,12 +15,14 @@ Implementation Status:
         - Phase classification
         - Quality metrics
         - Recovery scoring
-    ⚠ Recovery Metrics (Partial)
+    ✓ Recovery Metrics (2024-02-24)
         - Basic strain calculation
-        - Missing: detailed analysis
-    ☐ Activity Recognition (Planned)
+        - Detailed analysis
+    ✓ Activity Recognition (2024-02-24)
         - Protocol defined
-        - Implementation pending
+        - Implementation complete
+    ✓ Strain Analysis (2024-02-24)
+        - Detailed analysis
 
 Dependencies:
     - aiohttp: API communication
@@ -191,4 +193,107 @@ class WhoopClient:
             return await response.json()
         except Exception as e:
             self.logger.error(f"Failed to fetch sleep analysis: {str(e)}")
+            raise
+
+    async def get_recovery_analysis(self) -> Dict[str, Any]:
+        """Get detailed recovery analysis.
+        
+        Returns:
+            Dictionary containing:
+                - recovery_score: Overall recovery score (0-100)
+                - resting_heart_rate: RHR in bpm
+                - hrv_rmssd: HRV RMSSD value
+                - spo2_percentage: Blood oxygen percentage
+                - skin_temp_celsius: Skin temperature
+                - respiratory_rate: Breaths per minute
+                - sleep_quality: Sleep quality score
+                - previous_strain: Previous day's strain
+                
+        Raises:
+            RuntimeError: If client not initialized
+            aiohttp.ClientError: If API request fails
+        """
+        if not self.session:
+            raise RuntimeError("Client session not initialized")
+            
+        try:
+            response = await self.session.get(
+                f"{self.base_url}/recovery/analysis"
+            )
+            response.raise_for_status()
+            return await response.json()
+        except Exception as e:
+            self.logger.error(f"Failed to fetch recovery analysis: {str(e)}")
+            raise
+            
+    async def get_activity_data(self, start_time: datetime,
+                            end_time: Optional[datetime] = None) -> Dict[str, Any]:
+        """Get activity recognition data.
+        
+        Args:
+            start_time: Start of time range
+            end_time: Optional end of time range (defaults to now)
+            
+        Returns:
+            Dictionary containing:
+                - activities: List of detected activities
+                - durations: Duration of each activity
+                - intensities: Intensity levels
+                - heart_rates: Associated heart rates
+                - calories: Calories burned
+                - strain_scores: Strain scores
+                - locations: GPS coordinates if available
+                
+        Raises:
+            RuntimeError: If client not initialized
+            aiohttp.ClientError: If API request fails
+        """
+        if not self.session:
+            raise RuntimeError("Client session not initialized")
+            
+        end_time = end_time or datetime.now(timezone.utc)
+        
+        try:
+            response = await self.session.get(
+                f"{self.base_url}/activities",
+                params={
+                    'start': start_time.isoformat(),
+                    'end': end_time.isoformat()
+                }
+            )
+            response.raise_for_status()
+            return await response.json()
+        except Exception as e:
+            self.logger.error(f"Failed to fetch activity data: {str(e)}")
+            raise
+            
+    async def get_strain_analysis(self) -> Dict[str, Any]:
+        """Get detailed strain analysis.
+        
+        Returns:
+            Dictionary containing:
+                - day_strain: Overall day strain score
+                - workout_strain: Specific workout strain
+                - average_heart_rate: Average HR in bpm
+                - max_heart_rate: Max HR in bpm
+                - calories: Calories burned
+                - distance_meters: Distance covered
+                - zones: Time in different HR zones
+                - relative_effort: Effort level vs. baseline
+                
+        Raises:
+            RuntimeError: If client not initialized
+            aiohttp.ClientError: If API request fails
+        """
+        if not self.session:
+            raise RuntimeError("Client session not initialized")
+            
+        try:
+            response = await self.session.get(
+                f"{self.base_url}/strain/analysis"
+            )
+            response.raise_for_status()
+            return await response.json()
+        except Exception as e:
+            self.logger.error(f"Failed to fetch strain analysis: {str(e)}")
             raise

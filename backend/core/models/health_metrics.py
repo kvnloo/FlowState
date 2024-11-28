@@ -1,213 +1,253 @@
-from sqlalchemy import Column, Integer, Float, String, DateTime, ForeignKey, Boolean, JSON, Time
-from sqlalchemy.orm import relationship
+"""Health Metrics Models.
+
+This module defines the SQLAlchemy models for storing various health metrics including
+sleep, nutrition, exercise, biometrics, and mood data. These models form the core data
+structure for the health tracking system.
+
+The models are designed to be flexible enough to accommodate data from multiple providers
+while maintaining consistency in how the data is stored and accessed.
+
+Example:
+    >>> from backend.core.models.health_metrics import User, SleepMetrics
+    >>> user = User(email="user@example.com", name="John Doe")
+    >>> sleep_data = SleepMetrics(
+    ...     user=user,
+    ...     date=datetime.now(),
+    ...     duration_mins=480,
+    ...     sleep_score=85
+    ... )
+"""
+
 from datetime import datetime
-from .base import Base, TimestampMixin
+from sqlalchemy import Column, Integer, Float, String, DateTime, ForeignKey, JSON
+from sqlalchemy.orm import relationship
+from sqlalchemy.ext.declarative import declarative_base
+
+Base = declarative_base()
+
+class TimestampMixin:
+    """Mixin for adding created_at and updated_at timestamps to models."""
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
 class User(Base, TimestampMixin):
+    """User model for storing user information and preferences.
+    
+    This model stores core user information and maintains relationships with various
+    health metric tables. It also stores provider-specific tokens and user preferences.
+    
+    Attributes:
+        id (int): Primary key
+        email (str): User's email address
+        name (str): User's full name
+        preferences (dict): JSON field for storing user preferences
+        provider_tokens (dict): JSON field for storing provider OAuth tokens
+        created_at (datetime): Timestamp of record creation
+        updated_at (datetime): Timestamp of last update
+    
+    Relationships:
+        sleep_metrics: One-to-many relationship with SleepMetrics
+        nutrition_metrics: One-to-many relationship with NutritionMetrics
+        exercise_metrics: One-to-many relationship with ExerciseMetrics
+        biometric_metrics: One-to-many relationship with BiometricMetrics
+        mood_metrics: One-to-many relationship with MoodMetrics
+    """
     __tablename__ = 'users'
     
     id = Column(Integer, primary_key=True)
-    username = Column(String(50), unique=True, nullable=False)
-    email = Column(String(120), unique=True, nullable=False)
+    email = Column(String, unique=True, nullable=False)
+    name = Column(String)
+    preferences = Column(JSON, default=dict)
+    provider_tokens = Column(JSON, default=dict)
     
-    # Relationships
-    sleep_records = relationship("SleepMetrics", back_populates="user")
-    nutrition_records = relationship("NutritionMetrics", back_populates="user")
-    exercise_records = relationship("ExerciseMetrics", back_populates="user")
-    biometric_records = relationship("BiometricMetrics", back_populates="user")
-    mood_records = relationship("MoodMetrics", back_populates="user")
+    sleep_metrics = relationship("SleepMetrics", back_populates="user", cascade="all, delete-orphan")
+    nutrition_metrics = relationship("NutritionMetrics", back_populates="user", cascade="all, delete-orphan")
+    exercise_metrics = relationship("ExerciseMetrics", back_populates="user", cascade="all, delete-orphan")
+    biometric_metrics = relationship("BiometricMetrics", back_populates="user", cascade="all, delete-orphan")
+    mood_metrics = relationship("MoodMetrics", back_populates="user", cascade="all, delete-orphan")
 
 class SleepMetrics(Base, TimestampMixin):
+    """Model for storing sleep-related metrics.
+    
+    This model captures comprehensive sleep data from various providers, normalizing
+    it into a consistent format while preserving raw provider data.
+    
+    Attributes:
+        id (int): Primary key
+        user_id (int): Foreign key to user
+        date (datetime): Date of the sleep record
+        duration_mins (float): Total sleep duration in minutes
+        deep_sleep_mins (float): Deep sleep duration in minutes
+        rem_sleep_mins (float): REM sleep duration in minutes
+        light_sleep_mins (float): Light sleep duration in minutes
+        awake_mins (float): Time awake during sleep period
+        sleep_score (float): Overall sleep quality score (0-100)
+        provider (str): Name of the data provider (e.g., 'oura', 'whoop')
+        raw_data (dict): Original provider data in JSON format
+        created_at (datetime): Timestamp of record creation
+        updated_at (datetime): Timestamp of last update
+    """
     __tablename__ = 'sleep_metrics'
     
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey('users.id'), nullable=False)
     date = Column(DateTime, nullable=False)
+    duration_mins = Column(Float)
+    deep_sleep_mins = Column(Float)
+    rem_sleep_mins = Column(Float)
+    light_sleep_mins = Column(Float)
+    awake_mins = Column(Float)
+    sleep_score = Column(Float)
+    provider = Column(String)
+    raw_data = Column(JSON, default=dict)
     
-    # Sleep timing
-    bedtime = Column(Time, nullable=False)
-    wake_time = Column(Time, nullable=False)
-    total_sleep_duration = Column(Float)  # in hours
-    sleep_latency = Column(Float)  # time to fall asleep in minutes
-    
-    # Sleep quality metrics
-    deep_sleep_duration = Column(Float)  # in hours
-    rem_sleep_duration = Column(Float)  # in hours
-    light_sleep_duration = Column(Float)  # in hours
-    wake_periods = Column(Integer)  # number of times woken up
-    sleep_efficiency = Column(Float)  # percentage of time in bed actually sleeping
-    
-    # Environmental factors
-    room_temperature = Column(Float)  # in celsius
-    room_humidity = Column(Float)  # percentage
-    noise_level = Column(Float)  # in decibels
-    light_level = Column(Float)  # in lux
-    
-    # Wearable data
-    average_heart_rate = Column(Float)
-    average_hrv = Column(Float)  # Heart Rate Variability
-    respiratory_rate = Column(Float)
-    
-    # Subjective metrics
-    sleep_quality_rating = Column(Integer)  # 1-10 scale
-    morning_grogginess = Column(Integer)  # 1-10 scale
-    
-    # Relationships
-    user = relationship("User", back_populates="sleep_records")
+    user = relationship("User", back_populates="sleep_metrics")
 
 class NutritionMetrics(Base, TimestampMixin):
+    """Model for storing nutrition-related metrics.
+    
+    This model tracks detailed nutrition data including macronutrients and hydration.
+    It supports multiple data sources while maintaining a standardized format.
+    
+    Attributes:
+        id (int): Primary key
+        user_id (int): Foreign key to user
+        date (datetime): Date of the nutrition record
+        calories (float): Total calories consumed
+        protein_g (float): Protein intake in grams
+        carbs_g (float): Carbohydrate intake in grams
+        fat_g (float): Fat intake in grams
+        fiber_g (float): Fiber intake in grams
+        water_ml (float): Water intake in milliliters
+        provider (str): Name of the data provider
+        raw_data (dict): Original provider data in JSON format
+        created_at (datetime): Timestamp of record creation
+        updated_at (datetime): Timestamp of last update
+    """
     __tablename__ = 'nutrition_metrics'
     
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey('users.id'), nullable=False)
-    timestamp = Column(DateTime, default=datetime.utcnow, nullable=False)
-    
-    # Macronutrients (in grams)
+    date = Column(DateTime, nullable=False)
     calories = Column(Float)
-    protein = Column(Float)
-    carbohydrates = Column(Float)
-    fiber = Column(Float)
-    sugar = Column(Float)
-    fat = Column(Float)
-    saturated_fat = Column(Float)
-    unsaturated_fat = Column(Float)
+    protein_g = Column(Float)
+    carbs_g = Column(Float)
+    fat_g = Column(Float)
+    fiber_g = Column(Float)
+    water_ml = Column(Float)
+    provider = Column(String)
+    raw_data = Column(JSON, default=dict)
     
-    # Micronutrients (in various units)
-    vitamins = Column(JSON)  # Store detailed vitamin intake
-    minerals = Column(JSON)  # Store detailed mineral intake
-    
-    # Meal timing
-    meal_type = Column(String(20))  # breakfast, lunch, dinner, snack
-    meal_time = Column(Time)
-    fasting_duration = Column(Float)  # hours since last meal
-    
-    # Food details
-    food_items = Column(JSON)  # List of foods consumed
-    meal_photos = Column(JSON)  # URLs to meal photos
-    
-    # Hydration
-    water_intake = Column(Float)  # in milliliters
-    other_liquids = Column(Float)  # in milliliters
-    
-    # Supplements
-    supplements = Column(JSON)  # List of supplements taken
-    
-    # Automated metrics
-    blood_glucose_response = Column(Float)  # if using CGM
-    
-    # Relationships
-    user = relationship("User", back_populates="nutrition_records")
+    user = relationship("User", back_populates="nutrition_metrics")
 
 class ExerciseMetrics(Base, TimestampMixin):
+    """Model for storing exercise-related metrics.
+    
+    This model captures detailed exercise and physical activity data from various
+    tracking devices and apps, standardizing it for analysis while preserving
+    provider-specific details.
+    
+    Attributes:
+        id (int): Primary key
+        user_id (int): Foreign key to user
+        date (datetime): Date of the exercise record
+        activity_type (str): Type of exercise (e.g., 'running', 'cycling')
+        duration_mins (float): Activity duration in minutes
+        calories_burned (float): Estimated calories burned
+        distance_meters (float): Distance covered in meters
+        avg_heart_rate (float): Average heart rate during activity
+        max_heart_rate (float): Maximum heart rate during activity
+        provider (str): Name of the data provider
+        raw_data (dict): Original provider data in JSON format
+        created_at (datetime): Timestamp of record creation
+        updated_at (datetime): Timestamp of last update
+    """
     __tablename__ = 'exercise_metrics'
     
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey('users.id'), nullable=False)
-    timestamp = Column(DateTime, default=datetime.utcnow, nullable=False)
-    
-    # Exercise details
-    activity_type = Column(String(50))  # e.g., running, weightlifting, yoga
-    duration = Column(Float)  # in minutes
-    distance = Column(Float)  # in kilometers (if applicable)
-    
-    # Intensity metrics
-    average_heart_rate = Column(Float)
-    max_heart_rate = Column(Float)
+    date = Column(DateTime, nullable=False)
+    activity_type = Column(String)
+    duration_mins = Column(Float)
     calories_burned = Column(Float)
+    distance_meters = Column(Float)
+    avg_heart_rate = Column(Float)
+    max_heart_rate = Column(Float)
+    provider = Column(String)
+    raw_data = Column(JSON, default=dict)
     
-    # Strength training specifics
-    exercises = Column(JSON)  # Details of each exercise (sets, reps, weights)
-    total_volume = Column(Float)  # total weight × reps
-    one_rep_maxes = Column(JSON)  # Calculated 1RMs for key exercises
-    
-    # Recovery metrics
-    perceived_exertion = Column(Integer)  # 1-10 scale
-    fatigue_level = Column(Integer)  # 1-10 scale
-    muscle_soreness = Column(JSON)  # Body part specific soreness ratings
-    
-    # Performance metrics
-    heart_rate_zones = Column(JSON)  # Time spent in each HR zone
-    power_output = Column(JSON)  # For cycling/running power metrics
-    vo2_max_estimate = Column(Float)
-    
-    # Environmental factors
-    temperature = Column(Float)
-    humidity = Column(Float)
-    altitude = Column(Float)
-    
-    # Relationships
-    user = relationship("User", back_populates="exercise_records")
+    user = relationship("User", back_populates="exercise_metrics")
 
 class BiometricMetrics(Base, TimestampMixin):
+    """Model for storing biometric measurements.
+    
+    This model tracks various physiological measurements and vital signs,
+    providing a comprehensive view of physical health markers.
+    
+    Attributes:
+        id (int): Primary key
+        user_id (int): Foreign key to user
+        date (datetime): Date of the biometric record
+        weight_kg (float): Weight in kilograms
+        body_fat_pct (float): Body fat percentage
+        hrv_ms (float): Heart rate variability in milliseconds
+        resting_hr (float): Resting heart rate
+        blood_glucose (float): Blood glucose level in mg/dL
+        systolic_bp (float): Systolic blood pressure in mmHg
+        diastolic_bp (float): Diastolic blood pressure in mmHg
+        provider (str): Name of the data provider
+        raw_data (dict): Original provider data in JSON format
+        created_at (datetime): Timestamp of record creation
+        updated_at (datetime): Timestamp of last update
+    """
     __tablename__ = 'biometric_metrics'
     
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey('users.id'), nullable=False)
-    timestamp = Column(DateTime, default=datetime.utcnow, nullable=False)
+    date = Column(DateTime, nullable=False)
+    weight_kg = Column(Float)
+    body_fat_pct = Column(Float)
+    hrv_ms = Column(Float)
+    resting_hr = Column(Float)
+    blood_glucose = Column(Float)
+    systolic_bp = Column(Float)
+    diastolic_bp = Column(Float)
+    provider = Column(String)
+    raw_data = Column(JSON, default=dict)
     
-    # Basic measurements
-    weight = Column(Float)  # in kg
-    body_fat_percentage = Column(Float)
-    muscle_mass = Column(Float)  # in kg
-    bone_mass = Column(Float)  # in kg
-    water_percentage = Column(Float)
-    
-    # Body measurements (cm)
-    waist = Column(Float)
-    chest = Column(Float)
-    hips = Column(Float)
-    biceps = Column(Float)
-    thighs = Column(Float)
-    
-    # Vital signs
-    resting_heart_rate = Column(Float)
-    blood_pressure_systolic = Column(Float)
-    blood_pressure_diastolic = Column(Float)
-    respiratory_rate = Column(Float)
-    body_temperature = Column(Float)
-    
-    # Blood metrics
-    glucose_level = Column(Float)
-    ketone_level = Column(Float)
-    cholesterol_hdl = Column(Float)
-    cholesterol_ldl = Column(Float)
-    triglycerides = Column(Float)
-    
-    # Other health markers
-    vo2_max = Column(Float)
-    hrv_score = Column(Float)
-    
-    # Relationships
-    user = relationship("User", back_populates="biometric_records")
+    user = relationship("User", back_populates="biometric_metrics")
 
 class MoodMetrics(Base, TimestampMixin):
+    """Model for storing mood and mental state metrics.
+    
+    This model captures subjective and objective measures of psychological
+    well-being and readiness, integrating data from various tracking methods.
+    
+    Attributes:
+        id (int): Primary key
+        user_id (int): Foreign key to user
+        date (datetime): Date of the mood record
+        mood_score (float): Overall mood score (0-100)
+        stress_level (float): Stress level measurement (0-100)
+        energy_level (float): Energy level measurement (0-100)
+        readiness_score (float): Overall readiness score (0-100)
+        notes (str): Additional notes or context
+        provider (str): Name of the data provider
+        raw_data (dict): Original provider data in JSON format
+        created_at (datetime): Timestamp of record creation
+        updated_at (datetime): Timestamp of last update
+    """
     __tablename__ = 'mood_metrics'
     
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey('users.id'), nullable=False)
-    timestamp = Column(DateTime, default=datetime.utcnow, nullable=False)
+    date = Column(DateTime, nullable=False)
+    mood_score = Column(Float)
+    stress_level = Column(Float)
+    energy_level = Column(Float)
+    readiness_score = Column(Float)
+    notes = Column(String)
+    provider = Column(String)
+    raw_data = Column(JSON, default=dict)
     
-    # Emotional state
-    mood_rating = Column(Integer)  # 1-10 scale
-    energy_level = Column(Integer)  # 1-10 scale
-    stress_level = Column(Integer)  # 1-10 scale
-    anxiety_level = Column(Integer)  # 1-10 scale
-    
-    # Mental state
-    focus_rating = Column(Integer)  # 1-10 scale
-    mental_clarity = Column(Integer)  # 1-10 scale
-    motivation_level = Column(Integer)  # 1-10 scale
-    
-    # Productivity
-    productivity_score = Column(Integer)  # 1-10 scale
-    flow_state_duration = Column(Float)  # in hours
-    
-    # Environmental factors
-    weather_condition = Column(String(50))
-    daylight_exposure = Column(Float)  # in hours
-    
-    # Notes
-    mood_notes = Column(String(500))
-    
-    # Relationships
-    user = relationship("User", back_populates="mood_records")
+    user = relationship("User", back_populates="mood_metrics")

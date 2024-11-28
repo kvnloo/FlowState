@@ -13,16 +13,48 @@ class ShimmerHealthProvider(HealthDataProvider):
         )
         self.endpoints = list(credentials.keys())
     
-    def get_sleep_data(self, start_date: datetime, end_date: Optional[datetime] = None) -> pd.DataFrame:
-        """Fetch normalized sleep data from all configured sources."""
+    async def get_sleep_data(self, start_date: datetime, end_date: Optional[datetime] = None) -> pd.DataFrame:
+        """Retrieve sleep metrics from the data source.
+        
+        Args:
+            start_date: Start of date range
+            end_date: Optional end of date range
+            
+        Returns:
+            DataFrame with normalized sleep metrics:
+                - timestamp: Time of measurement
+                - duration: Total sleep duration (minutes)
+                - deep_sleep: Deep sleep duration (minutes)
+                - rem_sleep: REM sleep duration (minutes)
+                - light_sleep: Light sleep duration (minutes)
+                - awake: Time awake (minutes)
+                - efficiency: Sleep efficiency (%)
+                - source: Data source
+        """
         return self.fetcher.get_sleep_data(
             endpoints=self.endpoints,
             start_date=start_date,
             end_date=end_date
         )
     
-    def get_activity_data(self, start_date: datetime, end_date: Optional[datetime] = None) -> pd.DataFrame:
-        """Fetch normalized activity data from all configured sources."""
+    async def get_activity_data(self, start_date: datetime, end_date: Optional[datetime] = None) -> pd.DataFrame:
+        """Retrieve activity metrics from the data source.
+        
+        Args:
+            start_date: Start of date range
+            end_date: Optional end of date range
+            
+        Returns:
+            DataFrame with normalized activity metrics:
+                - timestamp: Time of measurement
+                - type: Activity type
+                - duration: Duration (minutes)
+                - calories: Energy burned
+                - distance: Distance (meters)
+                - steps: Step count
+                - heart_rate: Average heart rate
+                - source: Data source
+        """
         # Get both physical activity and step count data
         activity_df = self.fetcher.get_activity_data(
             endpoints=self.endpoints,
@@ -47,20 +79,57 @@ class ShimmerHealthProvider(HealthDataProvider):
         
         return activity_df
     
-    def get_hrv_data(self, start_date: datetime, end_date: Optional[datetime] = None) -> pd.DataFrame:
-        """Fetch normalized HRV data from all configured sources."""
+    async def get_hrv_data(self, start_date: datetime, end_date: Optional[datetime] = None) -> pd.DataFrame:
+        """Retrieve heart rate variability data from the data source.
+        
+        Args:
+            start_date: Start of date range
+            end_date: Optional end of date range
+            
+        Returns:
+            DataFrame with normalized HRV metrics:
+                - timestamp: Time of measurement
+                - rmssd: Root mean square of successive differences
+                - sdnn: Standard deviation of NN intervals
+                - lf_hf_ratio: Low-frequency to high-frequency ratio
+                - heart_rate: Associated heart rate
+                - source: Data source
+        """
         return self.fetcher.get_hrv_data(
             endpoints=self.endpoints,
             start_date=start_date,
             end_date=end_date
         )
     
-    def get_readiness_data(self, start_date: datetime, end_date: Optional[datetime] = None) -> pd.DataFrame:
-        """Calculate readiness score using normalized data from all sources."""
+    async def get_readiness_data(self, start_date: datetime, end_date: Optional[datetime] = None) -> pd.DataFrame:
+        """Calculate readiness metrics from available data.
+        
+        This method should aggregate multiple health metrics to compute
+        readiness and recovery scores, potentially including:
+            - Sleep quality
+            - HRV trends
+            - Resting heart rate
+            - Activity levels
+            - Recovery time
+        
+        Args:
+            start_date: Start of date range
+            end_date: Optional end of date range
+            
+        Returns:
+            DataFrame with normalized readiness metrics:
+                - timestamp: Time of measurement
+                - readiness_score: Overall readiness (0-100)
+                - recovery_score: Recovery level (0-100)
+                - strain_score: Accumulated strain (0-100)
+                - sleep_score: Sleep quality contribution
+                - hrv_score: HRV contribution
+                - source: Data source
+        """
         # Fetch all required metrics
-        sleep_df = self.get_sleep_data(start_date, end_date)
-        activity_df = self.get_activity_data(start_date, end_date)
-        hrv_df = self.get_hrv_data(start_date, end_date)
+        sleep_df = await self.get_sleep_data(start_date, end_date)
+        activity_df = await self.get_activity_data(start_date, end_date)
+        hrv_df = await self.get_hrv_data(start_date, end_date)
         
         # Get heart rate data
         hr_df = self.fetcher.client.get_data(
@@ -126,3 +195,54 @@ class ShimmerHealthProvider(HealthDataProvider):
             })
         
         return pd.DataFrame(readiness_data)
+    
+    async def get_nutrition_data(self, start_date: datetime, end_date: Optional[datetime] = None) -> pd.DataFrame:
+        """Retrieve nutrition data from the data source.
+        
+        Args:
+            start_date: Start of date range
+            end_date: Optional end of date range
+            
+        Returns:
+            DataFrame with normalized nutrition metrics:
+                - timestamp: Time of measurement
+                - calories: Total calories
+                - protein: Protein (g)
+                - carbs: Carbohydrates (g)
+                - fat: Fat (g)
+                - fiber: Fiber (g)
+                - water: Water intake (ml)
+                - source: Data source
+        """
+        # TO DO: Implement nutrition data retrieval
+        pass
+    
+    def normalize_timestamp(self, timestamp: datetime) -> datetime:
+        """Convert timestamp to UTC datetime.
+        
+        Args:
+            timestamp: Input timestamp in any format
+            
+        Returns:
+            Normalized UTC datetime
+        """
+        if isinstance(timestamp, str):
+            timestamp = pd.to_datetime(timestamp)
+        return pd.Timestamp(timestamp).tz_localize(None)
+    
+    def normalize_duration(self, duration: float, unit: str = 'minutes') -> float:
+        """Convert duration to minutes.
+        
+        Args:
+            duration: Duration value
+            unit: Input unit ('seconds', 'minutes', 'hours')
+            
+        Returns:
+            Duration in minutes
+        """
+        conversions = {
+            'seconds': 1/60,
+            'minutes': 1,
+            'hours': 60
+        }
+        return float(duration) * conversions.get(unit, 1)

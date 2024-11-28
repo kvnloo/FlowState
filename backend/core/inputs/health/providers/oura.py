@@ -1,3 +1,71 @@
+"""Oura Ring Data Provider Adapter.
+
+This module implements a data provider adapter for the Oura Ring, enabling access
+to sleep, activity, and readiness data through the Oura Cloud API. It handles
+authentication, data retrieval, and normalization of various health metrics.
+
+Features:
+    - OAuth2 authentication
+    - Real-time data sync
+    - Detailed sleep analysis
+    - Activity tracking
+    - Readiness scoring
+    - Temperature tracking
+
+Data Categories:
+    1. Sleep Metrics
+       - Total sleep time
+       - Sleep stages (deep, light, REM)
+       - Sleep latency
+       - Sleep efficiency
+       - Resting heart rate
+       - Respiratory rate
+       - Body temperature
+       
+    2. Activity Metrics
+       - Daily movement
+       - Training frequency
+       - Training volume
+       - Recovery time
+       - Steps
+       - Calories burned
+       
+    3. Readiness Metrics
+       - Overall readiness
+       - Previous night score
+       - Sleep balance
+       - Previous day activity
+       - Activity balance
+       - Temperature
+       
+    4. Heart Rate
+       - Average HR
+       - HRV
+       - Resting HR
+       - Temperature deviation
+
+Authentication:
+    Oura requires OAuth2 authentication with the following scopes:
+    - personal
+    - daily
+    - heartrate
+    - workout
+    - session
+
+Example:
+    >>> adapter = OuraAdapter(
+    ...     credentials={
+    ...         'client_id': 'your-client-id',
+    ...         'client_secret': 'your-client-secret',
+    ...         'access_token': 'your-access-token'
+    ...     }
+    ... )
+    >>> sleep_data = await adapter.get_sleep_data(
+    ...     start_date=datetime.now() - timedelta(days=7),
+    ...     end_date=datetime.now()
+    ... )
+"""
+
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional
 import requests
