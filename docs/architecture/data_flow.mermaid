@@ -1,0 +1,87 @@
+graph TB
+    %% Input Sources
+    subgraph Inputs
+        EEG[EEG Data\n256 Hz, 4ch]
+        HRV[HRV Data\nContinuous]
+        Sleep[Sleep Metrics\nDaily]
+        Env[Environmental\nTemp/Light/Noise]
+        User[User Feedback\nPeriodic]
+    end
+
+    %% Real-time Processing
+    subgraph RealTime[Real-time Processing]
+        EEG_Proc[EEG Processing\nArtifact Rejection\nBand Powers]
+        State_Det[State Detection\nAlpha/Theta Ratio\nCoherence]
+        HRV_Proc[HRV Analysis\nCoherence\nStress]
+        Env_Proc[Environmental\nAnalysis]
+    end
+
+    %% Control Systems
+    subgraph Control[Control Systems]
+        Audio[Audio Generation\nBinaural Beats]
+        Visual[Visual Stimulation\nStrobe/Phase]
+        Env_Ctrl[Environmental\nControl]
+    end
+
+    %% Feedback Loops
+    subgraph Feedback[Feedback Loops]
+        Primary[Primary Loop\nEEG Based]
+        Secondary[Secondary Loop\nHRV/Recovery]
+        Tertiary[Tertiary Loop\nEnvironmental]
+    end
+
+    %% Storage & Analysis
+    subgraph Storage[Storage & Analysis]
+        Raw_Store[Raw Data Storage]
+        Processed[Processed Metrics]
+        ML_Features[ML Feature Store]
+    end
+
+    %% Offline Analysis
+    subgraph Offline[Offline Analysis]
+        Pattern[Pattern Analysis]
+        ML[Machine Learning]
+        Optimization[Parameter\nOptimization]
+    end
+
+    %% Connections
+    EEG --> EEG_Proc
+    HRV --> HRV_Proc
+    Sleep --> Raw_Store
+    Env --> Env_Proc
+    User --> Raw_Store
+
+    EEG_Proc --> State_Det
+    EEG_Proc --> Raw_Store
+    State_Det --> Primary
+    HRV_Proc --> Secondary
+    Env_Proc --> Tertiary
+
+    Primary --> Audio
+    Primary --> Visual
+    Secondary --> Audio
+    Tertiary --> Env_Ctrl
+
+    Raw_Store --> Pattern
+    Raw_Store --> ML_Features
+    ML_Features --> ML
+    Pattern --> Optimization
+    ML --> Optimization
+
+    %% Real-time Feedback
+    Audio --> EEG
+    Visual --> EEG
+    Env_Ctrl --> Env
+
+    %% Analysis Flow
+    Optimization --> |Update Parameters| Primary
+    Optimization --> |Update Parameters| Secondary
+    Optimization --> |Update Parameters| Tertiary
+
+    classDef primary fill:#f9f,stroke:#333,stroke-width:2px
+    classDef secondary fill:#bbf,stroke:#333,stroke-width:2px
+    classDef storage fill:#bfb,stroke:#333,stroke-width:2px
+    
+    class EEG,Primary primary
+    class HRV,Secondary secondary
+    class Raw_Store,Processed,ML_Features storage
