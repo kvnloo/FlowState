@@ -30,6 +30,12 @@ isort = "*"
 mypy = "*"
 flake8 = "*"
 pre-commit = "*"
+websockets = "*"
+scipy = "*"
+muselsl = "*"
+pylsl = "*"
+mne = "*"
+numba = "*"
 
 [dev-packages]
 ipython = "*"

@@ -1,18 +1,25 @@
 import { useEffect, useState } from 'react';
 import { MuseClient } from '../lib/museClient';
 import { EEGClient } from '../lib/eegClient';
+import { BinauralBeatsEngine } from '../lib/audioEngine';
 import { ConnectButton } from '../components/ConnectButton';
 import { WaveChart } from '../components/WaveChart';
 import { BrainwaveBanner } from '../components/BrainwaveBanner';
 import { FlowStateIndicator } from '../components/FlowStateIndicator';
 import { useBrainwaveStore } from '../store/brainwaveStore';
-import { Activity, Brain, Waves } from 'lucide-react';
+import { Activity, Brain, Waves, Volume2, VolumeX, Play, Pause } from 'lucide-react';
+
+type EntrainmentState = 'focus' | 'flow' | 'meditate';
 
 export function Dashboard() {
   const [museClient, setMuseClient] = useState<MuseClient | null>(null);
   const [eegClient, setEegClient] = useState<EEGClient | null>(null);
+  const [audioEngine] = useState(() => new BinauralBeatsEngine());
   const [alphaTheta, setAlphaTheta] = useState(0);
   const [signalQuality, setSignalQuality] = useState<{[key: string]: number}>({});
+  const [volume, setVolume] = useState(0.1);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [currentState, setCurrentState] = useState<EntrainmentState>('focus');
   const { delta, theta, alpha, beta, gamma, updateWaves } = useBrainwaveStore();
 
   const handleMuseConnect = async (client: MuseClient) => {
@@ -42,17 +49,56 @@ export function Dashboard() {
     }
   };
 
+  const handleStateChange = async (state: EntrainmentState) => {
+    if (isPlaying) {
+      await audioEngine.stop();
+    }
+    setCurrentState(state);
+    if (isPlaying) {
+      await startEntrainment(state);
+    }
+  };
+
+  const startEntrainment = async (state: EntrainmentState) => {
+    try {
+      const userState = {
+        fatigue: 0.5, // TODO: Calculate from EEG data
+        time_of_day: new Date().getHours(),
+      };
+      await audioEngine.start(state, userState);
+      setIsPlaying(true);
+    } catch (error) {
+      console.error('Failed to start entrainment:', error);
+    }
+  };
+
+  const stopEntrainment = async () => {
+    try {
+      await audioEngine.stop();
+      setIsPlaying(false);
+    } catch (error) {
+      console.error('Failed to stop entrainment:', error);
+    }
+  };
+
+  const handleVolumeChange = async (newVolume: number) => {
+    try {
+      await audioEngine.setVolume(newVolume);
+      setVolume(newVolume);
+    } catch (error) {
+      console.error('Failed to update volume:', error);
+    }
+  };
+
   useEffect(() => {
-    // Try to connect to backend on component mount
     handleBackendConnect();
-    
     return () => {
       museClient?.disconnect();
       eegClient?.disconnect();
+      audioEngine.stop();
     };
   }, []);
 
-  // Create an array of the last 10 readings for the banner
   const bannerData = Array.from({ length: 10 }, (_, i) => ({
     delta: delta[delta.length - 1 - i] || 0,
     theta: theta[theta.length - 1 - i] || 0,
@@ -98,18 +144,49 @@ export function Dashboard() {
 
         <div className="bg-white rounded-lg shadow-sm p-6">
           <h2 className="text-xl font-semibold mb-4 flex items-center">
-            <Brain className="w-5 h-5 mr-2" />
-            Flow State Analysis
+            <Waves className="w-5 h-5 mr-2" />
+            Neural Entrainment
           </h2>
-          <div className="space-y-4">
-            <p className="text-gray-600">
-              The Alpha/Theta ratio is a key indicator of your cognitive state:
-            </p>
-            <ul className="list-disc list-inside space-y-2 text-gray-600">
-              <li>Below 0.8: Mind wandering or unfocused</li>
-              <li>0.8 - 1.6: Focused attention</li>
-              <li>Above 1.6: Optimal flow state</li>
-            </ul>
+          
+          <div className="space-y-6">
+            <div className="flex gap-4">
+              {(['focus', 'flow', 'meditate'] as EntrainmentState[]).map((state) => (
+                <button
+                  key={state}
+                  onClick={() => handleStateChange(state)}
+                  className={`flex-1 px-4 py-2 rounded-lg capitalize transition-colors ${
+                    currentState === state
+                      ? 'bg-purple-600 text-white'
+                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                  }`}
+                >
+                  {state}
+                </button>
+              ))}
+            </div>
+
+            <div className="flex items-center gap-4">
+              <button
+                onClick={isPlaying ? stopEntrainment : () => startEntrainment(currentState)}
+                className="p-2 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-colors"
+              >
+                {isPlaying ? <Pause className="w-6 h-6" /> : <Play className="w-6 h-6" />}
+              </button>
+
+              <div className="flex-1 flex items-center gap-4">
+                <VolumeX className="w-5 h-5 text-gray-500" />
+                <input
+                  type="range"
+                  min="0"
+                  max="1"
+                  step="0.01"
+                  value={volume}
+                  onChange={(e) => handleVolumeChange(parseFloat(e.target.value))}
+                  className="flex-1"
+                />
+                <Volume2 className="w-5 h-5 text-gray-500" />
+              </div>
+            </div>
           </div>
         </div>
       </div>
