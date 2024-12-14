@@ -8,29 +8,9 @@ This directory contains the unified documentation for the FlowState project, cov
 
 1. Python dependencies:
 ```bash
-pip install sphinx sphinx-rtd-theme myst-parser sphinx-js
-```
-
-2. Node.js dependencies:
-```bash
-npm install -g jsdoc jsdoc-mermaid
-```
-
-### Building Locally
-
-To build all documentation:
-```bash
-make all
-```
-
-To build only Python documentation:
-```bash
-make html
-```
-
-To build only JavaScript documentation:
-```bash
-make js
+  python -m pip install --upgrade pip
+  pip install pipenv
+  pipenv install
 ```
 
 ### Viewing Documentation
@@ -59,3 +39,5 @@ After building, open `_build/html/index.html` in your browser to view the docume
 ## Automated Building
 
 Documentation is automatically built and deployed to GitHub Pages when changes are pushed to the main branch. See `.github/workflows/docs.yml` for details.
+
+[FlowState Docs](./_build/html/index.html)
