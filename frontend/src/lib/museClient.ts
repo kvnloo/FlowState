@@ -1,48 +1,107 @@
-export class MuseClient {
-  private device: BluetoothDevice | null = null;
-  private server: BluetoothRemoteGATTServer | null = null;
-  private eegCharacteristics: BluetoothRemoteGATTCharacteristic[] = [];
+interface MuseDevice {
+  name: string;
+  address: string;
+  rssi: number;
+}
 
-  async connect() {
+export class MuseClient {
+  private baseUrl = 'http://localhost:8000/api';
+  private isConnecting: boolean = false;
+  private isConnected: boolean = false;
+  private websocket: WebSocket | null = null;
+
+  async getDevices(): Promise<MuseDevice[]> {
     try {
-      this.device = await navigator.bluetooth.requestDevice({
-        filters: [{ namePrefix: 'Muse' }],
-        optionalServices: ['0000fe8d-0000-1000-8000-00805f9b34fb']
+      const response = await fetch(`${this.baseUrl}/devices`);
+      if (!response.ok) {
+        throw new Error('Failed to get devices');
+      }
+      const data = await response.json();
+      return data.devices;
+    } catch (error) {
+      console.error('Error getting devices:', error);
+      throw error;
+    }
+  }
+
+  async connect(address: string) {
+    if (this.isConnecting) {
+      throw new Error('Already attempting to connect');
+    }
+
+    try {
+      this.isConnecting = true;
+      console.log('Connecting to Muse device...');
+
+      // Connect to the device through backend
+      const response = await fetch(`${this.baseUrl}/connect/${address}`, {
+        method: 'POST'
       });
 
-      this.server = await this.device.gatt?.connect();
-      const service = await this.server?.getPrimaryService('0000fe8d-0000-1000-8000-00805f9b34fb');
-      
-      // Get EEG characteristics for all channels
-      const characteristics = await service?.getCharacteristics();
-      this.eegCharacteristics = characteristics?.filter(char => 
-        char.uuid.startsWith('273e000')) || [];
+      if (!response.ok) {
+        throw new Error('Failed to connect to device');
+      }
 
+      const data = await response.json();
+      if (!data.success) {
+        throw new Error('Device connection failed');
+      }
+
+      this.isConnected = true;
+      console.log('Successfully connected to Muse');
       return true;
     } catch (error) {
-      console.error('Connection failed:', error);
-      return false;
+      console.error('Connection error:', error);
+      this.cleanup();
+      throw error;
+    } finally {
+      this.isConnecting = false;
     }
   }
 
   async startMonitoring(callback: (data: number[]) => void) {
-    for (const characteristic of this.eegCharacteristics) {
-      await characteristic.startNotifications();
-      characteristic.addEventListener('characteristicvaluechanged', 
-        (event: Event) => {
-          const value = (event.target as BluetoothRemoteGATTCharacteristic).value;
-          if (value) {
-            const data = new Float32Array(value.buffer);
-            callback(Array.from(data));
-          }
+    if (!this.isConnected) {
+      throw new Error('Not connected to Muse device');
+    }
+
+    try {
+      console.log('Starting EEG monitoring...');
+      
+      // Connect to WebSocket for real-time data
+      this.websocket = new WebSocket('ws://localhost:8000/api/ws');
+      
+      this.websocket.onmessage = (event) => {
+        const data = JSON.parse(event.data);
+        if (data.band_powers) {
+          callback(Object.values(data.band_powers));
         }
-      );
+      };
+
+      this.websocket.onerror = (error) => {
+        console.error('WebSocket error:', error);
+        this.cleanup();
+      };
+
+      console.log('EEG monitoring started');
+    } catch (error) {
+      console.error('Error starting monitoring:', error);
+      throw error;
     }
   }
 
-  async disconnect() {
-    if (this.device?.gatt?.connected) {
-      await this.device.gatt.disconnect();
+  private cleanup() {
+    if (this.websocket) {
+      this.websocket.close();
+      this.websocket = null;
     }
+    this.isConnected = false;
+  }
+
+  async disconnect() {
+    this.cleanup();
+  }
+
+  getIsConnected() {
+    return this.isConnected;
   }
 }

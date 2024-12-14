@@ -37,6 +37,15 @@ pylsl = "*"
 mne = "*"
 numba = "*"
 
+# docs
+sphinx = "*"
+revitron-sphinx-theme = {git = "https://github.com/revitron/revitron-sphinx-theme.git"}
+sphinx-rtd-theme = "*"
+myst-parser = "*"
+sphinx-js = "*"
+sphinxcontrib-mermaid = "*"
+
+
 [dev-packages]
 ipython = "*"
 jupyter = "*"

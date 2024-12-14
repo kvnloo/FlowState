@@ -9,7 +9,7 @@
 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	
-		<title>Flow State Detector &mdash; FlowState 0.1.0 documentation</title>
+		<title>Health Tracking API &mdash; FlowState 0.1.0 documentation</title>
 	
 	
 	
@@ -38,7 +38,8 @@
 
 		
 		<link rel="index" title="Index" href="../../genindex.html" />
-		<link rel="search" title="Search" href="../../search.html" /> 
+		<link rel="search" title="Search" href="../../search.html" />
+		<link rel="prev" title="API Documentation" href="../index.html" /> 
 </head>
 <body class="wy-body-for-nav">
 
@@ -76,7 +77,7 @@
 						
 						
 							<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../development/index.html">Development Documentation</a><ul class="simple">
 </ul>
 </li>
@@ -108,32 +109,32 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../index.html">API Documentation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="health_tracking.html">Health Tracking API</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="health_tracking.html#data-models">Data Models</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="health_tracking.html#user">User</a></li>
-<li class="toctree-l4"><a class="reference internal" href="health_tracking.html#sleepmetrics">SleepMetrics</a></li>
-<li class="toctree-l4"><a class="reference internal" href="health_tracking.html#nutritionmetrics">NutritionMetrics</a></li>
-<li class="toctree-l4"><a class="reference internal" href="health_tracking.html#exercisemetrics">ExerciseMetrics</a></li>
-<li class="toctree-l4"><a class="reference internal" href="health_tracking.html#biometricmetrics">BiometricMetrics</a></li>
-<li class="toctree-l4"><a class="reference internal" href="health_tracking.html#moodmetrics">MoodMetrics</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">API Documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Health Tracking API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#data-models">Data Models</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#user">User</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#sleepmetrics">SleepMetrics</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#nutritionmetrics">NutritionMetrics</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#exercisemetrics">ExerciseMetrics</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#biometricmetrics">BiometricMetrics</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#moodmetrics">MoodMetrics</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="health_tracking.html#graphql-api">GraphQL API</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="health_tracking.html#queries">Queries</a></li>
-<li class="toctree-l4"><a class="reference internal" href="health_tracking.html#mutations">Mutations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#graphql-api">GraphQL API</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#queries">Queries</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mutations">Mutations</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="health_tracking.html#data-providers">Data Providers</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="health_tracking.html#base-provider">Base Provider</a></li>
-<li class="toctree-l4"><a class="reference internal" href="health_tracking.html#apple-health">Apple Health</a></li>
-<li class="toctree-l4"><a class="reference internal" href="health_tracking.html#google-fit">Google Fit</a></li>
-<li class="toctree-l4"><a class="reference internal" href="health_tracking.html#myfitnesspal">MyFitnessPal</a></li>
-<li class="toctree-l4"><a class="reference internal" href="health_tracking.html#oura">Oura</a></li>
-<li class="toctree-l4"><a class="reference internal" href="health_tracking.html#whoop">Whoop</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#data-providers">Data Providers</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#base-provider">Base Provider</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#apple-health">Apple Health</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#google-fit">Google Fit</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#myfitnesspal">MyFitnessPal</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#oura">Oura</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#whoop">Whoop</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="health_tracking.html#sync-service">Sync Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sync-service">Sync Service</a></li>
 </ul>
 </li>
 </ul>
@@ -173,7 +174,9 @@
 			
 				<li><a href="../../index.html">FlowState</a> ⁄&nbsp;</li>
 				
-				<li><a href="">Flow State Detector</a></li>
+					<li><a href="../index.html">API Documentation</a> ⁄&nbsp;</li>
+				
+				<li><a href="">Health Tracking API</a></li>
 			
 		
 		
@@ -187,51 +190,63 @@
 					<div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
 					 <div itemprop="articleBody">
 						
-  <section id="flow-state-detector">
-<h1>Flow State Detector<a class="headerlink" href="#flow-state-detector" title="Link to this heading">¶</a></h1>
-<p>The Flow State Detector module provides real-time detection and analysis of flow states
-based on neural activity patterns and biometric data.</p>
-<section id="key-features">
-<h2>Key Features<a class="headerlink" href="#key-features" title="Link to this heading">¶</a></h2>
-<ul class="simple">
-<li><p>Real-time flow state detection</p></li>
-<li><p>Multi-modal data integration</p></li>
-<li><p>Adaptive thresholding</p></li>
-<li><p>State transition tracking</p></li>
-<li><p>Confidence scoring</p></li>
-</ul>
+  <section id="health-tracking-api">
+<h1>Health Tracking API<a class="headerlink" href="#health-tracking-api" title="Link to this heading">¶</a></h1>
+<p>This section documents the Health Tracking API components.</p>
+<section id="data-models">
+<h2>Data Models<a class="headerlink" href="#data-models" title="Link to this heading">¶</a></h2>
+<section id="user">
+<span id="module-backend.models.health_metrics"></span><h3>User<a class="headerlink" href="#user" title="Link to this heading">¶</a></h3>
 </section>
-<section id="classes">
-<h2>Classes<a class="headerlink" href="#classes" title="Link to this heading">¶</a></h2>
-<section id="flowstate">
-<h3>FlowState<a class="headerlink" href="#flowstate" title="Link to this heading">¶</a></h3>
+<section id="sleepmetrics">
+<h3>SleepMetrics<a class="headerlink" href="#sleepmetrics" title="Link to this heading">¶</a></h3>
 </section>
-<section id="flowfeatures">
-<h3>FlowFeatures<a class="headerlink" href="#flowfeatures" title="Link to this heading">¶</a></h3>
+<section id="nutritionmetrics">
+<h3>NutritionMetrics<a class="headerlink" href="#nutritionmetrics" title="Link to this heading">¶</a></h3>
 </section>
-<section id="flowmetrics">
-<h3>FlowMetrics<a class="headerlink" href="#flowmetrics" title="Link to this heading">¶</a></h3>
+<section id="exercisemetrics">
+<h3>ExerciseMetrics<a class="headerlink" href="#exercisemetrics" title="Link to this heading">¶</a></h3>
 </section>
-<section id="flowstatedetector">
-<h3>FlowStateDetector<a class="headerlink" href="#flowstatedetector" title="Link to this heading">¶</a></h3>
+<section id="biometricmetrics">
+<h3>BiometricMetrics<a class="headerlink" href="#biometricmetrics" title="Link to this heading">¶</a></h3>
+</section>
+<section id="moodmetrics">
+<h3>MoodMetrics<a class="headerlink" href="#moodmetrics" title="Link to this heading">¶</a></h3>
 </section>
 </section>
-<section id="example-usage">
-<h2>Example Usage<a class="headerlink" href="#example-usage" title="Link to this heading">¶</a></h2>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">flow_state_detector</span> <span class="kn">import</span> <span class="n">FlowStateDetector</span>
-
-<span class="c1"># Initialize the detector</span>
-<span class="n">detector</span> <span class="o">=</span> <span class="n">FlowStateDetector</span><span class="p">()</span>
-
-<span class="c1"># Process real-time data</span>
-<span class="n">flow_state</span> <span class="o">=</span> <span class="n">detector</span><span class="o">.</span><span class="n">process_data</span><span class="p">(</span><span class="n">eeg_data</span><span class="p">,</span> <span class="n">biometric_data</span><span class="p">)</span>
-
-<span class="c1"># Get flow state probability</span>
-<span class="n">probability</span> <span class="o">=</span> <span class="n">flow_state</span><span class="o">.</span><span class="n">probability</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Flow state probability: </span><span class="si">{</span><span class="n">probability</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
+<section id="graphql-api">
+<h2>GraphQL API<a class="headerlink" href="#graphql-api" title="Link to this heading">¶</a></h2>
+<section id="queries">
+<span id="module-backend.api.health.schema"></span><h3>Queries<a class="headerlink" href="#queries" title="Link to this heading">¶</a></h3>
 </section>
+<section id="mutations">
+<h3>Mutations<a class="headerlink" href="#mutations" title="Link to this heading">¶</a></h3>
+</section>
+</section>
+<section id="data-providers">
+<h2>Data Providers<a class="headerlink" href="#data-providers" title="Link to this heading">¶</a></h2>
+<section id="base-provider">
+<span id="module-backend.core.inputs.health.providers"></span><h3>Base Provider<a class="headerlink" href="#base-provider" title="Link to this heading">¶</a></h3>
+</section>
+<section id="apple-health">
+<h3>Apple Health<a class="headerlink" href="#apple-health" title="Link to this heading">¶</a></h3>
+</section>
+<section id="google-fit">
+<h3>Google Fit<a class="headerlink" href="#google-fit" title="Link to this heading">¶</a></h3>
+</section>
+<section id="myfitnesspal">
+<h3>MyFitnessPal<a class="headerlink" href="#myfitnesspal" title="Link to this heading">¶</a></h3>
+</section>
+<section id="oura">
+<h3>Oura<a class="headerlink" href="#oura" title="Link to this heading">¶</a></h3>
+</section>
+<section id="whoop">
+<h3>Whoop<a class="headerlink" href="#whoop" title="Link to this heading">¶</a></h3>
+</section>
+</section>
+<section id="sync-service">
+<h2>Sync Service<a class="headerlink" href="#sync-service" title="Link to this heading">¶</a></h2>
+<span class="target" id="module-backend.core.inputs.health.sync_service"></span></section>
 </section>
 
 
