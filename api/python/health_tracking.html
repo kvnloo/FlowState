@@ -1,0 +1,299 @@
+
+	
+
+<!DOCTYPE html>
+<html class="writer-html5 dark" lang="en" >
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+		<title>Health Tracking API &mdash; FlowState 0.1.0 documentation</title>
+	
+	
+	
+	<link rel="stylesheet" href="../../_static/default" type="text/css" />
+	<link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+	<link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+	<link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+
+	
+	
+	
+	
+
+	
+	<!--[if lt IE 9]>
+		<script src="../../_static/js/html5shiv.min.js"></script>
+	<![endif]-->
+	
+		
+			<script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+				<script src="../../_static/documentation_options.js?v=01f34227"></script>
+				<script src="../../_static/doctools.js?v=9bcbadda"></script>
+				<script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+		
+		<script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+		
+		<link rel="index" title="Index" href="../../genindex.html" />
+		<link rel="search" title="Search" href="../../search.html" />
+		<link rel="prev" title="API Documentation" href="../index.html" /> 
+</head>
+<body class="wy-body-for-nav">
+
+
+	 
+	<div class="wy-grid-for-nav">
+		
+		<nav data-toggle="wy-nav-shift" class="wy-nav-side">
+			<div class="wy-side-scroll">
+				<div class="wy-side-nav-search">
+					
+						<div class="brand">
+							<a href="../../index.html">
+							
+								FlowState
+							
+							</a>
+						</div>
+						
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+					
+				</div>
+				
+				<div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+					
+						
+						
+							
+						
+						
+							<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../development/index.html">Development Documentation</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../architecture/index.html">Architecture Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../architecture/health_tracking.html">Health Tracking System</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../architecture/health_tracking.html#system-components">System Components</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../architecture/health_tracking.html#database-schema">1. Database Schema</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../architecture/health_tracking.html#graphql-api">2. GraphQL API</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../architecture/health_tracking.html#data-providers">3. Data Providers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../architecture/health_tracking.html#synchronization-service">4. Synchronization Service</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../architecture/health_tracking.html#data-flow">Data Flow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../architecture/health_tracking.html#security-considerations">Security Considerations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../architecture/health_tracking.html#error-handling">Error Handling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../architecture/health_tracking.html#future-extensions">Future Extensions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../research/index.html">Research Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../research/findings/index.html">Research Findings</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../research/findings/index.html#algorithm-development">Algorithm Development</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../research/findings/index.html#key-findings">Key Findings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../research/findings/index.html#future-research">Future Research</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">API Documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Health Tracking API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#data-models">Data Models</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#user">User</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#sleepmetrics">SleepMetrics</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#nutritionmetrics">NutritionMetrics</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#exercisemetrics">ExerciseMetrics</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#biometricmetrics">BiometricMetrics</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#moodmetrics">MoodMetrics</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#graphql-api">GraphQL API</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#queries">Queries</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mutations">Mutations</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#data-providers">Data Providers</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#base-provider">Base Provider</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#apple-health">Apple Health</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#google-fit">Google Fit</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#myfitnesspal">MyFitnessPal</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#oura">Oura</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#whoop">Whoop</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#sync-service">Sync Service</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+						
+					
+				</div>
+				
+			</div>
+		</nav>
+
+		<section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+			
+			<nav class="wy-nav-top" aria-label="top navigation">
+			
+				<i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+				<a href="../../index.html">
+					
+						FlowState
+					
+				</a>
+			
+			</nav>
+
+
+			<div class="wy-nav-content">
+				
+				<div class="rst-content">
+				
+					<div role="navigation" aria-label="breadcrumbs navigation">
+
+	<ul class="wy-breadcrumbs">
+		
+			
+				<li><a href="../../index.html">FlowState</a> ⁄&nbsp;</li>
+				
+					<li><a href="../index.html">API Documentation</a> ⁄&nbsp;</li>
+				
+				<li><a href="">Health Tracking API</a></li>
+			
+		
+		
+			<li class="wy-breadcrumbs-aside">
+			
+			</li>
+		
+	</ul>
+
+</div>
+					<div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+					 <div itemprop="articleBody">
+						
+  <section id="health-tracking-api">
+<h1>Health Tracking API<a class="headerlink" href="#health-tracking-api" title="Link to this heading">¶</a></h1>
+<p>This section documents the Health Tracking API components.</p>
+<section id="data-models">
+<h2>Data Models<a class="headerlink" href="#data-models" title="Link to this heading">¶</a></h2>
+<section id="user">
+<span id="module-backend.models.health_metrics"></span><h3>User<a class="headerlink" href="#user" title="Link to this heading">¶</a></h3>
+</section>
+<section id="sleepmetrics">
+<h3>SleepMetrics<a class="headerlink" href="#sleepmetrics" title="Link to this heading">¶</a></h3>
+</section>
+<section id="nutritionmetrics">
+<h3>NutritionMetrics<a class="headerlink" href="#nutritionmetrics" title="Link to this heading">¶</a></h3>
+</section>
+<section id="exercisemetrics">
+<h3>ExerciseMetrics<a class="headerlink" href="#exercisemetrics" title="Link to this heading">¶</a></h3>
+</section>
+<section id="biometricmetrics">
+<h3>BiometricMetrics<a class="headerlink" href="#biometricmetrics" title="Link to this heading">¶</a></h3>
+</section>
+<section id="moodmetrics">
+<h3>MoodMetrics<a class="headerlink" href="#moodmetrics" title="Link to this heading">¶</a></h3>
+</section>
+</section>
+<section id="graphql-api">
+<h2>GraphQL API<a class="headerlink" href="#graphql-api" title="Link to this heading">¶</a></h2>
+<section id="queries">
+<span id="module-backend.api.health.schema"></span><h3>Queries<a class="headerlink" href="#queries" title="Link to this heading">¶</a></h3>
+</section>
+<section id="mutations">
+<h3>Mutations<a class="headerlink" href="#mutations" title="Link to this heading">¶</a></h3>
+</section>
+</section>
+<section id="data-providers">
+<h2>Data Providers<a class="headerlink" href="#data-providers" title="Link to this heading">¶</a></h2>
+<section id="base-provider">
+<span id="module-backend.core.inputs.health.providers"></span><h3>Base Provider<a class="headerlink" href="#base-provider" title="Link to this heading">¶</a></h3>
+</section>
+<section id="apple-health">
+<h3>Apple Health<a class="headerlink" href="#apple-health" title="Link to this heading">¶</a></h3>
+</section>
+<section id="google-fit">
+<h3>Google Fit<a class="headerlink" href="#google-fit" title="Link to this heading">¶</a></h3>
+</section>
+<section id="myfitnesspal">
+<h3>MyFitnessPal<a class="headerlink" href="#myfitnesspal" title="Link to this heading">¶</a></h3>
+</section>
+<section id="oura">
+<h3>Oura<a class="headerlink" href="#oura" title="Link to this heading">¶</a></h3>
+</section>
+<section id="whoop">
+<h3>Whoop<a class="headerlink" href="#whoop" title="Link to this heading">¶</a></h3>
+</section>
+</section>
+<section id="sync-service">
+<h2>Sync Service<a class="headerlink" href="#sync-service" title="Link to this heading">¶</a></h2>
+<span class="target" id="module-backend.core.inputs.health.sync_service"></span></section>
+</section>
+
+
+					 </div>
+					 
+					</div>
+					<footer>
+  
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2024, FlowState Team
+	  <br>
+      
+      
+      
+      Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+      
+      <a href="https://github.com/revitron/revitron-sphinx-theme">theme</a>
+      
+      provided by <a href="https://github.com/revitron">Revitron</a>.
+
+    </p>
+  </div> 
+
+</footer>
+
+				</div>
+			</div>
+
+		</section>
+
+	</div>
+	
+
+	<script type="text/javascript">
+			jQuery(function () {
+					SphinxRtdTheme.Navigation.enable(true);
+			});
+	</script>
+
+	
+	
+		
+	 
+
+ 
+</body>	
+</html>

@@ -1,0 +1,716 @@
+
+	
+
+<!DOCTYPE html>
+<html class="writer-html5 dark" lang="en" >
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+		<title>FlowState API Integration Plan &mdash; FlowState 0.1.0 documentation</title>
+	
+	
+	
+	<link rel="stylesheet" href="../_static/default" type="text/css" />
+	<link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+	<link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+	<link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+
+	
+	
+	
+	
+
+	
+	<!--[if lt IE 9]>
+		<script src="../_static/js/html5shiv.min.js"></script>
+	<![endif]-->
+	
+		
+			<script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+				<script src="../_static/documentation_options.js?v=01f34227"></script>
+				<script src="../_static/doctools.js?v=9bcbadda"></script>
+				<script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+		
+		<script type="text/javascript" src="../_static/js/theme.js"></script>
+
+		
+		<link rel="index" title="Index" href="../genindex.html" />
+		<link rel="search" title="Search" href="../search.html" /> 
+</head>
+<body class="wy-body-for-nav">
+
+
+	 
+	<div class="wy-grid-for-nav">
+		
+		<nav data-toggle="wy-nav-shift" class="wy-nav-side">
+			<div class="wy-side-scroll">
+				<div class="wy-side-nav-search">
+					
+						<div class="brand">
+							<a href="../index.html">
+							
+								FlowState
+							
+							</a>
+						</div>
+						
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+					
+				</div>
+				
+				<div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+					
+						
+						
+							
+						
+						
+							<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="llm_workflow.html">LLM-Based Development Workflow</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="llm_workflow.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="llm_workflow.html#workflow-stages">Workflow Stages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="llm_workflow.html#ideation-and-planning">1. Ideation and Planning</a></li>
+<li class="toctree-l3"><a class="reference internal" href="llm_workflow.html#prompt-engineering">2. Prompt Engineering</a></li>
+<li class="toctree-l3"><a class="reference internal" href="llm_workflow.html#code-generation">3. Code Generation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="llm_workflow.html#testing-and-refinement">4. Testing and Refinement</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="llm_workflow.html#best-practices">Best Practices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="llm_workflow.html#integration-with-priority-queue">Integration with Priority Queue</a></li>
+<li class="toctree-l2"><a class="reference internal" href="llm_workflow.html#templates">Templates</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="llm_workflow.html#feature-development-template">Feature Development Template</a></li>
+<li class="toctree-l3"><a class="reference internal" href="llm_workflow.html#debugging-template">Debugging Template</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="llm_workflow.html#workflow-optimization">Workflow Optimization</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture/system_overview.html">System Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../architecture/system_overview.html#core-components">Core Components</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../architecture/system_overview.html#key-modules">Key Modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../architecture/system_overview.html#technical-specifications">Technical Specifications</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../architecture/system_overview.html#dependencies-and-integrations">Dependencies and Integrations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../architecture/system_overview.html#security-considerations">Security Considerations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../architecture/system_overview.html#environmental-context">Environmental Context</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture/flow_optimization.html">Flow State Optimization</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../architecture/flow_optimization.html#core-design-principles">Core Design Principles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../architecture/flow_optimization.html#flow-state-characteristics">Flow State Characteristics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../architecture/flow_optimization.html#optimization-strategy">Optimization Strategy</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../research/index.html">Research Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../research/findings/index.html">Research Findings</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../research/findings/index.html#algorithm-development">Algorithm Development</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../research/findings/optimization_algorithms.html">Flow State Optimization Algorithm</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../research/findings/algorithm_design.html"><strong>1. Key Variables to Consider</strong></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../research/findings/algorithm_design.html#algorithm-design"><strong>2. Algorithm Design</strong></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../research/findings/algorithm_design.html#implementation-features"><strong>3. Implementation Features</strong></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../research/findings/algorithm_design.html#enhancing-intrinsic-feel"><strong>4. Enhancing Intrinsic Feel</strong></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../research/findings/algorithm_design.html#challenges-and-future-directions"><strong>5. Challenges and Future Directions</strong></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../research/findings/index.html#key-findings">Key Findings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../research/findings/index.html#future-research">Future Research</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../api/index.html">API Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../api/python/index.html">Python API Reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api/python/index.html#core-systems">Core Systems</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../api/python/index.html#flow-systems">Flow Systems</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/python/flow/chaos_system.html">Chaos System</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../api/python/index.html#research-analysis">Research &amp; Analysis</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../api/python/index.html#biometric-integration">Biometric Integration</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../api/python/index.html#hardware-interface">Hardware Interface</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../api/python/index.html#utilities">Utilities</a><ul class="simple">
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="llm_workflow.html">LLM-Based Development Workflow</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="llm_workflow.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="llm_workflow.html#workflow-stages">Workflow Stages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="llm_workflow.html#ideation-and-planning">1. Ideation and Planning</a></li>
+<li class="toctree-l3"><a class="reference internal" href="llm_workflow.html#prompt-engineering">2. Prompt Engineering</a></li>
+<li class="toctree-l3"><a class="reference internal" href="llm_workflow.html#code-generation">3. Code Generation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="llm_workflow.html#testing-and-refinement">4. Testing and Refinement</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="llm_workflow.html#best-practices">Best Practices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="llm_workflow.html#integration-with-priority-queue">Integration with Priority Queue</a></li>
+<li class="toctree-l2"><a class="reference internal" href="llm_workflow.html#templates">Templates</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="llm_workflow.html#feature-development-template">Feature Development Template</a></li>
+<li class="toctree-l3"><a class="reference internal" href="llm_workflow.html#debugging-template">Debugging Template</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="llm_workflow.html#workflow-optimization">Workflow Optimization</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="priority_queue.html">FlowState Feature Priority Queue</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="priority_queue.html#core-philosophy">Core Philosophy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="priority_queue.html#priority-1-core-flow-triggers-immediate-impact">Priority 1: Core Flow Triggers 🌊 (Immediate Impact)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="priority_queue.html#entropy-based-flow-detection">1.1 Entropy-Based Flow Detection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="priority_queue.html#advanced-brainwave-entrainment-engine">1.2 Advanced Brainwave Entrainment Engine</a></li>
+<li class="toctree-l3"><a class="reference internal" href="priority_queue.html#cognitive-load-optimizer">1.3 Cognitive Load Optimizer</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="priority_queue.html#priority-2-neural-synchronization-high-impact">Priority 2: Neural Synchronization 🧠 (High Impact)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="priority_queue.html#cross-hemisphere-synchronization">2.1 Cross-Hemisphere Synchronization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="priority_queue.html#attention-density-maximizer">2.2 Attention Density Maximizer</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="priority_queue.html#priority-3-state-maintenance-medium-high-impact">Priority 3: State Maintenance 🎯 (Medium-High Impact)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="priority_queue.html#flow-state-stability-system">3.1 Flow State Stability System</a></li>
+<li class="toctree-l3"><a class="reference internal" href="priority_queue.html#recovery-and-integration">3.2 Recovery and Integration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="priority_queue.html#priority-4-environmental-optimization-medium-impact">Priority 4: Environmental Optimization 🌟 (Medium Impact)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="priority_queue.html#circadian-rhythm-synchronization">4.1 Circadian Rhythm Synchronization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="priority_queue.html#environmental-control-system">4.2 Environmental Control System</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="priority_queue.html#priority-5-long-term-optimization-foundation-building">Priority 5: Long-term Optimization 📈 (Foundation Building)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="priority_queue.html#machine-learning-flow-predictor">5.1 Machine Learning Flow Predictor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="priority_queue.html#flow-state-analytics">5.2 Flow State Analytics</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="priority_queue.html#technical-dependencies-and-integration-points">Technical Dependencies and Integration Points</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="priority_queue.html#critical-systems-integration">Critical Systems Integration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="priority_queue.html#key-performance-indicators">Key Performance Indicators</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="priority_queue.html#implementation-notes">Implementation Notes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="priority_queue.html#research-foundations">Research Foundations</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../architecture/system_overview.html">System Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../architecture/system_overview.html#core-components">Core Components</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../architecture/system_overview.html#key-modules">Key Modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../architecture/system_overview.html#technical-specifications">Technical Specifications</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../architecture/system_overview.html#dependencies-and-integrations">Dependencies and Integrations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../architecture/system_overview.html#security-considerations">Security Considerations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../architecture/system_overview.html#environmental-context">Environmental Context</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture/flow_optimization.html">Flow State Optimization</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../architecture/flow_optimization.html#core-design-principles">Core Design Principles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../architecture/flow_optimization.html#flow-state-characteristics">Flow State Characteristics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../architecture/flow_optimization.html#optimization-strategy">Optimization Strategy</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture/quantum.html">Quantum Neurofeedback Algorithm Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../architecture/quantum.html#features">Features</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../architecture/quantum.html#classification-and-pattern-recognition">1. Classification and Pattern Recognition</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../architecture/quantum.html#adaptive-learning-and-optimization">2. Adaptive Learning and Optimization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../architecture/quantum.html#signal-preprocessing">3. Signal Preprocessing</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../architecture/quantum.html#getting-started">Getting Started</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../architecture/quantum.html#prerequisites">Prerequisites</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../architecture/quantum.html#setup-instructions">Setup Instructions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../architecture/quantum.html#terraform">Terraform</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../architecture/quantum.html#python-scripts">Python Scripts</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../architecture/quantum.html#future-work">Future Work</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../research/findings/index.html">Research Findings</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../research/findings/index.html#algorithm-development">Algorithm Development</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../research/findings/optimization_algorithms.html">Flow State Optimization Algorithm</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../research/findings/optimization_algorithms.html#phase-1-state-assessment">Phase 1: State Assessment</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../research/findings/optimization_algorithms.html#phase-2-intervention-planning">Phase 2: Intervention Planning</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../research/findings/optimization_algorithms.html#phase-3-real-time-adaptation">Phase 3: Real-time Adaptation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../research/findings/optimization_algorithms.html#phase-4-machine-learning-integration">Phase 4: Machine Learning Integration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../research/findings/optimization_algorithms.html#phase-5-personalization-layer">Phase 5: Personalization Layer</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../research/findings/algorithm_design.html"><strong>1. Key Variables to Consider</strong></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../research/findings/algorithm_design.html#physiological-metrics"><strong>Physiological Metrics:</strong></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../research/findings/algorithm_design.html#behavioral-and-environmental-triggers"><strong>Behavioral and Environmental Triggers:</strong></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../research/findings/algorithm_design.html#psychological-states"><strong>Psychological States:</strong></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../research/findings/algorithm_design.html#algorithm-design"><strong>2. Algorithm Design</strong></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../research/findings/algorithm_design.html#layer-1-input-data-collection"><strong>Layer 1: Input Data Collection</strong></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../research/findings/algorithm_design.html#layer-2-adaptive-control-loop"><strong>Layer 2: Adaptive Control Loop</strong></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../research/findings/algorithm_design.html#layer-3-machine-learning-optimization"><strong>Layer 3: Machine Learning Optimization</strong></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../research/findings/algorithm_design.html#implementation-features"><strong>3. Implementation Features</strong></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../research/findings/algorithm_design.html#user-feedback-interface"><strong>User Feedback Interface:</strong></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../research/findings/algorithm_design.html#flow-state-calibration-protocol"><strong>Flow State Calibration Protocol:</strong></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../research/findings/algorithm_design.html#self-optimization-through-ml"><strong>Self-Optimization Through ML:</strong></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../research/findings/algorithm_design.html#enhancing-intrinsic-feel"><strong>4. Enhancing Intrinsic Feel</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../research/findings/algorithm_design.html#challenges-and-future-directions"><strong>5. Challenges and Future Directions</strong></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../research/findings/index.html#key-findings">Key Findings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../research/findings/index.html#future-research">Future Research</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api/index.html">API Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../api/python/index.html">Python API Reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api/python/index.html#core-systems">Core Systems</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../api/python/index.html#flow-systems">Flow Systems</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/python/flow/chaos_system.html">Chaos System</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../api/python/index.html#research-analysis">Research &amp; Analysis</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../api/python/index.html#biometric-integration">Biometric Integration</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../api/python/index.html#hardware-interface">Hardware Interface</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../api/python/index.html#utilities">Utilities</a><ul class="simple">
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+						
+					
+				</div>
+				
+			</div>
+		</nav>
+
+		<section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+			
+			<nav class="wy-nav-top" aria-label="top navigation">
+			
+				<i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+				<a href="../index.html">
+					
+						FlowState
+					
+				</a>
+			
+			</nav>
+
+
+			<div class="wy-nav-content">
+				
+				<div class="rst-content">
+				
+					<div role="navigation" aria-label="breadcrumbs navigation">
+
+	<ul class="wy-breadcrumbs">
+		
+			
+				<li><a href="../index.html">FlowState</a> ⁄&nbsp;</li>
+				
+				<li><a href="">FlowState API Integration Plan</a></li>
+			
+		
+		
+			<li class="wy-breadcrumbs-aside">
+			
+			</li>
+		
+	</ul>
+
+</div>
+					<div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+					 <div itemprop="articleBody">
+						
+  <section class="tex2jax_ignore mathjax_ignore" id="flowstate-api-integration-plan">
+<h1>FlowState API Integration Plan<a class="headerlink" href="#flowstate-api-integration-plan" title="Link to this heading">¶</a></h1>
+<section id="current-implementation-status">
+<h2>Current Implementation Status<a class="headerlink" href="#current-implementation-status" title="Link to this heading">¶</a></h2>
+<section id="implemented-features">
+<h3>Implemented Features<a class="headerlink" href="#implemented-features" title="Link to this heading">¶</a></h3>
+<ol class="arabic simple">
+<li><p><strong>EEG Processing</strong></p>
+<ul class="simple">
+<li><p>Muse Headband integration</p></li>
+<li><p>Real-time band power analysis</p></li>
+<li><p>Flow state detection</p></li>
+<li><p>Neural entrainment optimization</p></li>
+</ul>
+</li>
+<li><p><strong>Audio Processing</strong></p>
+<ul class="simple">
+<li><p>Binaural beat generation</p></li>
+<li><p>Adaptive frequency modulation</p></li>
+<li><p>Real-time audio engine</p></li>
+</ul>
+</li>
+<li><p><strong>Visual Stimulation</strong></p>
+<ul class="simple">
+<li><p>Strobe glasses control</p></li>
+<li><p>Frequency adaptation</p></li>
+<li><p>Duty cycle optimization</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="missing-features">
+<h3>Missing Features<a class="headerlink" href="#missing-features" title="Link to this heading">¶</a></h3>
+<ol class="arabic simple">
+<li><p><strong>Biometric Data</strong></p>
+<ul class="simple">
+<li><p>Heart rate monitoring</p></li>
+<li><p>HRV analysis</p></li>
+<li><p>Sleep tracking</p></li>
+<li><p>Circadian rhythm analysis</p></li>
+</ul>
+</li>
+<li><p><strong>Eye Tracking</strong></p>
+<ul class="simple">
+<li><p>Gaze analysis</p></li>
+<li><p>Visual attention metrics</p></li>
+<li><p>Strobe synchronization</p></li>
+</ul>
+</li>
+</ol>
+</section>
+</section>
+<section id="api-integration-plan">
+<h2>API Integration Plan<a class="headerlink" href="#api-integration-plan" title="Link to this heading">¶</a></h2>
+<section id="health-data-apis">
+<h3>1. Health Data APIs<a class="headerlink" href="#health-data-apis" title="Link to this heading">¶</a></h3>
+<section id="apple-healthkit">
+<h4>Apple HealthKit<a class="headerlink" href="#apple-healthkit" title="Link to this heading">¶</a></h4>
+<ul>
+<li><p><strong>Purpose:</strong> Primary health data source for iOS users</p></li>
+<li><p><strong>Data Points:</strong></p>
+<ul class="simple">
+<li><p>Sleep metrics (duration, quality, phases)</p></li>
+<li><p>Heart rate history</p></li>
+<li><p>Activity levels</p></li>
+<li><p>Step count</p></li>
+<li><p>Blood oxygen</p></li>
+</ul>
+</li>
+<li><p><strong>Implementation:</strong></p>
+<div class="highlight-swift notranslate"><div class="highlight"><pre><span></span><span class="n">HealthKit</span> <span class="n">permissions</span><span class="p">:</span>
+<span class="o">-</span> <span class="n">Sleep</span> <span class="n">analysis</span>
+<span class="o">-</span> <span class="n">Heart</span> <span class="n">rate</span>
+<span class="o">-</span> <span class="n">Heart</span> <span class="n">rate</span> <span class="n">variability</span>
+<span class="o">-</span> <span class="n">Respiratory</span> <span class="n">rate</span>
+<span class="o">-</span> <span class="n">Activity</span>
+<span class="o">-</span> <span class="n">Steps</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+<section id="google-fit">
+<h4>Google Fit<a class="headerlink" href="#google-fit" title="Link to this heading">¶</a></h4>
+<ul>
+<li><p><strong>Purpose:</strong> Primary health data source for Android users</p></li>
+<li><p><strong>Data Points:</strong></p>
+<ul class="simple">
+<li><p>Sleep patterns</p></li>
+<li><p>Heart rate</p></li>
+<li><p>Activity recognition</p></li>
+<li><p>Step count</p></li>
+</ul>
+</li>
+<li><p><strong>Implementation:</strong></p>
+<div class="highlight-kotlin notranslate"><div class="highlight"><pre><span></span><span class="n">Required</span><span class="w"> </span><span class="n">scopes</span><span class="p">:</span>
+<span class="o">-</span><span class="w"> </span><span class="n">FITNESS_ACTIVITY_READ</span>
+<span class="o">-</span><span class="w"> </span><span class="n">FITNESS_HEART_RATE_READ</span>
+<span class="o">-</span><span class="w"> </span><span class="n">FITNESS_SLEEP_READ</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+</section>
+<section id="whoop-api">
+<h3>2. Whoop API<a class="headerlink" href="#whoop-api" title="Link to this heading">¶</a></h3>
+<ul>
+<li><p><strong>Purpose:</strong> Real-time biometric data</p></li>
+<li><p><strong>Endpoints:</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">GET</span> <span class="o">/</span><span class="n">v1</span><span class="o">/</span><span class="n">metrics</span><span class="o">/</span><span class="n">hrv</span>
+<span class="n">GET</span> <span class="o">/</span><span class="n">v1</span><span class="o">/</span><span class="n">metrics</span><span class="o">/</span><span class="n">heart_rate</span>
+<span class="n">GET</span> <span class="o">/</span><span class="n">v1</span><span class="o">/</span><span class="n">metrics</span><span class="o">/</span><span class="n">respiratory_rate</span>
+<span class="n">GET</span> <span class="o">/</span><span class="n">v1</span><span class="o">/</span><span class="n">metrics</span><span class="o">/</span><span class="n">strain</span>
+<span class="n">GET</span> <span class="o">/</span><span class="n">v1</span><span class="o">/</span><span class="n">metrics</span><span class="o">/</span><span class="n">recovery</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Implementation:</strong></p>
+<ul class="simple">
+<li><p>WebSocket connection for real-time updates</p></li>
+<li><p>OAuth2 authentication</p></li>
+<li><p>Automatic data synchronization</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="tobii-eye-tracker">
+<h3>3. Tobii Eye Tracker<a class="headerlink" href="#tobii-eye-tracker" title="Link to this heading">¶</a></h3>
+<ul>
+<li><p><strong>Purpose:</strong> Gaze tracking and visual attention analysis</p></li>
+<li><p><strong>Integration Points:</strong></p>
+<ol class="arabic">
+<li><p><strong>Raw Data Collection:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="o">-</span> <span class="n">Gaze</span> <span class="n">coordinates</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="o">-</span> <span class="n">Pupil</span> <span class="n">diameter</span>
+<span class="o">-</span> <span class="n">Fixation</span> <span class="n">duration</span>
+<span class="o">-</span> <span class="n">Saccade</span> <span class="n">velocity</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Feature Extraction:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="o">-</span> <span class="n">Attention</span> <span class="n">patterns</span>
+<span class="o">-</span> <span class="n">Visual</span> <span class="n">fatigue</span> <span class="n">indicators</span>
+<span class="o">-</span> <span class="n">Cognitive</span> <span class="n">load</span> <span class="n">estimation</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Strobe Synchronization:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="o">-</span> <span class="n">Align</span> <span class="n">strobe</span> <span class="n">patterns</span> <span class="k">with</span> <span class="n">saccade</span> <span class="n">timing</span>
+<span class="o">-</span> <span class="n">Adjust</span> <span class="n">frequency</span> <span class="n">based</span> <span class="n">on</span> <span class="n">attention</span> <span class="n">metrics</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</li>
+</ul>
+</section>
+</section>
+<section id="installation-requirements">
+<h2>Installation Requirements<a class="headerlink" href="#installation-requirements" title="Link to this heading">¶</a></h2>
+<section id="tobii-eye-tracker-sdk">
+<h3>Tobii Eye Tracker SDK<a class="headerlink" href="#tobii-eye-tracker-sdk" title="Link to this heading">¶</a></h3>
+<p>The Tobii Eye Tracker integration requires manual installation of the Tobii Pro SDK:</p>
+<ol class="arabic simple">
+<li><p>Download the SDK from <a class="reference external" href="https://developer.tobiipro.com/python/python-getting-started.html">Tobii Pro’s developer site</a></p></li>
+<li><p>Follow the macOS installation instructions provided by Tobii</p></li>
+<li><p>Verify installation by running their example scripts</p></li>
+</ol>
+</section>
+</section>
+<section id="data-integration-architecture">
+<h2>Data Integration Architecture<a class="headerlink" href="#data-integration-architecture" title="Link to this heading">¶</a></h2>
+<section id="data-collection-layer">
+<h3>1. Data Collection Layer<a class="headerlink" href="#data-collection-layer" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">BiometricDataCollector</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">whoop_client</span> <span class="o">=</span> <span class="n">WhoopClient</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">health_client</span> <span class="o">=</span> <span class="n">HealthClient</span><span class="p">()</span>  <span class="c1"># Apple/Google</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">eye_tracker</span> <span class="o">=</span> <span class="n">TobiiTracker</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">eeg</span> <span class="o">=</span> <span class="n">MuseEEG</span><span class="p">()</span>
+
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">collect_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s1">&#39;heart_rate&#39;</span><span class="p">:</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">whoop_client</span><span class="o">.</span><span class="n">get_hr</span><span class="p">(),</span>
+            <span class="s1">&#39;hrv&#39;</span><span class="p">:</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">whoop_client</span><span class="o">.</span><span class="n">get_hrv</span><span class="p">(),</span>
+            <span class="s1">&#39;sleep&#39;</span><span class="p">:</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">health_client</span><span class="o">.</span><span class="n">get_sleep</span><span class="p">(),</span>
+            <span class="s1">&#39;gaze&#39;</span><span class="p">:</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">eye_tracker</span><span class="o">.</span><span class="n">get_gaze</span><span class="p">(),</span>
+            <span class="s1">&#39;eeg&#39;</span><span class="p">:</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">eeg</span><span class="o">.</span><span class="n">get_data</span><span class="p">()</span>
+        <span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="feature-extraction-layer">
+<h3>2. Feature Extraction Layer<a class="headerlink" href="#feature-extraction-layer" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">FeatureExtractor</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">extract_features</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">raw_data</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s1">&#39;cognitive_load&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compute_cognitive_load</span><span class="p">(</span>
+                <span class="n">raw_data</span><span class="p">[</span><span class="s1">&#39;eeg&#39;</span><span class="p">],</span>
+                <span class="n">raw_data</span><span class="p">[</span><span class="s1">&#39;gaze&#39;</span><span class="p">]</span>
+            <span class="p">),</span>
+            <span class="s1">&#39;fatigue_level&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compute_fatigue</span><span class="p">(</span>
+                <span class="n">raw_data</span><span class="p">[</span><span class="s1">&#39;heart_rate&#39;</span><span class="p">],</span>
+                <span class="n">raw_data</span><span class="p">[</span><span class="s1">&#39;gaze&#39;</span><span class="p">]</span>
+            <span class="p">),</span>
+            <span class="s1">&#39;attention_score&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compute_attention</span><span class="p">(</span>
+                <span class="n">raw_data</span><span class="p">[</span><span class="s1">&#39;eeg&#39;</span><span class="p">],</span>
+                <span class="n">raw_data</span><span class="p">[</span><span class="s1">&#39;gaze&#39;</span><span class="p">]</span>
+            <span class="p">),</span>
+            <span class="s1">&#39;recovery_state&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compute_recovery</span><span class="p">(</span>
+                <span class="n">raw_data</span><span class="p">[</span><span class="s1">&#39;hrv&#39;</span><span class="p">],</span>
+                <span class="n">raw_data</span><span class="p">[</span><span class="s1">&#39;sleep&#39;</span><span class="p">]</span>
+            <span class="p">)</span>
+        <span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="flow-state-optimization">
+<h3>3. Flow State Optimization<a class="headerlink" href="#flow-state-optimization" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">FlowStateOptimizer</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">optimize_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">features</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s1">&#39;strobe_frequency&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_optimize_visual</span><span class="p">(</span>
+                <span class="n">features</span><span class="p">[</span><span class="s1">&#39;attention_score&#39;</span><span class="p">],</span>
+                <span class="n">features</span><span class="p">[</span><span class="s1">&#39;cognitive_load&#39;</span><span class="p">]</span>
+            <span class="p">),</span>
+            <span class="s1">&#39;binaural_frequency&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_optimize_audio</span><span class="p">(</span>
+                <span class="n">features</span><span class="p">[</span><span class="s1">&#39;fatigue_level&#39;</span><span class="p">],</span>
+                <span class="n">features</span><span class="p">[</span><span class="s1">&#39;recovery_state&#39;</span><span class="p">]</span>
+            <span class="p">),</span>
+            <span class="s1">&#39;session_duration&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_optimize_duration</span><span class="p">(</span>
+                <span class="n">features</span><span class="p">[</span><span class="s1">&#39;recovery_state&#39;</span><span class="p">],</span>
+                <span class="n">features</span><span class="p">[</span><span class="s1">&#39;cognitive_load&#39;</span><span class="p">]</span>
+            <span class="p">)</span>
+        <span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="implementation-timeline">
+<h2>Implementation Timeline<a class="headerlink" href="#implementation-timeline" title="Link to this heading">¶</a></h2>
+<ol class="arabic simple">
+<li><p><strong>Phase 1: Health Data Integration</strong></p>
+<ul class="simple">
+<li><p>Apple HealthKit integration</p></li>
+<li><p>Google Fit integration</p></li>
+<li><p>Data synchronization system</p></li>
+</ul>
+</li>
+<li><p><strong>Phase 2: Whoop Integration</strong></p>
+<ul class="simple">
+<li><p>Real-time HR/HRV monitoring</p></li>
+<li><p>Recovery score integration</p></li>
+<li><p>Strain score analysis</p></li>
+</ul>
+</li>
+<li><p><strong>Phase 3: Eye Tracking</strong></p>
+<ul class="simple">
+<li><p>Tobii SDK integration</p></li>
+<li><p>Gaze analysis system</p></li>
+<li><p>Strobe synchronization</p></li>
+</ul>
+</li>
+<li><p><strong>Phase 4: Feature Integration</strong></p>
+<ul class="simple">
+<li><p>Combined feature extraction</p></li>
+<li><p>Multi-modal optimization</p></li>
+<li><p>Real-time adaptation system</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="security-considerations">
+<h2>Security Considerations<a class="headerlink" href="#security-considerations" title="Link to this heading">¶</a></h2>
+<ol class="arabic simple">
+<li><p><strong>Data Privacy</strong></p>
+<ul class="simple">
+<li><p>Encrypted storage for all biometric data</p></li>
+<li><p>GDPR and HIPAA compliance</p></li>
+<li><p>User consent management</p></li>
+</ul>
+</li>
+<li><p><strong>API Security</strong></p>
+<ul class="simple">
+<li><p>OAuth2 authentication for all APIs</p></li>
+<li><p>Rate limiting</p></li>
+<li><p>Secure token storage</p></li>
+</ul>
+</li>
+<li><p><strong>Data Retention</strong></p>
+<ul class="simple">
+<li><p>Clear data retention policies</p></li>
+<li><p>User data export functionality</p></li>
+<li><p>Data anonymization for analysis</p></li>
+</ul>
+</li>
+</ol>
+</section>
+</section>
+
+
+					 </div>
+					 
+					</div>
+					<footer>
+  
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2024, FlowState Team
+	  <br>
+      
+      
+      
+      Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+      
+      <a href="https://github.com/revitron/revitron-sphinx-theme">theme</a>
+      
+      provided by <a href="https://github.com/revitron">Revitron</a>.
+
+    </p>
+  </div> 
+
+</footer>
+
+				</div>
+			</div>
+
+		</section>
+
+	</div>
+	
+
+	<script type="text/javascript">
+			jQuery(function () {
+					SphinxRtdTheme.Navigation.enable(true);
+			});
+	</script>
+
+	
+	
+		
+	 
+
+ 
+</body>	
+</html>

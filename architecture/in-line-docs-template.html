@@ -1,0 +1,612 @@
+
+	
+
+<!DOCTYPE html>
+<html class="writer-html5 dark" lang="en" >
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+		<title>FlowState In-Line Documentation Standards &mdash; FlowState 0.1.0 documentation</title>
+	
+	
+	
+	<link rel="stylesheet" href="../_static/default" type="text/css" />
+	<link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+	<link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+	<link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+
+	
+	
+	
+	
+
+	
+	<!--[if lt IE 9]>
+		<script src="../_static/js/html5shiv.min.js"></script>
+	<![endif]-->
+	
+		
+			<script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+				<script src="../_static/documentation_options.js?v=01f34227"></script>
+				<script src="../_static/doctools.js?v=9bcbadda"></script>
+				<script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+		
+		<script type="text/javascript" src="../_static/js/theme.js"></script>
+
+		
+		<link rel="index" title="Index" href="../genindex.html" />
+		<link rel="search" title="Search" href="../search.html" /> 
+</head>
+<body class="wy-body-for-nav">
+
+
+	 
+	<div class="wy-grid-for-nav">
+		
+		<nav data-toggle="wy-nav-shift" class="wy-nav-side">
+			<div class="wy-side-scroll">
+				<div class="wy-side-nav-search">
+					
+						<div class="brand">
+							<a href="../index.html">
+							
+								FlowState
+							
+							</a>
+						</div>
+						
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+					
+				</div>
+				
+				<div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+					
+						
+						
+							
+						
+						
+							<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../development/llm_workflow.html">LLM-Based Development Workflow</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../development/llm_workflow.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../development/llm_workflow.html#workflow-stages">Workflow Stages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../development/llm_workflow.html#ideation-and-planning">1. Ideation and Planning</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../development/llm_workflow.html#prompt-engineering">2. Prompt Engineering</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../development/llm_workflow.html#code-generation">3. Code Generation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../development/llm_workflow.html#testing-and-refinement">4. Testing and Refinement</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../development/llm_workflow.html#best-practices">Best Practices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../development/llm_workflow.html#integration-with-priority-queue">Integration with Priority Queue</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../development/llm_workflow.html#templates">Templates</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../development/llm_workflow.html#feature-development-template">Feature Development Template</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../development/llm_workflow.html#debugging-template">Debugging Template</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../development/llm_workflow.html#workflow-optimization">Workflow Optimization</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="system_overview.html">System Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="system_overview.html#core-components">Core Components</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="system_overview.html#key-modules">Key Modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="system_overview.html#technical-specifications">Technical Specifications</a></li>
+<li class="toctree-l3"><a class="reference internal" href="system_overview.html#dependencies-and-integrations">Dependencies and Integrations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="system_overview.html#security-considerations">Security Considerations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="system_overview.html#environmental-context">Environmental Context</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="flow_optimization.html">Flow State Optimization</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="flow_optimization.html#core-design-principles">Core Design Principles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="flow_optimization.html#flow-state-characteristics">Flow State Characteristics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="flow_optimization.html#optimization-strategy">Optimization Strategy</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../research/index.html">Research Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../research/findings/index.html">Research Findings</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../research/findings/index.html#algorithm-development">Algorithm Development</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../research/findings/optimization_algorithms.html">Flow State Optimization Algorithm</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../research/findings/algorithm_design.html"><strong>1. Key Variables to Consider</strong></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../research/findings/algorithm_design.html#algorithm-design"><strong>2. Algorithm Design</strong></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../research/findings/algorithm_design.html#implementation-features"><strong>3. Implementation Features</strong></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../research/findings/algorithm_design.html#enhancing-intrinsic-feel"><strong>4. Enhancing Intrinsic Feel</strong></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../research/findings/algorithm_design.html#challenges-and-future-directions"><strong>5. Challenges and Future Directions</strong></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../research/findings/index.html#key-findings">Key Findings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../research/findings/index.html#future-research">Future Research</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../api/index.html">API Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../api/python/index.html">Python API Reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api/python/index.html#core-systems">Core Systems</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../api/python/index.html#flow-systems">Flow Systems</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/python/flow/chaos_system.html">Chaos System</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../api/python/index.html#research-analysis">Research &amp; Analysis</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../api/python/index.html#biometric-integration">Biometric Integration</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../api/python/index.html#hardware-interface">Hardware Interface</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../api/python/index.html#utilities">Utilities</a><ul class="simple">
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../development/llm_workflow.html">LLM-Based Development Workflow</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../development/llm_workflow.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../development/llm_workflow.html#workflow-stages">Workflow Stages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../development/llm_workflow.html#ideation-and-planning">1. Ideation and Planning</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../development/llm_workflow.html#prompt-engineering">2. Prompt Engineering</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../development/llm_workflow.html#code-generation">3. Code Generation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../development/llm_workflow.html#testing-and-refinement">4. Testing and Refinement</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../development/llm_workflow.html#best-practices">Best Practices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../development/llm_workflow.html#integration-with-priority-queue">Integration with Priority Queue</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../development/llm_workflow.html#templates">Templates</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../development/llm_workflow.html#feature-development-template">Feature Development Template</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../development/llm_workflow.html#debugging-template">Debugging Template</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../development/llm_workflow.html#workflow-optimization">Workflow Optimization</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../development/priority_queue.html">FlowState Feature Priority Queue</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../development/priority_queue.html#core-philosophy">Core Philosophy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../development/priority_queue.html#priority-1-core-flow-triggers-immediate-impact">Priority 1: Core Flow Triggers 🌊 (Immediate Impact)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../development/priority_queue.html#entropy-based-flow-detection">1.1 Entropy-Based Flow Detection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../development/priority_queue.html#advanced-brainwave-entrainment-engine">1.2 Advanced Brainwave Entrainment Engine</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../development/priority_queue.html#cognitive-load-optimizer">1.3 Cognitive Load Optimizer</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../development/priority_queue.html#priority-2-neural-synchronization-high-impact">Priority 2: Neural Synchronization 🧠 (High Impact)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../development/priority_queue.html#cross-hemisphere-synchronization">2.1 Cross-Hemisphere Synchronization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../development/priority_queue.html#attention-density-maximizer">2.2 Attention Density Maximizer</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../development/priority_queue.html#priority-3-state-maintenance-medium-high-impact">Priority 3: State Maintenance 🎯 (Medium-High Impact)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../development/priority_queue.html#flow-state-stability-system">3.1 Flow State Stability System</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../development/priority_queue.html#recovery-and-integration">3.2 Recovery and Integration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../development/priority_queue.html#priority-4-environmental-optimization-medium-impact">Priority 4: Environmental Optimization 🌟 (Medium Impact)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../development/priority_queue.html#circadian-rhythm-synchronization">4.1 Circadian Rhythm Synchronization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../development/priority_queue.html#environmental-control-system">4.2 Environmental Control System</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../development/priority_queue.html#priority-5-long-term-optimization-foundation-building">Priority 5: Long-term Optimization 📈 (Foundation Building)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../development/priority_queue.html#machine-learning-flow-predictor">5.1 Machine Learning Flow Predictor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../development/priority_queue.html#flow-state-analytics">5.2 Flow State Analytics</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../development/priority_queue.html#technical-dependencies-and-integration-points">Technical Dependencies and Integration Points</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../development/priority_queue.html#critical-systems-integration">Critical Systems Integration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../development/priority_queue.html#key-performance-indicators">Key Performance Indicators</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../development/priority_queue.html#implementation-notes">Implementation Notes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../development/priority_queue.html#research-foundations">Research Foundations</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="system_overview.html">System Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="system_overview.html#core-components">Core Components</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="system_overview.html#key-modules">Key Modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="system_overview.html#technical-specifications">Technical Specifications</a></li>
+<li class="toctree-l3"><a class="reference internal" href="system_overview.html#dependencies-and-integrations">Dependencies and Integrations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="system_overview.html#security-considerations">Security Considerations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="system_overview.html#environmental-context">Environmental Context</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="flow_optimization.html">Flow State Optimization</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="flow_optimization.html#core-design-principles">Core Design Principles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="flow_optimization.html#flow-state-characteristics">Flow State Characteristics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="flow_optimization.html#optimization-strategy">Optimization Strategy</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="quantum.html">Quantum Neurofeedback Algorithm Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="quantum.html#features">Features</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="quantum.html#classification-and-pattern-recognition">1. Classification and Pattern Recognition</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quantum.html#adaptive-learning-and-optimization">2. Adaptive Learning and Optimization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quantum.html#signal-preprocessing">3. Signal Preprocessing</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="quantum.html#getting-started">Getting Started</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="quantum.html#prerequisites">Prerequisites</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quantum.html#setup-instructions">Setup Instructions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="quantum.html#terraform">Terraform</a></li>
+<li class="toctree-l4"><a class="reference internal" href="quantum.html#python-scripts">Python Scripts</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="quantum.html#future-work">Future Work</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../research/findings/index.html">Research Findings</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../research/findings/index.html#algorithm-development">Algorithm Development</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../research/findings/optimization_algorithms.html">Flow State Optimization Algorithm</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../research/findings/optimization_algorithms.html#phase-1-state-assessment">Phase 1: State Assessment</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../research/findings/optimization_algorithms.html#phase-2-intervention-planning">Phase 2: Intervention Planning</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../research/findings/optimization_algorithms.html#phase-3-real-time-adaptation">Phase 3: Real-time Adaptation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../research/findings/optimization_algorithms.html#phase-4-machine-learning-integration">Phase 4: Machine Learning Integration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../research/findings/optimization_algorithms.html#phase-5-personalization-layer">Phase 5: Personalization Layer</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../research/findings/algorithm_design.html"><strong>1. Key Variables to Consider</strong></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../research/findings/algorithm_design.html#physiological-metrics"><strong>Physiological Metrics:</strong></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../research/findings/algorithm_design.html#behavioral-and-environmental-triggers"><strong>Behavioral and Environmental Triggers:</strong></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../research/findings/algorithm_design.html#psychological-states"><strong>Psychological States:</strong></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../research/findings/algorithm_design.html#algorithm-design"><strong>2. Algorithm Design</strong></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../research/findings/algorithm_design.html#layer-1-input-data-collection"><strong>Layer 1: Input Data Collection</strong></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../research/findings/algorithm_design.html#layer-2-adaptive-control-loop"><strong>Layer 2: Adaptive Control Loop</strong></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../research/findings/algorithm_design.html#layer-3-machine-learning-optimization"><strong>Layer 3: Machine Learning Optimization</strong></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../research/findings/algorithm_design.html#implementation-features"><strong>3. Implementation Features</strong></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../research/findings/algorithm_design.html#user-feedback-interface"><strong>User Feedback Interface:</strong></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../research/findings/algorithm_design.html#flow-state-calibration-protocol"><strong>Flow State Calibration Protocol:</strong></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../research/findings/algorithm_design.html#self-optimization-through-ml"><strong>Self-Optimization Through ML:</strong></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../research/findings/algorithm_design.html#enhancing-intrinsic-feel"><strong>4. Enhancing Intrinsic Feel</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../research/findings/algorithm_design.html#challenges-and-future-directions"><strong>5. Challenges and Future Directions</strong></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../research/findings/index.html#key-findings">Key Findings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../research/findings/index.html#future-research">Future Research</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api/index.html">API Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../api/python/index.html">Python API Reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api/python/index.html#core-systems">Core Systems</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../api/python/index.html#flow-systems">Flow Systems</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/python/flow/chaos_system.html">Chaos System</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../api/python/index.html#research-analysis">Research &amp; Analysis</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../api/python/index.html#biometric-integration">Biometric Integration</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../api/python/index.html#hardware-interface">Hardware Interface</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../api/python/index.html#utilities">Utilities</a><ul class="simple">
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+						
+					
+				</div>
+				
+			</div>
+		</nav>
+
+		<section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+			
+			<nav class="wy-nav-top" aria-label="top navigation">
+			
+				<i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+				<a href="../index.html">
+					
+						FlowState
+					
+				</a>
+			
+			</nav>
+
+
+			<div class="wy-nav-content">
+				
+				<div class="rst-content">
+				
+					<div role="navigation" aria-label="breadcrumbs navigation">
+
+	<ul class="wy-breadcrumbs">
+		
+			
+				<li><a href="../index.html">FlowState</a> ⁄&nbsp;</li>
+				
+				<li><a href="">FlowState In-Line Documentation Standards</a></li>
+			
+		
+		
+			<li class="wy-breadcrumbs-aside">
+			
+			</li>
+		
+	</ul>
+
+</div>
+					<div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+					 <div itemprop="articleBody">
+						
+  <section class="tex2jax_ignore mathjax_ignore" id="flowstate-in-line-documentation-standards">
+<h1>FlowState In-Line Documentation Standards<a class="headerlink" href="#flowstate-in-line-documentation-standards" title="Link to this heading">¶</a></h1>
+<p>This document defines the standard template and guidelines for in-line documentation across the FlowState codebase.</p>
+<section id="module-level-documentation">
+<h2>Module Level Documentation<a class="headerlink" href="#module-level-documentation" title="Link to this heading">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;Module Name and Purpose.</span>
+
+<span class="sd">Detailed description of the module&#39;s functionality and purpose.</span>
+
+<span class="sd">Implementation Status:</span>
+<span class="sd">    ✓ Feature Group 1 (YYYY-MM-DD)</span>
+<span class="sd">        - Subfeature 1</span>
+<span class="sd">        - Subfeature 2</span>
+<span class="sd">    ⚠ Feature Group 2 (Partial)</span>
+<span class="sd">        - Implementation details</span>
+<span class="sd">    ☐ Feature Group 3 (Planned)</span>
+<span class="sd">        - Design status</span>
+
+<span class="sd">Dependencies:</span>
+<span class="sd">    - package1: Purpose/usage</span>
+<span class="sd">    - package2: Purpose/usage</span>
+
+<span class="sd">Integration Points:</span>
+<span class="sd">    - file1.py: Integration purpose</span>
+<span class="sd">    - file2.py: Integration purpose</span>
+
+<span class="sd">Example:</span>
+<span class="sd">    ```python</span>
+<span class="sd">    # Basic usage example</span>
+<span class="sd">    ```</span>
+
+<span class="sd">Performance Considerations:</span>
+<span class="sd">    - Key performance notes</span>
+<span class="sd">    - Resource usage details</span>
+
+<span class="sd">Configuration:</span>
+<span class="sd">    Required environment variables or settings</span>
+<span class="sd">&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="class-level-documentation">
+<h2>Class Level Documentation<a class="headerlink" href="#class-level-documentation" title="Link to this heading">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ClassName</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Class purpose and responsibility.</span>
+
+<span class="sd">    Detailed description of the class&#39;s role and functionality.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        attr1 (type): Description with valid ranges/constraints</span>
+<span class="sd">        attr2 (type): Description with valid ranges/constraints</span>
+
+<span class="sd">    Class Invariants:</span>
+<span class="sd">        - Invariant 1</span>
+<span class="sd">        - Invariant 2</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        ```python</span>
+<span class="sd">        # Usage example</span>
+<span class="sd">        ```</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">        Implementation details or special considerations</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="method-level-documentation">
+<h2>Method Level Documentation<a class="headerlink" href="#method-level-documentation" title="Link to this heading">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">method_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">param1</span><span class="p">:</span> <span class="nb">type</span><span class="p">,</span> <span class="n">param2</span><span class="p">:</span> <span class="nb">type</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">return_type</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Method purpose and functionality.</span>
+
+<span class="sd">    Detailed description of what the method does.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        param1: Description with valid ranges/constraints</span>
+<span class="sd">        param2: Description with valid ranges/constraints</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Description of return value</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        ExceptionType: When and why this exception occurs</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        ```python</span>
+<span class="sd">        # Usage example</span>
+<span class="sd">        ```</span>
+
+<span class="sd">    Technical Details:</span>
+<span class="sd">        - Implementation note 1</span>
+<span class="sd">        - Implementation note 2</span>
+
+<span class="sd">    See Also:</span>
+<span class="sd">        related_method: Description of relationship</span>
+<span class="sd">        OtherClass: Description of relationship</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="documentation-guidelines">
+<h2>Documentation Guidelines<a class="headerlink" href="#documentation-guidelines" title="Link to this heading">¶</a></h2>
+<ol class="arabic simple">
+<li><p><strong>Completeness</strong></p>
+<ul class="simple">
+<li><p>All modules must have module-level docstrings</p></li>
+<li><p>All classes must have class-level docstrings</p></li>
+<li><p>All public methods must have method-level docstrings</p></li>
+<li><p>Private methods should have docstrings if their functionality is non-trivial</p></li>
+</ul>
+</li>
+<li><p><strong>Implementation Status</strong></p>
+<ul class="simple">
+<li><p>Use ✓ for completed features</p></li>
+<li><p>Use ⚠ for partial implementations</p></li>
+<li><p>Use ☐ for planned features</p></li>
+<li><p>Include dates for completed features (YYYY-MM-DD)</p></li>
+</ul>
+</li>
+<li><p><strong>Dependencies</strong></p>
+<ul class="simple">
+<li><p>List all direct dependencies</p></li>
+<li><p>Explain why each dependency is needed</p></li>
+<li><p>Include version constraints if specific versions are required</p></li>
+</ul>
+</li>
+<li><p><strong>Examples</strong></p>
+<ul class="simple">
+<li><p>Provide clear, runnable examples</p></li>
+<li><p>Include expected output where relevant</p></li>
+<li><p>Show common use cases</p></li>
+<li><p>Demonstrate error handling where appropriate</p></li>
+</ul>
+</li>
+<li><p><strong>Technical Details</strong></p>
+<ul class="simple">
+<li><p>Document performance characteristics</p></li>
+<li><p>Explain complex algorithms</p></li>
+<li><p>Note any limitations or constraints</p></li>
+<li><p>Include resource usage details</p></li>
+</ul>
+</li>
+<li><p><strong>Cross-References</strong></p>
+<ul class="simple">
+<li><p>Link to related classes and methods</p></li>
+<li><p>Reference relevant documentation</p></li>
+<li><p>Point to example implementations</p></li>
+<li><p>Include external resources where helpful</p></li>
+</ul>
+</li>
+<li><p><strong>Maintenance</strong></p>
+<ul class="simple">
+<li><p>Update documentation when code changes</p></li>
+<li><p>Keep implementation status current</p></li>
+<li><p>Review and update examples regularly</p></li>
+<li><p>Maintain accurate dependency information</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="style-conventions">
+<h2>Style Conventions<a class="headerlink" href="#style-conventions" title="Link to this heading">¶</a></h2>
+<ol class="arabic simple">
+<li><p><strong>Line Length</strong></p>
+<ul class="simple">
+<li><p>Keep docstring lines under 80 characters</p></li>
+<li><p>Use proper indentation for multiline docstrings</p></li>
+</ul>
+</li>
+<li><p><strong>Formatting</strong></p>
+<ul class="simple">
+<li><p>Use backticks for code references</p></li>
+<li><p>Use italics for emphasis</p></li>
+<li><p>Use bold for warnings or important notes</p></li>
+<li><p>Use proper section headers</p></li>
+</ul>
+</li>
+<li><p><strong>Language</strong></p>
+<ul class="simple">
+<li><p>Use clear, concise language</p></li>
+<li><p>Write in the present tense</p></li>
+<li><p>Be specific about requirements and effects</p></li>
+<li><p>Avoid jargon unless necessary</p></li>
+</ul>
+</li>
+<li><p><strong>Type Hints</strong></p>
+<ul class="simple">
+<li><p>Always include type hints in method signatures</p></li>
+<li><p>Document complex types in docstrings</p></li>
+<li><p>Explain type constraints and valid values</p></li>
+<li><p>Use typing module for complex types</p></li>
+</ul>
+</li>
+</ol>
+</section>
+</section>
+
+
+					 </div>
+					 
+					</div>
+					<footer>
+  
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2024, FlowState Team
+	  <br>
+      
+      
+      
+      Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+      
+      <a href="https://github.com/revitron/revitron-sphinx-theme">theme</a>
+      
+      provided by <a href="https://github.com/revitron">Revitron</a>.
+
+    </p>
+  </div> 
+
+</footer>
+
+				</div>
+			</div>
+
+		</section>
+
+	</div>
+	
+
+	<script type="text/javascript">
+			jQuery(function () {
+					SphinxRtdTheme.Navigation.enable(true);
+			});
+	</script>
+
+	
+	
+		
+	 
+
+ 
+</body>	
+</html>

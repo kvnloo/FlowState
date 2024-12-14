@@ -1,293 +1,263 @@
 
+	
 
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" data-content_root="./">
+<html class="writer-html5 dark" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FlowState Documentation &mdash; FlowState 0.1.0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+		<title>FlowState Documentation &mdash; FlowState 0.1.0 documentation</title>
+	
+	
+	
+	<link rel="stylesheet" href="_static/default" type="text/css" />
+	<link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+	<link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+	<link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
 
-  
-      <script src="_static/jquery.js?v=5d32c60e"></script>
-      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=01f34227"></script>
-      <script src="_static/doctools.js?v=9bcbadda"></script>
-      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="_static/js/theme.js"></script>
-    <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+	
+	
+	
+	
+
+	
+	<!--[if lt IE 9]>
+		<script src="_static/js/html5shiv.min.js"></script>
+	<![endif]-->
+	
+		
+			<script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+				<script src="_static/documentation_options.js?v=01f34227"></script>
+				<script src="_static/doctools.js?v=9bcbadda"></script>
+				<script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+		
+		<script type="text/javascript" src="_static/js/theme.js"></script>
+
+		
+		<link rel="index" title="Index" href="genindex.html" />
+		<link rel="search" title="Search" href="search.html" />
+		<link rel="next" title="Development Documentation" href="development/index.html" /> 
 </head>
+<body class="wy-body-for-nav">
 
-<body class="wy-body-for-nav"> 
-  <div class="wy-grid-for-nav">
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
 
-          
-          
-          <a href="#" class="icon icon-home">
-            FlowState
-          </a>
+	 
+	<div class="wy-grid-for-nav">
+		
+		<nav data-toggle="wy-nav-shift" class="wy-nav-side">
+			<div class="wy-side-scroll">
+				<div class="wy-side-nav-search">
+					
+						<div class="brand">
+							<a href="#">
+							
+								FlowState
+							
+							</a>
+						</div>
+						
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <!-- Local TOC -->
-              <div class="local-toc"><ul>
-<li><a class="reference internal" href="#">FlowState Documentation</a><ul>
-<li><a class="reference internal" href="#implementation-status">Implementation Status</a><ul>
-<li><a class="reference internal" href="#implementation-status">Implementation Status</a><ul>
-<li><a class="reference internal" href="#core-systems">Core Systems</a><ul>
-<li><a class="reference internal" href="#neural-entrainment">Neural Entrainment</a><ul>
-<li><a class="reference internal" href="#audio-engine-adaptive-audio-engine-py">Audio Engine (<code class="docutils literal notranslate"><span class="pre">adaptive_audio_engine.py</span></code>)</a></li>
-<li><a class="reference internal" href="#visual-entrainment">Visual Entrainment</a></li>
+					
+				</div>
+				
+				<div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+					
+						
+						
+							
+						
+						
+							<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="development/index.html">Development Documentation</a><ul class="simple">
 </ul>
 </li>
-<li><a class="reference internal" href="#biometric-integration">Biometric Integration</a><ul>
-<li><a class="reference internal" href="#whoop-integration-biometric-whoop-client-py">Whoop Integration (<code class="docutils literal notranslate"><span class="pre">biometric/whoop_client.py</span></code>)</a></li>
-<li><a class="reference internal" href="#eye-tracking-biometric-tobii-tracker-py">Eye Tracking (<code class="docutils literal notranslate"><span class="pre">biometric/tobii_tracker.py</span></code>)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture/index.html">Architecture Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="architecture/health_tracking.html">Health Tracking System</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="architecture/health_tracking.html#system-components">System Components</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="architecture/health_tracking.html#database-schema">1. Database Schema</a></li>
+<li class="toctree-l4"><a class="reference internal" href="architecture/health_tracking.html#graphql-api">2. GraphQL API</a></li>
+<li class="toctree-l4"><a class="reference internal" href="architecture/health_tracking.html#data-providers">3. Data Providers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="architecture/health_tracking.html#synchronization-service">4. Synchronization Service</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#flow-state-detection-flow-state-detector-py">Flow State Detection (<code class="docutils literal notranslate"><span class="pre">flow_state_detector.py</span></code>)</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#frontend-integration">Frontend Integration</a></li>
-<li><a class="reference internal" href="#upcoming-features">Upcoming Features</a></li>
-<li><a class="reference internal" href="#recent-updates">Recent Updates</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a class="reference internal" href="#core-components">Core Components</a></li>
+<li class="toctree-l3"><a class="reference internal" href="architecture/health_tracking.html#data-flow">Data Flow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="architecture/health_tracking.html#security-considerations">Security Considerations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="architecture/health_tracking.html#error-handling">Error Handling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="architecture/health_tracking.html#future-extensions">Future Extensions</a></li>
 </ul>
 </li>
 </ul>
-</div>
-        </div>
-      </div>
-    </nav>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="research/index.html">Research Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="research/findings/index.html">Research Findings</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="research/findings/index.html#algorithm-development">Algorithm Development</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="research/findings/index.html#key-findings">Key Findings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="research/findings/index.html#future-research">Future Research</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api/index.html">API Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/python/health_tracking.html">Health Tracking API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/python/health_tracking.html#data-models">Data Models</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/python/health_tracking.html#user">User</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/python/health_tracking.html#sleepmetrics">SleepMetrics</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/python/health_tracking.html#nutritionmetrics">NutritionMetrics</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/python/health_tracking.html#exercisemetrics">ExerciseMetrics</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/python/health_tracking.html#biometricmetrics">BiometricMetrics</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/python/health_tracking.html#moodmetrics">MoodMetrics</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/python/health_tracking.html#graphql-api">GraphQL API</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/python/health_tracking.html#queries">Queries</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/python/health_tracking.html#mutations">Mutations</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/python/health_tracking.html#data-providers">Data Providers</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/python/health_tracking.html#base-provider">Base Provider</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/python/health_tracking.html#apple-health">Apple Health</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/python/health_tracking.html#google-fit">Google Fit</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/python/health_tracking.html#myfitnesspal">MyFitnessPal</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/python/health_tracking.html#oura">Oura</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/python/health_tracking.html#whoop">Whoop</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/python/health_tracking.html#sync-service">Sync Service</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
-          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="#">FlowState</a>
-      </nav>
+						
+					
+				</div>
+				
+			</div>
+		</nav>
 
-      <div class="wy-nav-content">
-        <div class="rst-content">
-          <div role="navigation" aria-label="Page navigation">
-  <ul class="wy-breadcrumbs">
-      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">FlowState Documentation</li>
-      <li class="wy-breadcrumbs-aside">
-            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
-      </li>
-  </ul>
-  <hr/>
+		<section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+			
+			<nav class="wy-nav-top" aria-label="top navigation">
+			
+				<i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+				<a href="#">
+					
+						FlowState
+					
+				</a>
+			
+			</nav>
+
+
+			<div class="wy-nav-content">
+				
+				<div class="rst-content">
+				
+					<div role="navigation" aria-label="breadcrumbs navigation">
+
+	<ul class="wy-breadcrumbs">
+		
+			
+				<li><a href="#">FlowState</a> ⁄&nbsp;</li>
+				
+				<li><a href="">FlowState Documentation</a></li>
+			
+		
+		
+			<li class="wy-breadcrumbs-aside">
+			
+			</li>
+		
+	</ul>
+
 </div>
-          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-           <div itemprop="articleBody">
-             
+					<div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+					 <div itemprop="articleBody">
+						
   <section id="flowstate-documentation">
-<h1>FlowState Documentation<a class="headerlink" href="#flowstate-documentation" title="Link to this heading"></a></h1>
+<h1>FlowState Documentation<a class="headerlink" href="#flowstate-documentation" title="Link to this heading">¶</a></h1>
+<p>Welcome to FlowState’s documentation. This documentation covers the architecture, features, and development process of the Neural Performance Platform.</p>
 <div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="development/index.html">Development Documentation</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="architecture/index.html">Architecture Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="architecture/health_tracking.html">Health Tracking System</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="research/index.html">Research Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="research/findings/index.html">Research Findings</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api/index.html">API Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/python/health_tracking.html">Health Tracking API</a></li>
+</ul>
+</li>
+</ul>
 </div>
-<section id="implementation-status">
-<h2>Implementation Status<a class="headerlink" href="#implementation-status" title="Link to this heading"></a></h2>
-<section class="tex2jax_ignore mathjax_ignore" id="implementation-status">
-<h3>Implementation Status<a class="headerlink" href="#implementation-status" title="Link to this heading"></a></h3>
-<section id="core-systems">
-<h4>Core Systems<a class="headerlink" href="#core-systems" title="Link to this heading"></a></h4>
-<section id="neural-entrainment">
-<h5>Neural Entrainment<a class="headerlink" href="#neural-entrainment" title="Link to this heading"></a></h5>
-<section id="audio-engine-adaptive-audio-engine-py">
-<h6>Audio Engine (<code class="docutils literal notranslate"><span class="pre">adaptive_audio_engine.py</span></code>)<a class="headerlink" href="#audio-engine-adaptive-audio-engine-py" title="Link to this heading"></a></h6>
-<ul class="simple">
-<li><p>✓ Binaural beat generation (2024-02-24)</p>
-<ul>
-<li><p>Carrier frequency management</p></li>
-<li><p>Beat frequency adaptation</p></li>
-<li><p>Real-time synthesis</p></li>
-</ul>
-</li>
-<li><p>✓ User state tracking (2024-02-24)</p>
-<ul>
-<li><p>Fatigue level monitoring</p></li>
-<li><p>Caffeine level tracking</p></li>
-<li><p>Sleep state integration</p></li>
-</ul>
-</li>
-<li><p>✓ AI-driven recommendations (2024-02-24)</p>
-<ul>
-<li><p>Frequency optimization</p></li>
-<li><p>State-based adaptation</p></li>
-</ul>
-</li>
-<li><p>⚠ Volume adaptation (partial)</p>
-<ul>
-<li><p>Basic volume control implemented</p></li>
-<li><p>Missing: ambient noise adaptation</p></li>
-</ul>
-</li>
-</ul>
-</section>
-<section id="visual-entrainment">
-<h6>Visual Entrainment<a class="headerlink" href="#visual-entrainment" title="Link to this heading"></a></h6>
-<ul class="simple">
-<li><p>✓ Strobe synchronization (2024-02-24)</p>
-<ul>
-<li><p>Eye movement-based timing</p></li>
-<li><p>Frequency range safety limits</p></li>
-</ul>
-</li>
-<li><p>⚠ Multi-display support (partial)</p>
-<ul>
-<li><p>Single display fully functional</p></li>
-<li><p>Multiple display coordination pending</p></li>
-</ul>
-</li>
-</ul>
-</section>
-</section>
-<section id="biometric-integration">
-<h5>Biometric Integration<a class="headerlink" href="#biometric-integration" title="Link to this heading"></a></h5>
-<section id="whoop-integration-biometric-whoop-client-py">
-<h6>Whoop Integration (<code class="docutils literal notranslate"><span class="pre">biometric/whoop_client.py</span></code>)<a class="headerlink" href="#whoop-integration-biometric-whoop-client-py" title="Link to this heading"></a></h6>
-<ul class="simple">
-<li><p>✓ Real-time heart rate monitoring</p></li>
-<li><p>✓ HRV analysis</p>
-<ul>
-<li><p>RMSSD calculation</p></li>
-<li><p>Frequency domain analysis</p></li>
-</ul>
-</li>
-<li><p>✓ Sleep phase detection</p></li>
-<li><p>⚠ Recovery metrics (partial)</p>
-<ul>
-<li><p>Basic recovery score</p></li>
-<li><p>Missing: detailed strain analysis</p></li>
-</ul>
-</li>
-</ul>
-</section>
-<section id="eye-tracking-biometric-tobii-tracker-py">
-<h6>Eye Tracking (<code class="docutils literal notranslate"><span class="pre">biometric/tobii_tracker.py</span></code>)<a class="headerlink" href="#eye-tracking-biometric-tobii-tracker-py" title="Link to this heading"></a></h6>
-<ul class="simple">
-<li><p>✓ Gaze tracking</p>
-<ul>
-<li><p>3D position tracking</p></li>
-<li><p>Validity checking</p></li>
-</ul>
-</li>
-<li><p>✓ Attention metrics</p>
-<ul>
-<li><p>Fixation duration</p></li>
-<li><p>Saccade velocity</p></li>
-<li><p>Pupil diameter</p></li>
-</ul>
-</li>
-<li><p>✓ Cognitive load estimation</p>
-<ul>
-<li><p>Combined metric calculation</p></li>
-<li><p>Real-time updates</p></li>
-</ul>
-</li>
-</ul>
-</section>
-</section>
-<section id="flow-state-detection-flow-state-detector-py">
-<h5>Flow State Detection (<code class="docutils literal notranslate"><span class="pre">flow_state_detector.py</span></code>)<a class="headerlink" href="#flow-state-detection-flow-state-detector-py" title="Link to this heading"></a></h5>
-<ul class="simple">
-<li><p>✓ Multi-modal feature extraction</p></li>
-<li><p>✓ Real-time state classification</p></li>
-<li><p>⚠ ML model integration (partial)</p>
-<ul>
-<li><p>Basic model framework</p></li>
-<li><p>Missing: advanced feature fusion</p></li>
-</ul>
-</li>
-</ul>
-</section>
-</section>
-<section id="frontend-integration">
-<h4>Frontend Integration<a class="headerlink" href="#frontend-integration" title="Link to this heading"></a></h4>
-<ul class="simple">
-<li><p>✓ Real-time visualization</p></li>
-<li><p>✓ User controls</p></li>
-<li><p>⚠ Advanced metrics display (partial)</p></li>
-</ul>
-</section>
-<section id="upcoming-features">
-<h4>Upcoming Features<a class="headerlink" href="#upcoming-features" title="Link to this heading"></a></h4>
-<ol class="arabic simple">
-<li><p>EEG Integration</p>
-<ul class="simple">
-<li><p>Hardware selection pending</p></li>
-<li><p>Protocol design complete</p></li>
-</ul>
-</li>
-<li><p>Advanced ML Pipeline</p>
-<ul class="simple">
-<li><p>Architecture designed</p></li>
-<li><p>Implementation scheduled</p></li>
-</ul>
-</li>
-<li><p>Environmental Monitoring</p>
-<ul class="simple">
-<li><p>Sensor selection in progress</p></li>
-<li><p>Integration planning complete</p></li>
-</ul>
-</li>
-</ol>
-</section>
-<section id="recent-updates">
-<h4>Recent Updates<a class="headerlink" href="#recent-updates" title="Link to this heading"></a></h4>
-<ul class="simple">
-<li><p>2024-02-24: Enhanced binaural beat synthesis</p></li>
-<li><p>2024-02-24: Improved cognitive load estimation</p></li>
-<li><p>2024-02-24: Added basic ML integration</p></li>
-</ul>
-</section>
-</section>
-</section>
-<section id="core-components">
-<h2>Core Components<a class="headerlink" href="#core-components" title="Link to this heading"></a></h2>
-</section>
 </section>
 
 
-           </div>
-          </div>
-          <footer>
-
-  <hr/>
+					 </div>
+					 
+					</div>
+					<footer>
+  
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2024, FlowState Team.</p>
-  </div>
+    <p>
+        
+        &copy; Copyright 2024, FlowState Team
+	  <br>
+      
+      
+      
+      Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+      
+      <a href="https://github.com/revitron/revitron-sphinx-theme">theme</a>
+      
+      provided by <a href="https://github.com/revitron">Revitron</a>.
 
-  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    provided by <a href="https://readthedocs.org">Read the Docs</a>.
-   
+    </p>
+  </div> 
 
 </footer>
-        </div>
-      </div>
-    </section>
-  </div>
-  <script>
-      jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(true);
-      });
-  </script> 
 
-</body>
+				</div>
+			</div>
+
+		</section>
+
+	</div>
+	
+
+	<script type="text/javascript">
+			jQuery(function () {
+					SphinxRtdTheme.Navigation.enable(true);
+			});
+	</script>
+
+	
+	
+		
+	 
+
+ 
+</body>	
 </html>
