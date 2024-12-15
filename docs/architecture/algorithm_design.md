@@ -13,7 +13,9 @@ Designing the perfect algorithm for consistently achieving and optimizing flow s
 - **Sleep Data:** Circadian alignment affects flow. Measure:
   - Sleep quality (deep vs. REM phases).
   - Time since last wake cycle (circadian rhythm).
-- **Dietary Inputs:** Blood sugar levels and the presence of key neurotransmitter precursors (e.g., tyrosine, tryptophan) may impact dopamine and serotonin, critical for flow.
+- **Dietary Inputs:** CGM, food intake, water intake, supplements (caffeine, vitamins, omega3s), etc.
+- **Exercise:** Cardio, Resistance Training, Yoga, Recovery, Strain
+- **Body Temperature:** Body temperature, ambient temperature, might be affected by sauana, ice bath, exercise, diet, sleep
 
 #### **Behavioral and Environmental Triggers:**
 - **Strobe Glasses Settings:** Strobe frequency and duty cycle to match reaction-time intervals or engage specific visual cortex rhythms.
@@ -21,7 +23,6 @@ Designing the perfect algorithm for consistently achieving and optimizing flow s
   - Alpha/theta for calm focus.
   - Gamma for heightened awareness.
 - **Task Structure:** Flow is most accessible when the challenge matches the user's skill level (based on Csikszentmihalyi's Flow Model).
-
 #### **Psychological States:**
 - **Perceived Difficulty:** Gather feedback on whether the task feels too hard or too easy.
 - **Intrinsic Motivation:** Measure engagement using surveys or behavioral metrics (e.g., session duration without fatigue).
