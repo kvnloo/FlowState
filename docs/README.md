@@ -113,10 +113,7 @@ After building, open `_build/html/index.html` in your browser to view the docume
 ```
 
 ### Quick Links
-- [Architecture Overview](architecture/index.rst)
-- [API Documentation](api/index.rst)
-- [Development Guide](development/index.rst)
-- [Research Findings](research/findings/index.rst)
+- [Main Index](https://flowstate.github.io/flowstate/_build/html/index.html)
 
 ## Contributing
 
