@@ -1,8 +1,33 @@
 Designing the perfect algorithm for consistently achieving and optimizing flow state requires a multi-layered approach that combines neuroscience, behavioral triggers, biofeedback, and adaptive optimization through machine learning. Here's a structured approach:
 
 ---
+## **0. Core Componets**
 
-### **1. Key Variables to Consider**
+The FlowState Neural Performance Platform consists of several key components working together to optimize cognitive performance through neural entrainment and flow state technologies.
+
+### Key Modules
+1. **Research System** (`/backend/research/research_system.py`)
+   - Automated research aggregation
+   - Activity-recovery correlation analysis
+   - Personalized intervention recommendations
+   - Continuous knowledge base expansion
+
+2. **Algorithm-design**
+    - 
+
+3. **Chaos System** (`/backend/flow/chaos_system.py`)
+   - Global chaos level control (0.0 - 1.0)
+   - Parameter-specific chaos injection
+   - Multiple chaos generators (Logistic, Hénon, Lorenz maps)
+   - Pattern learning and effectiveness tracking
+
+
+### Security Considerations
+- API key management
+- Secure data storage
+- User data protection mechanisms
+
+## **1. Key Variables to Consider**
 #### **Physiological Metrics:**
 - **Heart Rate (HR) and HR Variability (HRV):** HR and HRV are direct indicators of arousal and relaxation. Higher HRV generally correlates with a calm yet focused state ideal for flow.
 - **EEG Brainwave Data:** Specifically monitor:
@@ -29,7 +54,7 @@ Designing the perfect algorithm for consistently achieving and optimizing flow s
 
 ---
 
-### **2. Algorithm Design**
+## **2. Algorithm Design**
 The algorithm will operate in three layers:
 #### **Layer 1: Input Data Collection**
 Collect and preprocess real-time data:
@@ -53,7 +78,7 @@ The core algorithm will dynamically adjust settings based on biofeedback and use
    - Use physiological data (HRV, EEG) and subjective feedback (e.g., engagement, perceived effort) as input features.
    - Weight each factor dynamically to find the best parameter combination for each session.
 
-#### **Layer 3: Machine Learning Optimization**
+### **Layer 3: Machine Learning Optimization**
 A reinforcement learning agent will refine the algorithm over time:
 - **Model Inputs:**
   - Physiological data (HRV, EEG, etc.).

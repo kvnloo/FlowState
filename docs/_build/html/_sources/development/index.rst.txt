@@ -8,8 +8,9 @@ This section contains documentation about the development process, workflow, and
 
    llm_workflow
    priority_queue
-   API_Integration_Plan
+   priority_queue_2
    implementation_status
    completed
    planned
    FEATURES
+   in-line-docs-template

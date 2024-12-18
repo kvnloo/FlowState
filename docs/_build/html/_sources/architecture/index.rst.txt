@@ -5,10 +5,10 @@ This section contains documentation about the system architecture and design.
 
 .. toctree::
    :maxdepth: 2
-
-   system_overview
-   health_tracking
-   flow_optimization
+   algorithm_design
+   variables
+   flowstate_optimization_algorithms
+   api_integration
    entropy-chaos-algorithm
-   in-line-docs-template
    quantum
+   initial_feedback_loop
