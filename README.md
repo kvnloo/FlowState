@@ -29,3 +29,4 @@ The Muse stream should now be flowing
 Run the program 👍
 
 
+[View Documentation](https://flowstate.github.io/flowstate/)
