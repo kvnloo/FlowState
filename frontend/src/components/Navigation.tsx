@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import { Activity, History, Brain, Grid } from 'lucide-react';
+import { Activity, History, Brain, Grid, Droplets } from 'lucide-react';
 
 export function Navigation() {
   const location = useLocation();
@@ -9,6 +9,7 @@ export function Navigation() {
     { to: '/training', label: 'Training', icon: Brain },
     { to: '/history', label: 'History', icon: History },
     { to: '/heatmap', label: 'Heat Map', icon: Grid },
+    { to: '/wavelet-demo', label: 'Wavelet Demo', icon: Droplets },
   ];
 
   return (

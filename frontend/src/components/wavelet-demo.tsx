@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { Card } from "@/components/ui/card"
 import { Slider } from "@/components/ui/slider"
-import Wavelet from "./wavelet"
+import Wavelet from "./Wavelet"
 
 export default function WaveletDemo() {
   const [values, setValues] = useState({

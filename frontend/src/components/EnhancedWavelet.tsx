@@ -48,47 +48,66 @@ function EnhancedWaveletComponent({
   zIndex,
   opacity = 1
 }: EnhancedWaveletProps) {
-  // Find dominant frequency
+  // All 8 frequencies with metadata
   const frequencies = [
-    { value: delta, color: COLORS_ENHANCED.delta },
-    { value: theta, color: COLORS_ENHANCED.theta },
-    { value: lowAlpha, color: COLORS_ENHANCED.lowAlpha },
-    { value: highAlpha, color: COLORS_ENHANCED.highAlpha },
-    { value: lowBeta, color: COLORS_ENHANCED.lowBeta },
-    { value: highBeta, color: COLORS_ENHANCED.highBeta },
-    { value: lowGamma, color: COLORS_ENHANCED.lowGamma },
-    { value: highGamma, color: COLORS_ENHANCED.highGamma },
+    { name: 'delta', value: delta, color: COLORS_ENHANCED.delta },
+    { name: 'theta', value: theta, color: COLORS_ENHANCED.theta },
+    { name: 'lowAlpha', value: lowAlpha, color: COLORS_ENHANCED.lowAlpha },
+    { name: 'highAlpha', value: highAlpha, color: COLORS_ENHANCED.highAlpha },
+    { name: 'lowBeta', value: lowBeta, color: COLORS_ENHANCED.lowBeta },
+    { name: 'highBeta', value: highBeta, color: COLORS_ENHANCED.highBeta },
+    { name: 'lowGamma', value: lowGamma, color: COLORS_ENHANCED.lowGamma },
+    { name: 'highGamma', value: highGamma, color: COLORS_ENHANCED.highGamma },
   ];
 
-  const dominant = frequencies.reduce((max, f) => f.value > max.value ? f : max);
+  // Sort by intensity (largest first for back-to-front rendering)
+  // Filter out very weak signals to avoid clutter
+  const sortedFrequencies = frequencies
+    .filter(f => f.value > 0.05)
+    .sort((a, b) => b.value - a.value);
 
-  // DEBUG: Log what we're actually rendering
-  console.log('EnhancedWavelet rendering:', { size, x, y, opacity, color: dominant.color });
+  // Calculate circle size based on intensity
+  const calculateCircleSize = (intensity: number, baseSize: number): number => {
+    // Minimum 20% visibility, scale up to 100% based on intensity
+    const minScale = 0.2;
+    const maxScale = 1.0;
+    return baseSize * (minScale + (intensity * (maxScale - minScale)));
+  };
 
   const containerStyle: CSSProperties = {
     position: 'absolute',
-    left: `${x}px`, // Explicit px units
+    left: `${x}px`,
     top: `${y}px`,
-    width: `${size}px`, // Explicit px units
-    height: `${size}px`,
     transform: 'translate(-50%, -50%)',
     pointerEvents: 'none',
-    zIndex,
-    // Step 4: Add screen blend mode for bright additive color mixing
-    mixBlendMode: 'screen',
   };
 
   return (
     <div style={containerStyle}>
-      <div
-        style={{
-          backgroundColor: dominant.color,
-          width: `${size}px`, // Explicit px units
-          height: `${size}px`,
-          borderRadius: '50%',
-          opacity: opacity,
-        }}
-      />
+      {sortedFrequencies.map((freq, index) => {
+        const circleSize = calculateCircleSize(freq.value, size);
+        // Largest circles (index 0) get lowest z-index (back), smallest get highest (front)
+        const layerZIndex = zIndex + (sortedFrequencies.length - index);
+
+        return (
+          <div
+            key={freq.name}
+            style={{
+              position: 'absolute',
+              left: '50%',
+              top: '50%',
+              transform: 'translate(-50%, -50%)',
+              width: `${circleSize}px`,
+              height: `${circleSize}px`,
+              backgroundColor: freq.color,
+              borderRadius: '50%',
+              opacity: 0.6,
+              zIndex: layerZIndex,
+              filter: 'blur(20px)',
+            }}
+          />
+        );
+      })}
     </div>
   );
 }
