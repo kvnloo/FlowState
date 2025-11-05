@@ -3,6 +3,7 @@ import { Navigation } from './components/Navigation';
 import { Dashboard } from './pages/Dashboard';
 import { Training } from './pages/Training';
 import { History } from './pages/History';
+import { HeatMapDemo } from './pages/HeatMapDemo';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
             <Route path="/" element={<Dashboard />} />
             <Route path="/training" element={<Training />} />
             <Route path="/history" element={<History />} />
+            <Route path="/heatmap" element={<HeatMapDemo />} />
           </Routes>
         </main>
       </div>
