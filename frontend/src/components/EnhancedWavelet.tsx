@@ -74,7 +74,8 @@ function EnhancedWaveletComponent({
     transform: 'translate(-50%, -50%)',
     pointerEvents: 'none',
     zIndex,
-    // Removed mixBlendMode and filter for debugging
+    // Step 4: Add screen blend mode for bright additive color mixing
+    mixBlendMode: 'screen',
   };
 
   return (

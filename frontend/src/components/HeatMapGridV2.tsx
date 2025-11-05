@@ -43,18 +43,14 @@ export function HeatMapGridV2({
       noiseStrength
     };
 
-    // DEBUG: Start with just ONE wavelet at center
-    const row = 2; // center row
-    const col = 2; // center column
-
-    {
-        // Grid position - NO random offset for debugging
+    // Generate 5x5 grid of wavelets
+    for (let row = 0; row < gridSize; row++) {
+      for (let col = 0; col < gridSize; col++) {
+        // Grid position - NO random offset yet
         const baseX = (col + 0.5) * (width / gridSize);
         const baseY = (row + 0.5) * (height / gridSize);
         const x = baseX;
         const y = baseY;
-
-        console.log('DEBUG: Creating wavelet at center:', { x, y, gridCellSize: width / gridSize });
 
         // Generate brainwave data based on position
         const xNorm = (x / width) * 100;
@@ -78,13 +74,11 @@ export function HeatMapGridV2({
           brainwaveData.highGamma
         ) / 8;
 
-        // DEBUG: Fixed size and opacity
-        const size = 400; // FIXED at 400px for debugging
+        // Step 2: Randomize size (300-400px for significant overlap)
+        const size = 300 + Math.random() * 100;
 
-        console.log('DEBUG: Wavelet size:', size);
-
-        // Full opacity for debugging
-        const opacity = 1.0;
+        // Step 3: Reduce opacity (0.6-0.8 for transparency and color mixing)
+        const opacity = 0.6 + Math.random() * 0.2;
 
         // Simple z-index based on intensity
         const zIndex = Math.floor(totalIntensity * 100);
@@ -98,6 +92,7 @@ export function HeatMapGridV2({
           intensity: totalIntensity,
           ...brainwaveData
         } as WaveletPosition & typeof brainwaveData);
+      }
     }
 
     console.log('DEBUG: Total wavelets created:', generatedWavelets.length);

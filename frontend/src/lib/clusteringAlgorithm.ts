@@ -132,7 +132,6 @@ export function generateWaveletDataForPoint(
   highBeta: number;
   lowGamma: number;
   highGamma: number;
-  size: number;
 } {
   // Get cluster influence
   const { intensity, state } = getClusterInfluence(x, y, clusters, config.clusterRadius);
@@ -143,13 +142,9 @@ export function generateWaveletDataForPoint(
   // Generate brain wave values based on state
   const baseValues = getStateValues(state, finalIntensity);
 
-  // Calculate size based on total intensity
-  const totalPower = Object.values(baseValues).reduce((a, b) => a + b, 0);
-  const size = 8 + (totalPower / 8) * 72; // 8px to 80px range
-
+  // Size is now controlled by the caller, not calculated here
   return {
-    ...baseValues,
-    size
+    ...baseValues
   };
 }
 
