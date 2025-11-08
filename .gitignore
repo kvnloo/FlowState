@@ -3,3 +3,6 @@ backend/attention_test.pynode_modules
 
 Pipfile.lock
 .DS_Store
+**/.claude_flow/
+.claude
+

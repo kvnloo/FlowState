@@ -23,7 +23,7 @@ extensions = [
     'sphinx.ext.napoleon',
     'sphinx.ext.viewcode',
     'sphinx.ext.githubpages',
-    # 'myst_parser',
+    'myst_parser',  # Enabled for Markdown support
     'sphinxcontrib.mermaid',
 ]
 
