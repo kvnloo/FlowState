@@ -1,0 +1,7 @@
+backend.api.health.schema module
+================================
+
+.. automodule:: backend.api.health.schema
+   :members:
+   :show-inheritance:
+   :undoc-members:

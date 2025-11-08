@@ -1,0 +1,7 @@
+backend.core.inputs.health.providers.google\_fit module
+=======================================================
+
+.. automodule:: backend.core.inputs.health.providers.google_fit
+   :members:
+   :show-inheritance:
+   :undoc-members:

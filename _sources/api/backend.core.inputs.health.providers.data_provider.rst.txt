@@ -1,0 +1,7 @@
+backend.core.inputs.health.providers.data\_provider module
+==========================================================
+
+.. automodule:: backend.core.inputs.health.providers.data_provider
+   :members:
+   :show-inheritance:
+   :undoc-members:

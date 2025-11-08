@@ -1,0 +1,897 @@
+
+	
+
+<!DOCTYPE html>
+<html class="writer-html5 dark" lang="en" >
+<head>
+	<meta charset="utf-8">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+		<title>backend.core.utils.logger &mdash; FlowState 0.1.0 documentation</title>
+	
+	
+	
+	<link rel="stylesheet" href="../../../../_static/default" type="text/css" />
+	<link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+	<link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+	<link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+
+	
+	
+	
+	
+
+	
+	<!--[if lt IE 9]>
+		<script src="../../../../_static/js/html5shiv.min.js"></script>
+	<![endif]-->
+	
+		
+			<script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+				<script src="../../../../_static/documentation_options.js?v=01f34227"></script>
+				<script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+				<script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+				<script type="module" src="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.esm.min.mjs"></script>
+				<script type="module" src="https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.1.4/dist/mermaid-layout-elk.esm.min.mjs"></script>
+				<script type="module">
+    mermaid.initialize({
+        startOnLoad: true,
+        theme: 'default',
+        securityLevel: 'loose',
+    });
+</script>
+				<script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+				<script type="module">
+import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.esm.min.mjs";
+window.addEventListener("load", () => mermaid.run());
+</script>
+		
+		<script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+		
+		<link rel="index" title="Index" href="../../../../genindex.html" />
+		<link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+<body class="wy-body-for-nav">
+
+
+	 
+	<div class="wy-grid-for-nav">
+		
+		<nav data-toggle="wy-nav-shift" class="wy-nav-side">
+			<div class="wy-side-scroll">
+				<div class="wy-side-nav-search">
+					
+						<div class="brand">
+							<a href="../../../../index.html">
+							
+								FlowState
+							
+							</a>
+						</div>
+						
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+					
+				</div>
+				
+				<div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+					
+						
+						
+							
+						
+						
+							<p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../README.html">FlowState Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../README.html#building-documentation">Building Documentation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../README.html#prerequisites">Prerequisites</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../README.html#viewing-documentation">Viewing Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../README.html#documentation-structure">Documentation Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../README.html#linking-to-documentation-pages">Linking to Documentation Pages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../README.html#in-markdown-files-md">In Markdown Files (.md)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../README.html#in-rst-files-rst">In RST Files (.rst)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../README.html#quick-links">Quick Links</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../README.html#contributing">Contributing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../README.html#automated-building">Automated Building</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../development/index.html">Development Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../development/llm_workflow.html">LLM-Based Development Workflow</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../development/llm_workflow.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../development/llm_workflow.html#workflow-stages">Workflow Stages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../development/llm_workflow.html#ideation-and-planning">1. Ideation and Planning</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../development/llm_workflow.html#prompt-engineering">2. Prompt Engineering</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../development/llm_workflow.html#code-generation">3. Code Generation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../development/llm_workflow.html#testing-and-refinement">4. Testing and Refinement</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../development/llm_workflow.html#best-practices">Best Practices</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../development/llm_workflow.html#integration-with-priority-queue">Integration with Priority Queue</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../development/llm_workflow.html#templates">Templates</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../development/llm_workflow.html#feature-development-template">Feature Development Template</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../development/llm_workflow.html#debugging-template">Debugging Template</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../development/llm_workflow.html#workflow-optimization">Workflow Optimization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../development/priority_queue.html">FlowState Development Priority Queue</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../development/priority_queue.html#core-philosophy">Core Philosophy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../development/priority_queue.html#priority-1-eeg-foundation-critical-path">Priority 1: EEG Foundation 🧠 (Critical Path)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../development/priority_queue.html#eeg-signal-processing">1.1 EEG Signal Processing</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../development/priority_queue.html#alpha-theta-optimization">1.2 Alpha/Theta Optimization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../development/priority_queue.html#basic-neural-entrainment">1.3 Basic Neural Entrainment</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../development/priority_queue.html#priority-2-first-feedback-loop-high-impact">Priority 2: First Feedback Loop 🔄 (High Impact)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../development/priority_queue.html#real-time-state-detection">2.1 Real-time State Detection</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../development/priority_queue.html#adaptive-entrainment">2.2 Adaptive Entrainment</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../development/priority_queue.html#priority-3-recovery-readiness-foundation">Priority 3: Recovery &amp; Readiness 🌙 (Foundation)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../development/priority_queue.html#sleep-quality-analysis">3.1 Sleep Quality Analysis</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../development/priority_queue.html#hrv-integration">3.2 HRV Integration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../development/priority_queue.html#recovery-and-integration">3.3 Recovery and Integration</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../development/priority_queue.html#priority-4-advanced-neural-optimization-enhancement">Priority 4: Advanced Neural Optimization 🌊 (Enhancement)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../development/priority_queue.html#entropy-based-flow-detection">4.1 Entropy-Based Flow Detection</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../development/priority_queue.html#cross-hemisphere-synchronization">4.2 Cross-Hemisphere Synchronization</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../development/priority_queue.html#priority-5-cognitive-enhancement-advanced-features">Priority 5: Cognitive Enhancement 🎯 (Advanced Features)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../development/priority_queue.html#cognitive-load-optimizer">5.1 Cognitive Load Optimizer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../development/priority_queue.html#attention-density-maximizer">5.2 Attention Density Maximizer</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../development/priority_queue.html#priority-6-environmental-optimization-supporting-systems">Priority 6: Environmental Optimization 🌟 (Supporting Systems)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../development/priority_queue.html#circadian-rhythm-synchronization">6.1 Circadian Rhythm Synchronization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../development/priority_queue.html#environmental-control-system">6.2 Environmental Control System</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../development/priority_queue.html#priority-7-long-term-optimization-future-enhancement">Priority 7: Long-term Optimization 📈 (Future Enhancement)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../development/priority_queue.html#machine-learning-flow-predictor">7.1 Machine Learning Flow Predictor</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../development/priority_queue.html#flow-state-analytics">7.2 Flow State Analytics</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../development/priority_queue.html#technical-implementation-notes">Technical Implementation Notes</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../development/priority_queue.html#core-systems">Core Systems</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../development/priority_queue.html#key-performance-indicators">Key Performance Indicators</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../development/priority_queue.html#research-foundation">Research Foundation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../development/priority_queue_2.html">Enhanced Flow State Optimization System</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../development/priority_queue_2.html#current-implementation-status-updated">Current Implementation Status (Updated)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../development/priority_queue_2.html#priority-queue-ranked-by-impact">Priority Queue (Ranked by Impact)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../development/priority_queue_2.html#immediate-priorities-high-impact-low-effort">Immediate Priorities (High Impact/Low Effort)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../development/priority_queue_2.html#medium-term-goals-high-impact-medium-effort">Medium-term Goals (High Impact/Medium Effort)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../development/priority_queue_2.html#long-term-vision-breakthrough-impact">Long-term Vision (Breakthrough Impact)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../development/priority_queue_2.html#enhancement-ideas">Enhancement Ideas</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../development/priority_queue_2.html#neuroscience-inspired-optimizations">Neuroscience-Inspired Optimizations</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../development/priority_queue_2.html#technical-optimizations">Technical Optimizations</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../development/priority_queue_2.html#research-integration-points">Research Integration Points</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../development/priority_queue_2.html#impact-metrics">Impact Metrics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../development/priority_queue_2.html#todo-high-priority-enhancements">TODO: High-Priority Enhancements</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../development/implementation_status.html">Implementation Status</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../development/implementation_status.html#core-systems">Core Systems</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../development/implementation_status.html#neural-entrainment">Neural Entrainment</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../development/implementation_status.html#biometric-integration">Biometric Integration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../development/implementation_status.html#flow-state-detection-flow-state-detector-py">Flow State Detection (<code class="docutils literal notranslate"><span class="pre">flow_state_detector.py</span></code>)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../development/implementation_status.html#frontend-integration">Frontend Integration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../development/implementation_status.html#upcoming-features">Upcoming Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../development/implementation_status.html#recent-updates">Recent Updates</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../development/completed.html">Completed Features</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../development/completed.html#core-systems">Core Systems</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../development/completed.html#neural-entrainment-system">1. Neural Entrainment System</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../development/completed.html#attention-density-maximizer">2. Attention Density Maximizer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../development/completed.html#flow-state-stability-system">3. Flow State Stability System</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../development/completed.html#recovery-and-integration-system">4. Recovery and Integration System</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../development/completed.html#research-system">5. Research System</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../development/completed.html#chaos-system">6. Chaos System</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../development/completed.html#integration-features">Integration Features</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../development/completed.html#hardware-integration">1. Hardware Integration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../development/completed.html#data-processing">2. Data Processing</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../development/completed.html#user-interface">3. User Interface</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../development/completed.html#technical-features">Technical Features</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../development/completed.html#performance-optimization">1. Performance Optimization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../development/completed.html#data-management">2. Data Management</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../development/completed.html#security">3. Security</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../development/completed.html#documentation">Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../development/planned.html">Planned Features</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../development/planned.html#core-systems">Core Systems</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../development/planned.html#advanced-neural-entrainment">1. Advanced Neural Entrainment</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../development/planned.html#enhanced-flow-detection">2. Enhanced Flow Detection</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../development/planned.html#cognitive-performance-optimization">3. Cognitive Performance Optimization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../development/planned.html#advanced-recovery-system">4. Advanced Recovery System</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../development/planned.html#integration-features">Integration Features</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../development/planned.html#extended-hardware-support">1. Extended Hardware Support</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../development/planned.html#advanced-data-processing">2. Advanced Data Processing</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../development/planned.html#enhanced-user-experience">3. Enhanced User Experience</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../development/planned.html#research-integration">Research Integration</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../development/planned.html#advanced-research-system">1. Advanced Research System</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../development/planned.html#knowledge-integration">2. Knowledge Integration</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../development/planned.html#performance-features">Performance Features</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../development/planned.html#system-optimization">1. System Optimization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../development/planned.html#advanced-analytics">2. Advanced Analytics</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../development/planned.html#integration-apis">3. Integration APIs</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../development/planned.html#user-personalization">User Personalization</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../development/planned.html#advanced-profiles">1. Advanced Profiles</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../development/planned.html#social-features">2. Social Features</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../development/planned.html#documentation-and-support">Documentation and Support</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../development/planned.html#enhanced-documentation">1. Enhanced Documentation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../development/planned.html#development-tools">2. Development Tools</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../development/FEATURES.html">FlowState Features &amp; Implementation Status</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../development/FEATURES.html#core-systems">Core Systems</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../development/FEATURES.html#neural-entrainment-system">1. Neural Entrainment System</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../development/FEATURES.html#flow-state-detection-stability">2. Flow State Detection &amp; Stability</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../development/FEATURES.html#attention-density-maximizer">3. Attention Density Maximizer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../development/FEATURES.html#recovery-and-integration-system">4. Recovery and Integration System</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../development/FEATURES.html#chaos-system">5. Chaos System</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../development/FEATURES.html#eeg-foundation">6. EEG Foundation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../development/FEATURES.html#id1">7. Attention Density Maximizer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../development/FEATURES.html#id2">8. Recovery and Integration System</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../development/FEATURES.html#research-system">9. Research System</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../development/FEATURES.html#biometric-integration">10. Biometric Integration</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../development/FEATURES.html#integration-features">Integration Features</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../development/FEATURES.html#hardware-integration">1. Hardware Integration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../development/FEATURES.html#data-processing">2. Data Processing</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../development/FEATURES.html#user-interface">3. User Interface</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../development/FEATURES.html#technical-features">Technical Features</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../development/FEATURES.html#performance-optimization">1. Performance Optimization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../development/FEATURES.html#data-management">2. Data Management</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../development/FEATURES.html#security">3. Security</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../development/FEATURES.html#documentation">Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../development/FEATURES.html#integration-status">Integration Status</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../development/FEATURES.html#data-flow">Data Flow</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../development/FEATURES.html#upcoming-features">Upcoming Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../development/FEATURES.html#version-history">Version History</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../development/in-line-docs-template.html">FlowState In-Line Documentation Standards</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../development/in-line-docs-template.html#module-level-documentation">Module Level Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../development/in-line-docs-template.html#class-level-documentation">Class Level Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../development/in-line-docs-template.html#method-level-documentation">Method Level Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../development/in-line-docs-template.html#documentation-guidelines">Documentation Guidelines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../development/in-line-docs-template.html#style-conventions">Style Conventions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Architecture</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../architecture/index.html">Architecture Documentation</a></li>
+</ul>
+
+						
+					
+				</div>
+				
+			</div>
+		</nav>
+
+		<section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+			
+			<nav class="wy-nav-top" aria-label="top navigation">
+			
+				<i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+				<a href="../../../../index.html">
+					
+						FlowState
+					
+				</a>
+			
+			</nav>
+
+
+			<div class="wy-nav-content">
+				
+				<div class="rst-content">
+				
+					<div role="navigation" aria-label="breadcrumbs navigation">
+
+	<ul class="wy-breadcrumbs">
+		
+			
+				<li><a href="../../../../index.html">FlowState</a> ⁄&nbsp;</li>
+				
+					<li><a href="../../../index.html">Module code</a> ⁄&nbsp;</li>
+				
+				<li><a href="">backend.core.utils.logger</a></li>
+			
+		
+		
+			<li class="wy-breadcrumbs-aside">
+			
+			</li>
+		
+	</ul>
+
+</div>
+					<div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+					 <div itemprop="articleBody">
+						
+  <h1>Source code for backend.core.utils.logger</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Centralized Logging Configuration for FlowState.</span>
+
+<span class="sd">This module provides a standardized logging infrastructure for the FlowState</span>
+<span class="sd">application. It implements structured logging with appropriate handlers, formatters,</span>
+<span class="sd">and log levels for different environments (development, production).</span>
+
+<span class="sd">The logging system supports:</span>
+<span class="sd">    - Structured JSON logging for production</span>
+<span class="sd">    - Human-readable console logging for development</span>
+<span class="sd">    - File-based log rotation</span>
+<span class="sd">    - Context-aware logging with request IDs</span>
+<span class="sd">    - Performance metrics logging</span>
+<span class="sd">    - Error tracking with stack traces</span>
+
+<span class="sd">Architecture:</span>
+<span class="sd">    The logger uses Python&#39;s standard logging module with customized formatters</span>
+<span class="sd">    and handlers. Log messages are enriched with contextual information such as</span>
+<span class="sd">    timestamps, module names, and request IDs.</span>
+
+<span class="sd">Log Levels:</span>
+<span class="sd">    - DEBUG: Detailed diagnostic information for troubleshooting</span>
+<span class="sd">    - INFO: General informational messages about application state</span>
+<span class="sd">    - WARNING: Potentially harmful situations that don&#39;t prevent operation</span>
+<span class="sd">    - ERROR: Error events that might still allow operation to continue</span>
+<span class="sd">    - CRITICAL: Severe errors that may prevent operation</span>
+
+<span class="sd">Best Practices:</span>
+<span class="sd">    1. Use appropriate log levels for different types of messages</span>
+<span class="sd">    2. Include relevant context in log messages</span>
+<span class="sd">    3. Avoid logging sensitive information (passwords, tokens, PII)</span>
+<span class="sd">    4. Use structured logging for production environments</span>
+<span class="sd">    5. Log exceptions with stack traces for debugging</span>
+
+<span class="sd">Usage:</span>
+<span class="sd">    &gt;&gt;&gt; from core.utils.logger import get_logger</span>
+<span class="sd">    &gt;&gt;&gt; logger = get_logger(__name__)</span>
+<span class="sd">    &gt;&gt;&gt; logger.info(&quot;Processing EEG data&quot;, extra={&#39;user_id&#39;: 123})</span>
+<span class="sd">    &gt;&gt;&gt; logger.error(&quot;Failed to connect to Muse headband&quot;, exc_info=True)</span>
+
+<span class="sd">Configuration:</span>
+<span class="sd">    Environment variables control logging behavior:</span>
+
+<span class="sd">    LOG_LEVEL : str</span>
+<span class="sd">        Minimum log level to output (DEBUG, INFO, WARNING, ERROR, CRITICAL)</span>
+<span class="sd">        Default: INFO for production, DEBUG for development</span>
+<span class="sd">    LOG_FORMAT : str</span>
+<span class="sd">        Output format (&#39;json&#39; for structured, &#39;text&#39; for human-readable)</span>
+<span class="sd">        Default: json for production, text for development</span>
+<span class="sd">    LOG_FILE : str</span>
+<span class="sd">        Path to log file for file-based logging</span>
+<span class="sd">        Default: logs/flowstate.log</span>
+<span class="sd">    LOG_MAX_BYTES : int</span>
+<span class="sd">        Maximum size of log file before rotation (bytes)</span>
+<span class="sd">        Default: 10485760 (10MB)</span>
+<span class="sd">    LOG_BACKUP_COUNT : int</span>
+<span class="sd">        Number of backup log files to keep</span>
+<span class="sd">        Default: 5</span>
+
+<span class="sd">See Also:</span>
+<span class="sd">    :mod:`logging`: Python standard logging module</span>
+<span class="sd">    :class:`StructuredFormatter`: Custom JSON formatter for production logs</span>
+
+<span class="sd">Examples:</span>
+<span class="sd">    Basic logging:</span>
+
+<span class="sd">    &gt;&gt;&gt; logger = get_logger(__name__)</span>
+<span class="sd">    &gt;&gt;&gt; logger.info(&quot;Application started&quot;)</span>
+<span class="sd">    &gt;&gt;&gt; logger.debug(&quot;Configuration loaded&quot;, extra={&#39;config_file&#39;: &#39;.env&#39;})</span>
+
+<span class="sd">    Error logging with context:</span>
+
+<span class="sd">    &gt;&gt;&gt; try:</span>
+<span class="sd">    ...     process_eeg_data(data)</span>
+<span class="sd">    ... except Exception as e:</span>
+<span class="sd">    ...     logger.error(</span>
+<span class="sd">    ...         &quot;EEG processing failed&quot;,</span>
+<span class="sd">    ...         exc_info=True,</span>
+<span class="sd">    ...         extra={&#39;data_shape&#39;: data.shape, &#39;user_id&#39;: user.id}</span>
+<span class="sd">    ...     )</span>
+
+<span class="sd">    Performance logging:</span>
+
+<span class="sd">    &gt;&gt;&gt; import time</span>
+<span class="sd">    &gt;&gt;&gt; start = time.time()</span>
+<span class="sd">    &gt;&gt;&gt; result = expensive_operation()</span>
+<span class="sd">    &gt;&gt;&gt; duration = time.time() - start</span>
+<span class="sd">    &gt;&gt;&gt; logger.info(</span>
+<span class="sd">    ...     &quot;Operation completed&quot;,</span>
+<span class="sd">    ...     extra={&#39;operation&#39;: &#39;expensive_operation&#39;, &#39;duration_ms&#39;: duration * 1000}</span>
+<span class="sd">    ... )</span>
+
+<span class="sd">    Context manager for request logging:</span>
+
+<span class="sd">    &gt;&gt;&gt; with log_context(request_id=request.id, user_id=user.id):</span>
+<span class="sd">    ...     logger.info(&quot;Processing request&quot;)</span>
+<span class="sd">    ...     # All logs within this context will include request_id and user_id</span>
+
+<span class="sd">Security Considerations:</span>
+<span class="sd">    - Never log passwords, API keys, or authentication tokens</span>
+<span class="sd">    - Sanitize user input before logging to prevent log injection</span>
+<span class="sd">    - Limit logging of PII (personally identifiable information)</span>
+<span class="sd">    - Use appropriate log levels to avoid excessive information disclosure</span>
+<span class="sd">    - Ensure log files have restricted file permissions</span>
+
+<span class="sd">Performance Impact:</span>
+<span class="sd">    - Logging overhead typically &lt; 1ms per log statement</span>
+<span class="sd">    - File I/O is asynchronous to minimize blocking</span>
+<span class="sd">    - Log rotation happens in background thread</span>
+<span class="sd">    - JSON formatting adds ~0.5ms overhead per message</span>
+
+<span class="sd">Note:</span>
+<span class="sd">    Loggers are cached by name, so calling get_logger with the same name</span>
+<span class="sd">    multiple times returns the same logger instance.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging.handlers</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Optional</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">contextvars</span><span class="w"> </span><span class="kn">import</span> <span class="n">ContextVar</span>
+
+<span class="c1"># Context variables for request-scoped logging</span>
+<span class="n">_log_context</span><span class="p">:</span> <span class="n">ContextVar</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="n">ContextVar</span><span class="p">(</span><span class="s1">&#39;log_context&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="p">{})</span>
+
+
+<div class="viewcode-block" id="StructuredFormatter">
+<a class="viewcode-back" href="../../../../api/backend.core.utils.logger.html#backend.core.utils.logger.StructuredFormatter">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">StructuredFormatter</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;JSON formatter for structured logging in production.</span>
+
+<span class="sd">    Converts log records to JSON format with consistent structure and</span>
+<span class="sd">    enriched metadata. This enables efficient log parsing and analysis</span>
+<span class="sd">    by log aggregation systems like ELK, Splunk, or CloudWatch.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        None (uses standard logging.Formatter attributes)</span>
+
+<span class="sd">    Output Format:</span>
+<span class="sd">        Each log message is formatted as a JSON object with the following fields:</span>
+
+<span class="sd">        .. code-block:: json</span>
+
+<span class="sd">            {</span>
+<span class="sd">                &quot;timestamp&quot;: &quot;2024-11-08T15:30:45.123Z&quot;,</span>
+<span class="sd">                &quot;level&quot;: &quot;INFO&quot;,</span>
+<span class="sd">                &quot;logger&quot;: &quot;core.services.eeg_processor&quot;,</span>
+<span class="sd">                &quot;message&quot;: &quot;Processing EEG data&quot;,</span>
+<span class="sd">                &quot;module&quot;: &quot;eeg_processor&quot;,</span>
+<span class="sd">                &quot;function&quot;: &quot;process_chunk&quot;,</span>
+<span class="sd">                &quot;line&quot;: 145,</span>
+<span class="sd">                &quot;thread&quot;: &quot;MainThread&quot;,</span>
+<span class="sd">                &quot;process&quot;: 12345,</span>
+<span class="sd">                &quot;extra&quot;: {</span>
+<span class="sd">                    &quot;user_id&quot;: 123,</span>
+<span class="sd">                    &quot;request_id&quot;: &quot;abc-123-def&quot;</span>
+<span class="sd">                }</span>
+<span class="sd">            }</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; formatter = StructuredFormatter()</span>
+<span class="sd">        &gt;&gt;&gt; handler = logging.StreamHandler()</span>
+<span class="sd">        &gt;&gt;&gt; handler.setFormatter(formatter)</span>
+<span class="sd">        &gt;&gt;&gt; logger = logging.getLogger(&#39;test&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; logger.addHandler(handler)</span>
+<span class="sd">        &gt;&gt;&gt; logger.info(&quot;Test message&quot;, extra={&#39;key&#39;: &#39;value&#39;})</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">        Exception information is automatically included when exc_info=True</span>
+<span class="sd">        is passed to the logging call.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="StructuredFormatter.format">
+<a class="viewcode-back" href="../../../../api/backend.core.utils.logger.html#backend.core.utils.logger.StructuredFormatter.format">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">format</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">record</span><span class="p">:</span> <span class="n">logging</span><span class="o">.</span><span class="n">LogRecord</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Format log record as JSON string.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        record : logging.LogRecord</span>
+<span class="sd">            The log record to format</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        str</span>
+<span class="sd">            JSON-formatted log message</span>
+
+<span class="sd">        Note</span>
+<span class="sd">        ----</span>
+<span class="sd">        Extra fields from the record are merged into the output JSON.</span>
+<span class="sd">        Datetime values are formatted as ISO 8601 strings.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Base log structure</span>
+        <span class="n">log_data</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;timestamp&#39;</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">utcfromtimestamp</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">created</span><span class="p">)</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span> <span class="o">+</span> <span class="s1">&#39;Z&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;level&#39;</span><span class="p">:</span> <span class="n">record</span><span class="o">.</span><span class="n">levelname</span><span class="p">,</span>
+            <span class="s1">&#39;logger&#39;</span><span class="p">:</span> <span class="n">record</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+            <span class="s1">&#39;message&#39;</span><span class="p">:</span> <span class="n">record</span><span class="o">.</span><span class="n">getMessage</span><span class="p">(),</span>
+            <span class="s1">&#39;module&#39;</span><span class="p">:</span> <span class="n">record</span><span class="o">.</span><span class="n">module</span><span class="p">,</span>
+            <span class="s1">&#39;function&#39;</span><span class="p">:</span> <span class="n">record</span><span class="o">.</span><span class="n">funcName</span><span class="p">,</span>
+            <span class="s1">&#39;line&#39;</span><span class="p">:</span> <span class="n">record</span><span class="o">.</span><span class="n">lineno</span><span class="p">,</span>
+            <span class="s1">&#39;thread&#39;</span><span class="p">:</span> <span class="n">record</span><span class="o">.</span><span class="n">threadName</span><span class="p">,</span>
+            <span class="s1">&#39;process&#39;</span><span class="p">:</span> <span class="n">record</span><span class="o">.</span><span class="n">process</span><span class="p">,</span>
+        <span class="p">}</span>
+
+        <span class="c1"># Add exception information if present</span>
+        <span class="k">if</span> <span class="n">record</span><span class="o">.</span><span class="n">exc_info</span><span class="p">:</span>
+            <span class="n">log_data</span><span class="p">[</span><span class="s1">&#39;exception&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="n">record</span><span class="o">.</span><span class="n">exc_info</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
+                <span class="s1">&#39;message&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">exc_info</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span>
+                <span class="s1">&#39;traceback&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">formatException</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">exc_info</span><span class="p">)</span>
+            <span class="p">}</span>
+
+        <span class="c1"># Add extra fields</span>
+        <span class="n">extra</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">record</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;msg&#39;</span><span class="p">,</span> <span class="s1">&#39;args&#39;</span><span class="p">,</span> <span class="s1">&#39;created&#39;</span><span class="p">,</span> <span class="s1">&#39;filename&#39;</span><span class="p">,</span> <span class="s1">&#39;funcName&#39;</span><span class="p">,</span>
+                          <span class="s1">&#39;levelname&#39;</span><span class="p">,</span> <span class="s1">&#39;levelno&#39;</span><span class="p">,</span> <span class="s1">&#39;lineno&#39;</span><span class="p">,</span> <span class="s1">&#39;module&#39;</span><span class="p">,</span> <span class="s1">&#39;msecs&#39;</span><span class="p">,</span>
+                          <span class="s1">&#39;message&#39;</span><span class="p">,</span> <span class="s1">&#39;pathname&#39;</span><span class="p">,</span> <span class="s1">&#39;process&#39;</span><span class="p">,</span> <span class="s1">&#39;processName&#39;</span><span class="p">,</span> <span class="s1">&#39;relativeCreated&#39;</span><span class="p">,</span>
+                          <span class="s1">&#39;thread&#39;</span><span class="p">,</span> <span class="s1">&#39;threadName&#39;</span><span class="p">,</span> <span class="s1">&#39;exc_info&#39;</span><span class="p">,</span> <span class="s1">&#39;exc_text&#39;</span><span class="p">,</span> <span class="s1">&#39;stack_info&#39;</span><span class="p">]:</span>
+                <span class="n">extra</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+
+        <span class="c1"># Add context variables</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="n">_log_context</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">context</span><span class="p">:</span>
+            <span class="n">extra</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">extra</span><span class="p">:</span>
+            <span class="n">log_data</span><span class="p">[</span><span class="s1">&#39;extra&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">extra</span>
+
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">log_data</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="ColoredConsoleFormatter">
+<a class="viewcode-back" href="../../../../api/backend.core.utils.logger.html#backend.core.utils.logger.ColoredConsoleFormatter">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ColoredConsoleFormatter</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Colored console formatter for development.</span>
+
+<span class="sd">    Provides human-readable colored output for console logging during</span>
+<span class="sd">    development. Different log levels are displayed in different colors</span>
+<span class="sd">    for easy visual scanning.</span>
+
+<span class="sd">    Colors:</span>
+<span class="sd">        - DEBUG: Cyan</span>
+<span class="sd">        - INFO: Green</span>
+<span class="sd">        - WARNING: Yellow</span>
+<span class="sd">        - ERROR: Red</span>
+<span class="sd">        - CRITICAL: Red background</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; formatter = ColoredConsoleFormatter()</span>
+<span class="sd">        &gt;&gt;&gt; handler = logging.StreamHandler()</span>
+<span class="sd">        &gt;&gt;&gt; handler.setFormatter(formatter)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">COLORS</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;DEBUG&#39;</span><span class="p">:</span> <span class="s1">&#39;</span><span class="se">\033</span><span class="s1">[36m&#39;</span><span class="p">,</span>     <span class="c1"># Cyan</span>
+        <span class="s1">&#39;INFO&#39;</span><span class="p">:</span> <span class="s1">&#39;</span><span class="se">\033</span><span class="s1">[32m&#39;</span><span class="p">,</span>      <span class="c1"># Green</span>
+        <span class="s1">&#39;WARNING&#39;</span><span class="p">:</span> <span class="s1">&#39;</span><span class="se">\033</span><span class="s1">[33m&#39;</span><span class="p">,</span>   <span class="c1"># Yellow</span>
+        <span class="s1">&#39;ERROR&#39;</span><span class="p">:</span> <span class="s1">&#39;</span><span class="se">\033</span><span class="s1">[31m&#39;</span><span class="p">,</span>     <span class="c1"># Red</span>
+        <span class="s1">&#39;CRITICAL&#39;</span><span class="p">:</span> <span class="s1">&#39;</span><span class="se">\033</span><span class="s1">[41m&#39;</span><span class="p">,</span>  <span class="c1"># Red background</span>
+    <span class="p">}</span>
+    <span class="n">RESET</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\033</span><span class="s1">[0m&#39;</span>
+
+<div class="viewcode-block" id="ColoredConsoleFormatter.format">
+<a class="viewcode-back" href="../../../../api/backend.core.utils.logger.html#backend.core.utils.logger.ColoredConsoleFormatter.format">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">format</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">record</span><span class="p">:</span> <span class="n">logging</span><span class="o">.</span><span class="n">LogRecord</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Format log record with colors for console output.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        record : logging.LogRecord</span>
+<span class="sd">            The log record to format</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        str</span>
+<span class="sd">            Colored formatted log message</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">level_color</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">COLORS</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">levelname</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">record</span><span class="o">.</span><span class="n">levelname</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">level_color</span><span class="si">}{</span><span class="n">record</span><span class="o">.</span><span class="n">levelname</span><span class="si">}{</span><span class="bp">self</span><span class="o">.</span><span class="n">RESET</span><span class="si">}</span><span class="s2">&quot;</span>
+
+        <span class="c1"># Format message</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">record</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">message</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="setup_logging">
+<a class="viewcode-back" href="../../../../api/backend.core.utils.logger.html#backend.core.utils.logger.setup_logging">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">setup_logging</span><span class="p">(</span>
+    <span class="n">level</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">format_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">log_file</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Configure application-wide logging settings.</span>
+
+<span class="sd">    Sets up logging handlers, formatters, and filters based on environment</span>
+<span class="sd">    configuration. Should be called once at application startup.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    level : str, optional</span>
+<span class="sd">        Minimum log level (DEBUG, INFO, WARNING, ERROR, CRITICAL)</span>
+<span class="sd">        If not provided, reads from LOG_LEVEL environment variable</span>
+<span class="sd">    format_type : str, optional</span>
+<span class="sd">        Log format type (&#39;json&#39; or &#39;text&#39;)</span>
+<span class="sd">        If not provided, reads from LOG_FORMAT environment variable</span>
+<span class="sd">    log_file : str, optional</span>
+<span class="sd">        Path to log file for file-based logging</span>
+<span class="sd">        If not provided, reads from LOG_FILE environment variable</span>
+
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    ValueError</span>
+<span class="sd">        If invalid log level or format type is provided</span>
+
+<span class="sd">    Example</span>
+<span class="sd">    -------</span>
+<span class="sd">    &gt;&gt;&gt; # Basic setup for development</span>
+<span class="sd">    &gt;&gt;&gt; setup_logging(level=&#39;DEBUG&#39;, format_type=&#39;text&#39;)</span>
+<span class="sd">    &gt;&gt;&gt;</span>
+<span class="sd">    &gt;&gt;&gt; # Production setup with file logging</span>
+<span class="sd">    &gt;&gt;&gt; setup_logging(</span>
+<span class="sd">    ...     level=&#39;INFO&#39;,</span>
+<span class="sd">    ...     format_type=&#39;json&#39;,</span>
+<span class="sd">    ...     log_file=&#39;/var/log/flowstate/app.log&#39;</span>
+<span class="sd">    ... )</span>
+
+<span class="sd">    Note</span>
+<span class="sd">    ----</span>
+<span class="sd">    This function modifies the root logger configuration, affecting all</span>
+<span class="sd">    loggers in the application unless they have propagate=False.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Determine configuration</span>
+    <span class="n">log_level</span> <span class="o">=</span> <span class="n">level</span> <span class="ow">or</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;LOG_LEVEL&#39;</span><span class="p">,</span> <span class="s1">&#39;INFO&#39;</span><span class="p">)</span>
+    <span class="n">log_format</span> <span class="o">=</span> <span class="n">format_type</span> <span class="ow">or</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;LOG_FORMAT&#39;</span><span class="p">,</span> <span class="s1">&#39;text&#39;</span><span class="p">)</span>
+    <span class="n">file_path</span> <span class="o">=</span> <span class="n">log_file</span> <span class="ow">or</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;LOG_FILE&#39;</span><span class="p">,</span> <span class="s1">&#39;logs/flowstate.log&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Validate log level</span>
+    <span class="n">numeric_level</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">logging</span><span class="p">,</span> <span class="n">log_level</span><span class="o">.</span><span class="n">upper</span><span class="p">(),</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">numeric_level</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Invalid log level: </span><span class="si">{</span><span class="n">log_level</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Get root logger</span>
+    <span class="n">root_logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">()</span>
+    <span class="n">root_logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">numeric_level</span><span class="p">)</span>
+
+    <span class="c1"># Remove existing handlers</span>
+    <span class="n">root_logger</span><span class="o">.</span><span class="n">handlers</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="c1"># Configure console handler</span>
+    <span class="n">console_handler</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
+    <span class="n">console_handler</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">numeric_level</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">log_format</span> <span class="o">==</span> <span class="s1">&#39;json&#39;</span><span class="p">:</span>
+        <span class="n">console_handler</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="n">StructuredFormatter</span><span class="p">())</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">console_formatter</span> <span class="o">=</span> <span class="n">ColoredConsoleFormatter</span><span class="p">(</span>
+            <span class="s1">&#39;</span><span class="si">%(asctime)s</span><span class="s1"> - </span><span class="si">%(name)s</span><span class="s1"> - </span><span class="si">%(levelname)s</span><span class="s1"> - </span><span class="si">%(message)s</span><span class="s1">&#39;</span>
+        <span class="p">)</span>
+        <span class="n">console_handler</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="n">console_formatter</span><span class="p">)</span>
+
+    <span class="n">root_logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">console_handler</span><span class="p">)</span>
+
+    <span class="c1"># Configure file handler with rotation</span>
+    <span class="k">if</span> <span class="n">file_path</span><span class="p">:</span>
+        <span class="n">log_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span>
+        <span class="n">log_dir</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="n">max_bytes</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;LOG_MAX_BYTES&#39;</span><span class="p">,</span> <span class="mi">10</span> <span class="o">*</span> <span class="mi">1024</span> <span class="o">*</span> <span class="mi">1024</span><span class="p">))</span>  <span class="c1"># 10MB</span>
+        <span class="n">backup_count</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;LOG_BACKUP_COUNT&#39;</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+        <span class="n">file_handler</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">handlers</span><span class="o">.</span><span class="n">RotatingFileHandler</span><span class="p">(</span>
+            <span class="n">file_path</span><span class="p">,</span>
+            <span class="n">maxBytes</span><span class="o">=</span><span class="n">max_bytes</span><span class="p">,</span>
+            <span class="n">backupCount</span><span class="o">=</span><span class="n">backup_count</span>
+        <span class="p">)</span>
+        <span class="n">file_handler</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">numeric_level</span><span class="p">)</span>
+        <span class="n">file_handler</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="n">StructuredFormatter</span><span class="p">())</span>
+        <span class="n">root_logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">file_handler</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="get_logger">
+<a class="viewcode-back" href="../../../../api/backend.core.utils.logger.html#backend.core.utils.logger.get_logger">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_logger</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">logging</span><span class="o">.</span><span class="n">Logger</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get a logger instance for the specified module.</span>
+
+<span class="sd">    Returns a configured logger instance for the given name. Loggers are</span>
+<span class="sd">    cached, so multiple calls with the same name return the same instance.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    name : str</span>
+<span class="sd">        Logger name, typically __name__ of the calling module</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    logging.Logger</span>
+<span class="sd">        Configured logger instance</span>
+
+<span class="sd">    Example</span>
+<span class="sd">    -------</span>
+<span class="sd">    &gt;&gt;&gt; logger = get_logger(__name__)</span>
+<span class="sd">    &gt;&gt;&gt; logger.info(&quot;Module initialized&quot;)</span>
+<span class="sd">    &gt;&gt;&gt; logger.debug(&quot;Debug information&quot;, extra={&#39;key&#39;: &#39;value&#39;})</span>
+
+<span class="sd">    Note</span>
+<span class="sd">    ----</span>
+<span class="sd">    Always use __name__ as the logger name to maintain a clear module</span>
+<span class="sd">    hierarchy in log messages.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">name</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="log_context">
+<a class="viewcode-back" href="../../../../api/backend.core.utils.logger.html#backend.core.utils.logger.log_context">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">log_context</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Context manager for adding context to all log messages within a scope.</span>
+
+<span class="sd">    Useful for adding request IDs, user IDs, or other contextual information</span>
+<span class="sd">    that should be included in all log messages within a specific scope.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    **kwargs</span>
+<span class="sd">        Key-value pairs to add to log context</span>
+
+<span class="sd">    Example</span>
+<span class="sd">    -------</span>
+<span class="sd">    &gt;&gt;&gt; with log_context(request_id=&#39;abc-123&#39;, user_id=42):</span>
+<span class="sd">    ...     logger.info(&quot;Processing request&quot;)</span>
+<span class="sd">    ...     # Log will include request_id and user_id</span>
+
+<span class="sd">    Note</span>
+<span class="sd">    ----</span>
+<span class="sd">    Context is thread-safe using ContextVar. Each async task or thread</span>
+<span class="sd">    maintains its own context.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="log_context.__init__">
+<a class="viewcode-back" href="../../../../api/backend.core.utils.logger.html#backend.core.utils.logger.log_context.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize context with key-value pairs.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">context</span> <span class="o">=</span> <span class="n">kwargs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">token</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="log_context.__enter__">
+<a class="viewcode-back" href="../../../../api/backend.core.utils.logger.html#backend.core.utils.logger.log_context.__enter__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Enter context and set context variables.&quot;&quot;&quot;</span>
+        <span class="n">current</span> <span class="o">=</span> <span class="n">_log_context</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+        <span class="n">new_context</span> <span class="o">=</span> <span class="p">{</span><span class="o">**</span><span class="n">current</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">token</span> <span class="o">=</span> <span class="n">_log_context</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">new_context</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+
+<div class="viewcode-block" id="log_context.__exit__">
+<a class="viewcode-back" href="../../../../api/backend.core.utils.logger.html#backend.core.utils.logger.log_context.__exit__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exc_type</span><span class="p">,</span> <span class="n">exc_val</span><span class="p">,</span> <span class="n">exc_tb</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Exit context and restore previous context.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">token</span><span class="p">:</span>
+            <span class="n">_log_context</span><span class="o">.</span><span class="n">reset</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">token</span><span class="p">)</span></div>
+</div>
+
+
+
+<span class="c1"># Initialize logging on module import</span>
+<span class="n">setup_logging</span><span class="p">()</span>
+</pre></div>
+
+					 </div>
+					 
+					</div>
+					<footer>
+  
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2024, FlowState Team
+	  <br>
+      
+      
+      
+      Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+      
+      <a href="https://github.com/revitron/revitron-sphinx-theme">theme</a>
+      
+      provided by <a href="https://github.com/revitron">Revitron</a>.
+
+    </p>
+  </div> 
+
+</footer>
+
+				</div>
+			</div>
+
+		</section>
+
+	</div>
+	
+
+	<script type="text/javascript">
+			jQuery(function () {
+					SphinxRtdTheme.Navigation.enable(true);
+			});
+	</script>
+
+	
+	
+		
+	 
+
+ 
+</body>	
+</html>

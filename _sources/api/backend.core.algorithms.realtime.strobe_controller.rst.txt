@@ -1,0 +1,7 @@
+backend.core.algorithms.realtime.strobe\_controller module
+==========================================================
+
+.. automodule:: backend.core.algorithms.realtime.strobe_controller
+   :members:
+   :show-inheritance:
+   :undoc-members:

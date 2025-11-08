@@ -1,0 +1,13 @@
+backend.core.inputs namespace
+=============================
+
+.. py:module:: backend.core.inputs
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   backend.core.inputs.health
+   backend.core.inputs.performance

@@ -1,0 +1,7 @@
+backend.api.middleware.api module
+=================================
+
+.. automodule:: backend.api.middleware.api
+   :members:
+   :show-inheritance:
+   :undoc-members:

@@ -1,0 +1,7 @@
+backend.core.algorithms.realtime.binaural\_beats\_generator module
+==================================================================
+
+.. automodule:: backend.core.algorithms.realtime.binaural_beats_generator
+   :members:
+   :show-inheritance:
+   :undoc-members:

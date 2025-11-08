@@ -1,0 +1,7 @@
+backend.core.algorithms.realtime.flow\_state\_detector module
+=============================================================
+
+.. automodule:: backend.core.algorithms.realtime.flow_state_detector
+   :members:
+   :show-inheritance:
+   :undoc-members:

@@ -1,0 +1,7 @@
+backend.core.inputs.health.providers.shimmer module
+===================================================
+
+.. automodule:: backend.core.inputs.health.providers.shimmer
+   :members:
+   :show-inheritance:
+   :undoc-members:

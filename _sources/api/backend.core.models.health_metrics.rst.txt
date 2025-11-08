@@ -1,0 +1,7 @@
+backend.core.models.health\_metrics module
+==========================================
+
+.. automodule:: backend.core.models.health_metrics
+   :members:
+   :show-inheritance:
+   :undoc-members:

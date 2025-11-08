@@ -1,0 +1,7 @@
+backend.core.research.research\_system module
+=============================================
+
+.. automodule:: backend.core.research.research_system
+   :members:
+   :show-inheritance:
+   :undoc-members:

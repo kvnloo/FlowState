@@ -1,0 +1,7 @@
+backend.core.inputs.health.sync\_service module
+===============================================
+
+.. automodule:: backend.core.inputs.health.sync_service
+   :members:
+   :show-inheritance:
+   :undoc-members:

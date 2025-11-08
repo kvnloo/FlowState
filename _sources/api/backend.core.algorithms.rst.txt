@@ -1,0 +1,13 @@
+backend.core.algorithms namespace
+=================================
+
+.. py:module:: backend.core.algorithms
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   backend.core.algorithms.flow
+   backend.core.algorithms.realtime

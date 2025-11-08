@@ -1,0 +1,7 @@
+backend.core.algorithms.flow.recovery\_system module
+====================================================
+
+.. automodule:: backend.core.algorithms.flow.recovery_system
+   :members:
+   :show-inheritance:
+   :undoc-members:

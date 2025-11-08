@@ -1,0 +1,17 @@
+backend.core.algorithms.flow namespace
+======================================
+
+.. py:module:: backend.core.algorithms.flow
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   backend.core.algorithms.flow.attention_maximizer
+   backend.core.algorithms.flow.chaos_system
+   backend.core.algorithms.flow.recovery_system
+   backend.core.algorithms.flow.stability_system
+   backend.core.algorithms.flow.visual_stimulation
+   backend.core.algorithms.flow.youtube_focus

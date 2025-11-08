@@ -1,0 +1,12 @@
+backend.api.middleware namespace
+================================
+
+.. py:module:: backend.api.middleware
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   backend.api.middleware.api

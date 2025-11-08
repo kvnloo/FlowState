@@ -1,0 +1,13 @@
+backend.core.models namespace
+=============================
+
+.. py:module:: backend.core.models
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   backend.core.models.base
+   backend.core.models.health_metrics

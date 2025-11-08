@@ -1,0 +1,7 @@
+backend.api.eeg\_endpoints module
+=================================
+
+.. automodule:: backend.api.eeg_endpoints
+   :members:
+   :show-inheritance:
+   :undoc-members:

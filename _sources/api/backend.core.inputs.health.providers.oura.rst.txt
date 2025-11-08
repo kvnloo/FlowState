@@ -1,0 +1,7 @@
+backend.core.inputs.health.providers.oura module
+================================================
+
+.. automodule:: backend.core.inputs.health.providers.oura
+   :members:
+   :show-inheritance:
+   :undoc-members:

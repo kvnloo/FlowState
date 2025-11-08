@@ -1,0 +1,7 @@
+backend.core.inputs.health.providers.myfitnesspal module
+========================================================
+
+.. automodule:: backend.core.inputs.health.providers.myfitnesspal
+   :members:
+   :show-inheritance:
+   :undoc-members:

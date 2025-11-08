@@ -1,0 +1,7 @@
+backend.core.inputs.health.providers.whoop module
+=================================================
+
+.. automodule:: backend.core.inputs.health.providers.whoop
+   :members:
+   :show-inheritance:
+   :undoc-members:

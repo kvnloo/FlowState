@@ -1,0 +1,12 @@
+backend.core.research namespace
+===============================
+
+.. py:module:: backend.core.research
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   backend.core.research.research_system

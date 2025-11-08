@@ -1,0 +1,16 @@
+backend.core.utils package
+==========================
+
+.. automodule:: backend.core.utils
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   backend.core.utils.logger
+   backend.core.utils.validators

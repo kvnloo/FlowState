@@ -1,0 +1,7 @@
+backend.quantum.quantum\_fourier\_transform module
+==================================================
+
+.. automodule:: backend.quantum.quantum_fourier_transform
+   :members:
+   :show-inheritance:
+   :undoc-members:

@@ -1,0 +1,7 @@
+backend.core.algorithms.flow.attention\_maximizer module
+========================================================
+
+.. automodule:: backend.core.algorithms.flow.attention_maximizer
+   :members:
+   :show-inheritance:
+   :undoc-members:

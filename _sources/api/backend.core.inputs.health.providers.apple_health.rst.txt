@@ -1,0 +1,7 @@
+backend.core.inputs.health.providers.apple\_health module
+=========================================================
+
+.. automodule:: backend.core.inputs.health.providers.apple_health
+   :members:
+   :show-inheritance:
+   :undoc-members:

@@ -1,0 +1,7 @@
+backend.core.algorithms.flow.youtube\_focus module
+==================================================
+
+.. automodule:: backend.core.algorithms.flow.youtube_focus
+   :members:
+   :show-inheritance:
+   :undoc-members:

@@ -1,0 +1,7 @@
+backend.core.utils.logger module
+================================
+
+.. automodule:: backend.core.utils.logger
+   :members:
+   :show-inheritance:
+   :undoc-members:

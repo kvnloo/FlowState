@@ -1,0 +1,7 @@
+backend.api.health.repository module
+====================================
+
+.. automodule:: backend.api.health.repository
+   :members:
+   :show-inheritance:
+   :undoc-members:

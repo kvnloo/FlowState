@@ -1,0 +1,7 @@
+backend.core.inputs.performance.kovaak module
+=============================================
+
+.. automodule:: backend.core.inputs.performance.kovaak
+   :members:
+   :show-inheritance:
+   :undoc-members:

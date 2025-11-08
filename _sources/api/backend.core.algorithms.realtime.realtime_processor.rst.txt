@@ -1,0 +1,7 @@
+backend.core.algorithms.realtime.realtime\_processor module
+===========================================================
+
+.. automodule:: backend.core.algorithms.realtime.realtime_processor
+   :members:
+   :show-inheritance:
+   :undoc-members:

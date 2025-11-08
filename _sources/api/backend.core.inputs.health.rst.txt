@@ -1,0 +1,20 @@
+backend.core.inputs.health namespace
+====================================
+
+.. py:module:: backend.core.inputs.health
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   backend.core.inputs.health.providers
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   backend.core.inputs.health.sync_service

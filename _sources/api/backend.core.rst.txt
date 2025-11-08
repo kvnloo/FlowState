@@ -1,0 +1,26 @@
+backend.core package
+====================
+
+.. automodule:: backend.core
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   backend.core.models
+   backend.core.research
+   backend.core.utils
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   backend.core.helpers
+   backend.core.settings

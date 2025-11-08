@@ -1,0 +1,22 @@
+backend.core.inputs.health.providers namespace
+==============================================
+
+.. py:module:: backend.core.inputs.health.providers
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   backend.core.inputs.health.providers.apple_health
+   backend.core.inputs.health.providers.base
+   backend.core.inputs.health.providers.data_provider
+   backend.core.inputs.health.providers.google_fit
+   backend.core.inputs.health.providers.muse
+   backend.core.inputs.health.providers.myfitnesspal
+   backend.core.inputs.health.providers.oura
+   backend.core.inputs.health.providers.shimmer
+   backend.core.inputs.health.providers.tobii
+   backend.core.inputs.health.providers.utils
+   backend.core.inputs.health.providers.whoop

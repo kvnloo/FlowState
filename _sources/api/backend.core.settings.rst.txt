@@ -1,0 +1,7 @@
+backend.core.settings module
+============================
+
+.. automodule:: backend.core.settings
+   :members:
+   :show-inheritance:
+   :undoc-members:

@@ -1,0 +1,13 @@
+backend.quantum namespace
+=========================
+
+.. py:module:: backend.quantum
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   backend.quantum.qaoa_optimization
+   backend.quantum.quantum_fourier_transform

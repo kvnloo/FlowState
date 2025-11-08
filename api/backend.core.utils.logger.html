@@ -1,0 +1,771 @@
+
+	
+
+<!DOCTYPE html>
+<html class="writer-html5 dark" lang="en" >
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+		<title>backend.core.utils.logger module &mdash; FlowState 0.1.0 documentation</title>
+	
+	
+	
+	<link rel="stylesheet" href="../_static/default" type="text/css" />
+	<link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+	<link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+	<link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+
+	
+	
+	
+	
+
+	
+	<!--[if lt IE 9]>
+		<script src="../_static/js/html5shiv.min.js"></script>
+	<![endif]-->
+	
+		
+			<script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+				<script src="../_static/documentation_options.js?v=01f34227"></script>
+				<script src="../_static/doctools.js?v=9bcbadda"></script>
+				<script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+		
+		<script type="text/javascript" src="../_static/js/theme.js"></script>
+
+		
+		<link rel="index" title="Index" href="../genindex.html" />
+		<link rel="search" title="Search" href="../search.html" /> 
+</head>
+<body class="wy-body-for-nav">
+
+
+	 
+	<div class="wy-grid-for-nav">
+		
+		<nav data-toggle="wy-nav-shift" class="wy-nav-side">
+			<div class="wy-side-scroll">
+				<div class="wy-side-nav-search">
+					
+						<div class="brand">
+							<a href="../index.html">
+							
+								FlowState
+							
+							</a>
+						</div>
+						
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+					
+				</div>
+				
+				<div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+					
+						
+						
+							
+						
+						
+							<p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../README.html">FlowState Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../README.html#building-documentation">Building Documentation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../README.html#prerequisites">Prerequisites</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../README.html#viewing-documentation">Viewing Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../README.html#documentation-structure">Documentation Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../README.html#linking-to-documentation-pages">Linking to Documentation Pages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../README.html#in-markdown-files-md">In Markdown Files (.md)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../README.html#in-rst-files-rst">In RST Files (.rst)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../README.html#quick-links">Quick Links</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../README.html#contributing">Contributing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../README.html#automated-building">Automated Building</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../development/index.html">Development Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../development/llm_workflow.html">LLM-Based Development Workflow</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../development/llm_workflow.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../development/llm_workflow.html#workflow-stages">Workflow Stages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../development/llm_workflow.html#ideation-and-planning">1. Ideation and Planning</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/llm_workflow.html#prompt-engineering">2. Prompt Engineering</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/llm_workflow.html#code-generation">3. Code Generation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/llm_workflow.html#testing-and-refinement">4. Testing and Refinement</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../development/llm_workflow.html#best-practices">Best Practices</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../development/llm_workflow.html#integration-with-priority-queue">Integration with Priority Queue</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../development/llm_workflow.html#templates">Templates</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../development/llm_workflow.html#feature-development-template">Feature Development Template</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/llm_workflow.html#debugging-template">Debugging Template</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../development/llm_workflow.html#workflow-optimization">Workflow Optimization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../development/priority_queue.html">FlowState Development Priority Queue</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../development/priority_queue.html#core-philosophy">Core Philosophy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../development/priority_queue.html#priority-1-eeg-foundation-critical-path">Priority 1: EEG Foundation 🧠 (Critical Path)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../development/priority_queue.html#eeg-signal-processing">1.1 EEG Signal Processing</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/priority_queue.html#alpha-theta-optimization">1.2 Alpha/Theta Optimization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/priority_queue.html#basic-neural-entrainment">1.3 Basic Neural Entrainment</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../development/priority_queue.html#priority-2-first-feedback-loop-high-impact">Priority 2: First Feedback Loop 🔄 (High Impact)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../development/priority_queue.html#real-time-state-detection">2.1 Real-time State Detection</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/priority_queue.html#adaptive-entrainment">2.2 Adaptive Entrainment</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../development/priority_queue.html#priority-3-recovery-readiness-foundation">Priority 3: Recovery &amp; Readiness 🌙 (Foundation)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../development/priority_queue.html#sleep-quality-analysis">3.1 Sleep Quality Analysis</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/priority_queue.html#hrv-integration">3.2 HRV Integration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/priority_queue.html#recovery-and-integration">3.3 Recovery and Integration</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../development/priority_queue.html#priority-4-advanced-neural-optimization-enhancement">Priority 4: Advanced Neural Optimization 🌊 (Enhancement)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../development/priority_queue.html#entropy-based-flow-detection">4.1 Entropy-Based Flow Detection</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/priority_queue.html#cross-hemisphere-synchronization">4.2 Cross-Hemisphere Synchronization</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../development/priority_queue.html#priority-5-cognitive-enhancement-advanced-features">Priority 5: Cognitive Enhancement 🎯 (Advanced Features)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../development/priority_queue.html#cognitive-load-optimizer">5.1 Cognitive Load Optimizer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/priority_queue.html#attention-density-maximizer">5.2 Attention Density Maximizer</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../development/priority_queue.html#priority-6-environmental-optimization-supporting-systems">Priority 6: Environmental Optimization 🌟 (Supporting Systems)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../development/priority_queue.html#circadian-rhythm-synchronization">6.1 Circadian Rhythm Synchronization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/priority_queue.html#environmental-control-system">6.2 Environmental Control System</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../development/priority_queue.html#priority-7-long-term-optimization-future-enhancement">Priority 7: Long-term Optimization 📈 (Future Enhancement)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../development/priority_queue.html#machine-learning-flow-predictor">7.1 Machine Learning Flow Predictor</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/priority_queue.html#flow-state-analytics">7.2 Flow State Analytics</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../development/priority_queue.html#technical-implementation-notes">Technical Implementation Notes</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../development/priority_queue.html#core-systems">Core Systems</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/priority_queue.html#key-performance-indicators">Key Performance Indicators</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../development/priority_queue.html#research-foundation">Research Foundation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../development/priority_queue_2.html">Enhanced Flow State Optimization System</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../development/priority_queue_2.html#current-implementation-status-updated">Current Implementation Status (Updated)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../development/priority_queue_2.html#priority-queue-ranked-by-impact">Priority Queue (Ranked by Impact)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../development/priority_queue_2.html#immediate-priorities-high-impact-low-effort">Immediate Priorities (High Impact/Low Effort)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/priority_queue_2.html#medium-term-goals-high-impact-medium-effort">Medium-term Goals (High Impact/Medium Effort)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/priority_queue_2.html#long-term-vision-breakthrough-impact">Long-term Vision (Breakthrough Impact)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../development/priority_queue_2.html#enhancement-ideas">Enhancement Ideas</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../development/priority_queue_2.html#neuroscience-inspired-optimizations">Neuroscience-Inspired Optimizations</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/priority_queue_2.html#technical-optimizations">Technical Optimizations</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../development/priority_queue_2.html#research-integration-points">Research Integration Points</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../development/priority_queue_2.html#impact-metrics">Impact Metrics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../development/priority_queue_2.html#todo-high-priority-enhancements">TODO: High-Priority Enhancements</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../development/implementation_status.html">Implementation Status</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../development/implementation_status.html#core-systems">Core Systems</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../development/implementation_status.html#neural-entrainment">Neural Entrainment</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/implementation_status.html#biometric-integration">Biometric Integration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/implementation_status.html#flow-state-detection-flow-state-detector-py">Flow State Detection (<code class="docutils literal notranslate"><span class="pre">flow_state_detector.py</span></code>)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../development/implementation_status.html#frontend-integration">Frontend Integration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../development/implementation_status.html#upcoming-features">Upcoming Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../development/implementation_status.html#recent-updates">Recent Updates</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../development/completed.html">Completed Features</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../development/completed.html#core-systems">Core Systems</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../development/completed.html#neural-entrainment-system">1. Neural Entrainment System</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/completed.html#attention-density-maximizer">2. Attention Density Maximizer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/completed.html#flow-state-stability-system">3. Flow State Stability System</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/completed.html#recovery-and-integration-system">4. Recovery and Integration System</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/completed.html#research-system">5. Research System</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/completed.html#chaos-system">6. Chaos System</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../development/completed.html#integration-features">Integration Features</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../development/completed.html#hardware-integration">1. Hardware Integration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/completed.html#data-processing">2. Data Processing</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/completed.html#user-interface">3. User Interface</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../development/completed.html#technical-features">Technical Features</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../development/completed.html#performance-optimization">1. Performance Optimization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/completed.html#data-management">2. Data Management</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/completed.html#security">3. Security</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../development/completed.html#documentation">Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../development/planned.html">Planned Features</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../development/planned.html#core-systems">Core Systems</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../development/planned.html#advanced-neural-entrainment">1. Advanced Neural Entrainment</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/planned.html#enhanced-flow-detection">2. Enhanced Flow Detection</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/planned.html#cognitive-performance-optimization">3. Cognitive Performance Optimization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/planned.html#advanced-recovery-system">4. Advanced Recovery System</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../development/planned.html#integration-features">Integration Features</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../development/planned.html#extended-hardware-support">1. Extended Hardware Support</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/planned.html#advanced-data-processing">2. Advanced Data Processing</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/planned.html#enhanced-user-experience">3. Enhanced User Experience</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../development/planned.html#research-integration">Research Integration</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../development/planned.html#advanced-research-system">1. Advanced Research System</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/planned.html#knowledge-integration">2. Knowledge Integration</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../development/planned.html#performance-features">Performance Features</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../development/planned.html#system-optimization">1. System Optimization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/planned.html#advanced-analytics">2. Advanced Analytics</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/planned.html#integration-apis">3. Integration APIs</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../development/planned.html#user-personalization">User Personalization</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../development/planned.html#advanced-profiles">1. Advanced Profiles</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/planned.html#social-features">2. Social Features</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../development/planned.html#documentation-and-support">Documentation and Support</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../development/planned.html#enhanced-documentation">1. Enhanced Documentation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/planned.html#development-tools">2. Development Tools</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../development/FEATURES.html">FlowState Features &amp; Implementation Status</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../development/FEATURES.html#core-systems">Core Systems</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../development/FEATURES.html#neural-entrainment-system">1. Neural Entrainment System</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/FEATURES.html#flow-state-detection-stability">2. Flow State Detection &amp; Stability</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/FEATURES.html#attention-density-maximizer">3. Attention Density Maximizer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/FEATURES.html#recovery-and-integration-system">4. Recovery and Integration System</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/FEATURES.html#chaos-system">5. Chaos System</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/FEATURES.html#eeg-foundation">6. EEG Foundation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/FEATURES.html#id1">7. Attention Density Maximizer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/FEATURES.html#id2">8. Recovery and Integration System</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/FEATURES.html#research-system">9. Research System</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/FEATURES.html#biometric-integration">10. Biometric Integration</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../development/FEATURES.html#integration-features">Integration Features</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../development/FEATURES.html#hardware-integration">1. Hardware Integration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/FEATURES.html#data-processing">2. Data Processing</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/FEATURES.html#user-interface">3. User Interface</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../development/FEATURES.html#technical-features">Technical Features</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../development/FEATURES.html#performance-optimization">1. Performance Optimization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/FEATURES.html#data-management">2. Data Management</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/FEATURES.html#security">3. Security</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../development/FEATURES.html#documentation">Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../development/FEATURES.html#integration-status">Integration Status</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../development/FEATURES.html#data-flow">Data Flow</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../development/FEATURES.html#upcoming-features">Upcoming Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../development/FEATURES.html#version-history">Version History</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../development/in-line-docs-template.html">FlowState In-Line Documentation Standards</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../development/in-line-docs-template.html#module-level-documentation">Module Level Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../development/in-line-docs-template.html#class-level-documentation">Class Level Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../development/in-line-docs-template.html#method-level-documentation">Method Level Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../development/in-line-docs-template.html#documentation-guidelines">Documentation Guidelines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../development/in-line-docs-template.html#style-conventions">Style Conventions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Architecture</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../architecture/index.html">Architecture Documentation</a></li>
+</ul>
+
+						
+					
+				</div>
+				
+			</div>
+		</nav>
+
+		<section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+			
+			<nav class="wy-nav-top" aria-label="top navigation">
+			
+				<i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+				<a href="../index.html">
+					
+						FlowState
+					
+				</a>
+			
+			</nav>
+
+
+			<div class="wy-nav-content">
+				
+				<div class="rst-content">
+				
+					<div role="navigation" aria-label="breadcrumbs navigation">
+
+	<ul class="wy-breadcrumbs">
+		
+			
+				<li><a href="../index.html">FlowState</a> ⁄&nbsp;</li>
+				
+				<li><a href="">backend.core.utils.logger module</a></li>
+			
+		
+		
+			<li class="wy-breadcrumbs-aside">
+			
+			</li>
+		
+	</ul>
+
+</div>
+					<div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+					 <div itemprop="articleBody">
+						
+  <section id="module-backend.core.utils.logger">
+<span id="backend-core-utils-logger-module"></span><h1>backend.core.utils.logger module<a class="headerlink" href="#module-backend.core.utils.logger" title="Link to this heading">¶</a></h1>
+<p>Centralized Logging Configuration for FlowState.</p>
+<p>This module provides a standardized logging infrastructure for the FlowState
+application. It implements structured logging with appropriate handlers, formatters,
+and log levels for different environments (development, production).</p>
+<dl>
+<dt>The logging system supports:</dt><dd><ul class="simple">
+<li><p>Structured JSON logging for production</p></li>
+<li><p>Human-readable console logging for development</p></li>
+<li><p>File-based log rotation</p></li>
+<li><p>Context-aware logging with request IDs</p></li>
+<li><p>Performance metrics logging</p></li>
+<li><p>Error tracking with stack traces</p></li>
+</ul>
+</dd>
+<dt>Architecture:</dt><dd><p>The logger uses Python’s standard logging module with customized formatters
+and handlers. Log messages are enriched with contextual information such as
+timestamps, module names, and request IDs.</p>
+</dd>
+<dt>Log Levels:</dt><dd><ul class="simple">
+<li><p>DEBUG: Detailed diagnostic information for troubleshooting</p></li>
+<li><p>INFO: General informational messages about application state</p></li>
+<li><p>WARNING: Potentially harmful situations that don’t prevent operation</p></li>
+<li><p>ERROR: Error events that might still allow operation to continue</p></li>
+<li><p>CRITICAL: Severe errors that may prevent operation</p></li>
+</ul>
+</dd>
+<dt>Best Practices:</dt><dd><ol class="arabic simple">
+<li><p>Use appropriate log levels for different types of messages</p></li>
+<li><p>Include relevant context in log messages</p></li>
+<li><p>Avoid logging sensitive information (passwords, tokens, PII)</p></li>
+<li><p>Use structured logging for production environments</p></li>
+<li><p>Log exceptions with stack traces for debugging</p></li>
+</ol>
+</dd>
+<dt>Usage:</dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">core.utils.logger</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_logger</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">logger</span> <span class="o">=</span> <span class="n">get_logger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Processing EEG data&quot;</span><span class="p">,</span> <span class="n">extra</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;user_id&#39;</span><span class="p">:</span> <span class="mi">123</span><span class="p">})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Failed to connect to Muse headband&quot;</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd>
+<dt>Configuration:</dt><dd><p>Environment variables control logging behavior:</p>
+<dl class="simple">
+<dt>LOG_LEVEL<span class="classifier">str</span></dt><dd><p>Minimum log level to output (DEBUG, INFO, WARNING, ERROR, CRITICAL)
+Default: INFO for production, DEBUG for development</p>
+</dd>
+<dt>LOG_FORMAT<span class="classifier">str</span></dt><dd><p>Output format (‘json’ for structured, ‘text’ for human-readable)
+Default: json for production, text for development</p>
+</dd>
+<dt>LOG_FILE<span class="classifier">str</span></dt><dd><p>Path to log file for file-based logging
+Default: logs/flowstate.log</p>
+</dd>
+<dt>LOG_MAX_BYTES<span class="classifier">int</span></dt><dd><p>Maximum size of log file before rotation (bytes)
+Default: 10485760 (10MB)</p>
+</dd>
+<dt>LOG_BACKUP_COUNT<span class="classifier">int</span></dt><dd><p>Number of backup log files to keep
+Default: 5</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging</span></code>: Python standard logging module
+<a class="reference internal" href="#backend.core.utils.logger.StructuredFormatter" title="backend.core.utils.logger.StructuredFormatter"><code class="xref py py-class docutils literal notranslate"><span class="pre">StructuredFormatter</span></code></a>: Custom JSON formatter for production logs</p>
+</div>
+<p class="rubric">Examples</p>
+<p>Basic logging:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">logger</span> <span class="o">=</span> <span class="n">get_logger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Application started&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Configuration loaded&quot;</span><span class="p">,</span> <span class="n">extra</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;config_file&#39;</span><span class="p">:</span> <span class="s1">&#39;.env&#39;</span><span class="p">})</span>
+</pre></div>
+</div>
+<p>Error logging with context:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">try</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">process_eeg_data</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="gp">... </span><span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+<span class="gp">... </span>        <span class="s2">&quot;EEG processing failed&quot;</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="n">extra</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;data_shape&#39;</span><span class="p">:</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="s1">&#39;user_id&#39;</span><span class="p">:</span> <span class="n">user</span><span class="o">.</span><span class="n">id</span><span class="p">}</span>
+<span class="gp">... </span>    <span class="p">)</span>
+</pre></div>
+</div>
+<p>Performance logging:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">expensive_operation</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">duration</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="s2">&quot;Operation completed&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">extra</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;operation&#39;</span><span class="p">:</span> <span class="s1">&#39;expensive_operation&#39;</span><span class="p">,</span> <span class="s1">&#39;duration_ms&#39;</span><span class="p">:</span> <span class="n">duration</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">}</span>
+<span class="gp">... </span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Context manager for request logging:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">log_context</span><span class="p">(</span><span class="n">request_id</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">user_id</span><span class="o">=</span><span class="n">user</span><span class="o">.</span><span class="n">id</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Processing request&quot;</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="c1"># All logs within this context will include request_id and user_id</span>
+</pre></div>
+</div>
+<dl class="simple">
+<dt>Security Considerations:</dt><dd><ul class="simple">
+<li><p>Never log passwords, API keys, or authentication tokens</p></li>
+<li><p>Sanitize user input before logging to prevent log injection</p></li>
+<li><p>Limit logging of PII (personally identifiable information)</p></li>
+<li><p>Use appropriate log levels to avoid excessive information disclosure</p></li>
+<li><p>Ensure log files have restricted file permissions</p></li>
+</ul>
+</dd>
+<dt>Performance Impact:</dt><dd><ul class="simple">
+<li><p>Logging overhead typically &lt; 1ms per log statement</p></li>
+<li><p>File I/O is asynchronous to minimize blocking</p></li>
+<li><p>Log rotation happens in background thread</p></li>
+<li><p>JSON formatting adds ~0.5ms overhead per message</p></li>
+</ul>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Loggers are cached by name, so calling get_logger with the same name
+multiple times returns the same logger instance.</p>
+</div>
+<dl class="py class">
+<dt class="sig sig-object py" id="backend.core.utils.logger.StructuredFormatter">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">backend.core.utils.logger.</span></span><span class="sig-name descname"><span class="pre">StructuredFormatter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fmt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">datefmt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">style</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'%'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">validate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">defaults</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/backend/core/utils/logger.html#StructuredFormatter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#backend.core.utils.logger.StructuredFormatter" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Formatter</span></code></p>
+<p>JSON formatter for structured logging in production.</p>
+<p>Converts log records to JSON format with consistent structure and
+enriched metadata. This enables efficient log parsing and analysis
+by log aggregation systems like ELK, Splunk, or CloudWatch.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="backend.core.utils.logger.StructuredFormatter.None">
+<span class="sig-name descname"><span class="pre">None</span></span><a class="headerlink" href="#backend.core.utils.logger.StructuredFormatter.None" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>uses standard logging.Formatter attributes</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl>
+<dt>Output Format:</dt><dd><p>Each log message is formatted as a JSON object with the following fields:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;timestamp&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2024-11-08T15:30:45.123Z&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;level&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;INFO&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;logger&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;core.services.eeg_processor&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Processing EEG data&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;module&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;eeg_processor&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;function&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;process_chunk&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;line&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">145</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;thread&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;MainThread&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;process&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">12345</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;extra&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;user_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">123</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;request_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;abc-123-def&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">formatter</span> <span class="o">=</span> <span class="n">StructuredFormatter</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">handler</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">handler</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="n">formatter</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s1">&#39;test&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">handler</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Test message&quot;</span><span class="p">,</span> <span class="n">extra</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;key&#39;</span><span class="p">:</span> <span class="s1">&#39;value&#39;</span><span class="p">})</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Exception information is automatically included when exc_info=True
+is passed to the logging call.</p>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="backend.core.utils.logger.StructuredFormatter.format">
+<span class="sig-name descname"><span class="pre">format</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">record</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">LogRecord</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/backend/core/utils/logger.html#StructuredFormatter.format"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#backend.core.utils.logger.StructuredFormatter.format" title="Link to this definition">¶</a></dt>
+<dd><p>Format log record as JSON string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>record</strong> (<em>logging.LogRecord</em>) – The log record to format</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>JSON-formatted log message</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Extra fields from the record are merged into the output JSON.
+Datetime values are formatted as ISO 8601 strings.</p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="backend.core.utils.logger.ColoredConsoleFormatter">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">backend.core.utils.logger.</span></span><span class="sig-name descname"><span class="pre">ColoredConsoleFormatter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fmt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">datefmt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">style</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'%'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">validate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">defaults</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/backend/core/utils/logger.html#ColoredConsoleFormatter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#backend.core.utils.logger.ColoredConsoleFormatter" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Formatter</span></code></p>
+<p>Colored console formatter for development.</p>
+<p>Provides human-readable colored output for console logging during
+development. Different log levels are displayed in different colors
+for easy visual scanning.</p>
+<dl class="simple">
+<dt>Colors:</dt><dd><ul class="simple">
+<li><p>DEBUG: Cyan</p></li>
+<li><p>INFO: Green</p></li>
+<li><p>WARNING: Yellow</p></li>
+<li><p>ERROR: Red</p></li>
+<li><p>CRITICAL: Red background</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">formatter</span> <span class="o">=</span> <span class="n">ColoredConsoleFormatter</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">handler</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">handler</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="n">formatter</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="backend.core.utils.logger.ColoredConsoleFormatter.COLORS">
+<span class="sig-name descname"><span class="pre">COLORS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'CRITICAL':</span> <span class="pre">'\x1b[41m',</span> <span class="pre">'DEBUG':</span> <span class="pre">'\x1b[36m',</span> <span class="pre">'ERROR':</span> <span class="pre">'\x1b[31m',</span> <span class="pre">'INFO':</span> <span class="pre">'\x1b[32m',</span> <span class="pre">'WARNING':</span> <span class="pre">'\x1b[33m'}</span></em><a class="headerlink" href="#backend.core.utils.logger.ColoredConsoleFormatter.COLORS" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="backend.core.utils.logger.ColoredConsoleFormatter.RESET">
+<span class="sig-name descname"><span class="pre">RESET</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'\x1b[0m'</span></em><a class="headerlink" href="#backend.core.utils.logger.ColoredConsoleFormatter.RESET" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="backend.core.utils.logger.ColoredConsoleFormatter.format">
+<span class="sig-name descname"><span class="pre">format</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">record</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">LogRecord</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/backend/core/utils/logger.html#ColoredConsoleFormatter.format"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#backend.core.utils.logger.ColoredConsoleFormatter.format" title="Link to this definition">¶</a></dt>
+<dd><p>Format log record with colors for console output.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>record</strong> (<em>logging.LogRecord</em>) – The log record to format</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Colored formatted log message</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="backend.core.utils.logger.setup_logging">
+<span class="sig-prename descclassname"><span class="pre">backend.core.utils.logger.</span></span><span class="sig-name descname"><span class="pre">setup_logging</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">level</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#backend.core.utils.logger.StructuredFormatter.None" title="backend.core.utils.logger.StructuredFormatter.None"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">format_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#backend.core.utils.logger.StructuredFormatter.None" title="backend.core.utils.logger.StructuredFormatter.None"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#backend.core.utils.logger.StructuredFormatter.None" title="backend.core.utils.logger.StructuredFormatter.None"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#backend.core.utils.logger.StructuredFormatter.None" title="backend.core.utils.logger.StructuredFormatter.None"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/backend/core/utils/logger.html#setup_logging"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#backend.core.utils.logger.setup_logging" title="Link to this definition">¶</a></dt>
+<dd><p>Configure application-wide logging settings.</p>
+<p>Sets up logging handlers, formatters, and filters based on environment
+configuration. Should be called once at application startup.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>level</strong> (<em>str</em><em>, </em><em>optional</em>) – Minimum log level (DEBUG, INFO, WARNING, ERROR, CRITICAL)
+If not provided, reads from LOG_LEVEL environment variable</p></li>
+<li><p><strong>format_type</strong> (<em>str</em><em>, </em><em>optional</em>) – Log format type (‘json’ or ‘text’)
+If not provided, reads from LOG_FORMAT environment variable</p></li>
+<li><p><strong>log_file</strong> (<em>str</em><em>, </em><em>optional</em>) – Path to log file for file-based logging
+If not provided, reads from LOG_FILE environment variable</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If invalid log level or format type is provided</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Basic setup for development</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">setup_logging</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="s1">&#39;DEBUG&#39;</span><span class="p">,</span> <span class="n">format_type</span><span class="o">=</span><span class="s1">&#39;text&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Production setup with file logging</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">setup_logging</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">level</span><span class="o">=</span><span class="s1">&#39;INFO&#39;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">format_type</span><span class="o">=</span><span class="s1">&#39;json&#39;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">log_file</span><span class="o">=</span><span class="s1">&#39;/var/log/flowstate/app.log&#39;</span>
+<span class="gp">... </span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This function modifies the root logger configuration, affecting all
+loggers in the application unless they have propagate=False.</p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="backend.core.utils.logger.get_logger">
+<span class="sig-prename descclassname"><span class="pre">backend.core.utils.logger.</span></span><span class="sig-name descname"><span class="pre">get_logger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Logger</span></span></span><a class="reference internal" href="../_modules/backend/core/utils/logger.html#get_logger"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#backend.core.utils.logger.get_logger" title="Link to this definition">¶</a></dt>
+<dd><p>Get a logger instance for the specified module.</p>
+<p>Returns a configured logger instance for the given name. Loggers are
+cached, so multiple calls with the same name return the same instance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em>) – Logger name, typically __name__ of the calling module</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Configured logger instance</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>logging.Logger</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">logger</span> <span class="o">=</span> <span class="n">get_logger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Module initialized&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Debug information&quot;</span><span class="p">,</span> <span class="n">extra</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;key&#39;</span><span class="p">:</span> <span class="s1">&#39;value&#39;</span><span class="p">})</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Always use __name__ as the logger name to maintain a clear module
+hierarchy in log messages.</p>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="backend.core.utils.logger.log_context">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">backend.core.utils.logger.</span></span><span class="sig-name descname"><span class="pre">log_context</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/backend/core/utils/logger.html#log_context"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#backend.core.utils.logger.log_context" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Context manager for adding context to all log messages within a scope.</p>
+<p>Useful for adding request IDs, user IDs, or other contextual information
+that should be included in all log messages within a specific scope.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>**kwargs</strong> – Key-value pairs to add to log context</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">log_context</span><span class="p">(</span><span class="n">request_id</span><span class="o">=</span><span class="s1">&#39;abc-123&#39;</span><span class="p">,</span> <span class="n">user_id</span><span class="o">=</span><span class="mi">42</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Processing request&quot;</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="c1"># Log will include request_id and user_id</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Context is thread-safe using ContextVar. Each async task or thread
+maintains its own context.</p>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="backend.core.utils.logger.log_context.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/backend/core/utils/logger.html#log_context.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#backend.core.utils.logger.log_context.__init__" title="Link to this definition">¶</a></dt>
+<dd><p>Initialize context with key-value pairs.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="backend.core.utils.logger.log_context.__enter__">
+<span class="sig-name descname"><span class="pre">__enter__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/backend/core/utils/logger.html#log_context.__enter__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#backend.core.utils.logger.log_context.__enter__" title="Link to this definition">¶</a></dt>
+<dd><p>Enter context and set context variables.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="backend.core.utils.logger.log_context.__exit__">
+<span class="sig-name descname"><span class="pre">__exit__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exc_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exc_val</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exc_tb</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/backend/core/utils/logger.html#log_context.__exit__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#backend.core.utils.logger.log_context.__exit__" title="Link to this definition">¶</a></dt>
+<dd><p>Exit context and restore previous context.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+					 </div>
+					 
+					</div>
+					<footer>
+  
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2024, FlowState Team
+	  <br>
+      
+      
+      
+      Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+      
+      <a href="https://github.com/revitron/revitron-sphinx-theme">theme</a>
+      
+      provided by <a href="https://github.com/revitron">Revitron</a>.
+
+    </p>
+  </div> 
+
+</footer>
+
+				</div>
+			</div>
+
+		</section>
+
+	</div>
+	
+
+	<script type="text/javascript">
+			jQuery(function () {
+					SphinxRtdTheme.Navigation.enable(true);
+			});
+	</script>
+
+	
+	
+		
+	 
+
+ 
+</body>	
+</html>

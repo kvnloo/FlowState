@@ -1,0 +1,7 @@
+backend.core.algorithms.flow.visual\_stimulation module
+=======================================================
+
+.. automodule:: backend.core.algorithms.flow.visual_stimulation
+   :members:
+   :show-inheritance:
+   :undoc-members:

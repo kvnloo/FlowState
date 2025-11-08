@@ -1,0 +1,7 @@
+backend.core.models.base module
+===============================
+
+.. automodule:: backend.core.models.base
+   :members:
+   :show-inheritance:
+   :undoc-members:

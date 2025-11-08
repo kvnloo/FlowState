@@ -1,0 +1,24 @@
+backend.api package
+===================
+
+.. automodule:: backend.api
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   backend.api.health
+   backend.api.middleware
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   backend.api.eeg_endpoints

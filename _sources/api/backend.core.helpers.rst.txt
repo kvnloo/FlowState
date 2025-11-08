@@ -1,0 +1,7 @@
+backend.core.helpers module
+===========================
+
+.. automodule:: backend.core.helpers
+   :members:
+   :show-inheritance:
+   :undoc-members:

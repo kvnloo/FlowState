@@ -1,0 +1,7 @@
+backend.core.algorithms.flow.chaos\_system module
+=================================================
+
+.. automodule:: backend.core.algorithms.flow.chaos_system
+   :members:
+   :show-inheritance:
+   :undoc-members:

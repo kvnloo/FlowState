@@ -1,0 +1,16 @@
+backend.core.algorithms.realtime namespace
+==========================================
+
+.. py:module:: backend.core.algorithms.realtime
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   backend.core.algorithms.realtime.binaural_beats_generator
+   backend.core.algorithms.realtime.flow_state_detector
+   backend.core.algorithms.realtime.realtime_processor
+   backend.core.algorithms.realtime.strobe_controller
+   backend.core.algorithms.realtime.task_scheduling

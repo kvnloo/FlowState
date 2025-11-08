@@ -1,0 +1,683 @@
+
+	
+
+<!DOCTYPE html>
+<html class="writer-html5 dark" lang="en" >
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+		<title>FlowState Relevant Variables Analysis &mdash; FlowState 0.1.0 documentation</title>
+	
+	
+	
+	<link rel="stylesheet" href="../_static/default" type="text/css" />
+	<link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+	<link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+	<link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+
+	
+	
+	
+	
+
+	
+	<!--[if lt IE 9]>
+		<script src="../_static/js/html5shiv.min.js"></script>
+	<![endif]-->
+	
+		
+			<script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+				<script src="../_static/documentation_options.js?v=01f34227"></script>
+				<script src="../_static/doctools.js?v=9bcbadda"></script>
+				<script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+		
+		<script type="text/javascript" src="../_static/js/theme.js"></script>
+
+		
+		<link rel="index" title="Index" href="../genindex.html" />
+		<link rel="search" title="Search" href="../search.html" /> 
+</head>
+<body class="wy-body-for-nav">
+
+
+	 
+	<div class="wy-grid-for-nav">
+		
+		<nav data-toggle="wy-nav-shift" class="wy-nav-side">
+			<div class="wy-side-scroll">
+				<div class="wy-side-nav-search">
+					
+						<div class="brand">
+							<a href="../index.html">
+							
+								FlowState
+							
+							</a>
+						</div>
+						
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+					
+				</div>
+				
+				<div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+					
+						
+						
+							
+						
+						
+							<p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../README.html">FlowState Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../README.html#building-documentation">Building Documentation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../README.html#prerequisites">Prerequisites</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../README.html#viewing-documentation">Viewing Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../README.html#documentation-structure">Documentation Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../README.html#linking-to-documentation-pages">Linking to Documentation Pages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../README.html#in-markdown-files-md">In Markdown Files (.md)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../README.html#in-rst-files-rst">In RST Files (.rst)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../README.html#quick-links">Quick Links</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../README.html#contributing">Contributing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../README.html#automated-building">Automated Building</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../development/index.html">Development Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../development/llm_workflow.html">LLM-Based Development Workflow</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../development/llm_workflow.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../development/llm_workflow.html#workflow-stages">Workflow Stages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../development/llm_workflow.html#ideation-and-planning">1. Ideation and Planning</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/llm_workflow.html#prompt-engineering">2. Prompt Engineering</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/llm_workflow.html#code-generation">3. Code Generation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/llm_workflow.html#testing-and-refinement">4. Testing and Refinement</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../development/llm_workflow.html#best-practices">Best Practices</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../development/llm_workflow.html#integration-with-priority-queue">Integration with Priority Queue</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../development/llm_workflow.html#templates">Templates</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../development/llm_workflow.html#feature-development-template">Feature Development Template</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/llm_workflow.html#debugging-template">Debugging Template</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../development/llm_workflow.html#workflow-optimization">Workflow Optimization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../development/priority_queue.html">FlowState Development Priority Queue</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../development/priority_queue.html#core-philosophy">Core Philosophy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../development/priority_queue.html#priority-1-eeg-foundation-critical-path">Priority 1: EEG Foundation 🧠 (Critical Path)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../development/priority_queue.html#eeg-signal-processing">1.1 EEG Signal Processing</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/priority_queue.html#alpha-theta-optimization">1.2 Alpha/Theta Optimization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/priority_queue.html#basic-neural-entrainment">1.3 Basic Neural Entrainment</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../development/priority_queue.html#priority-2-first-feedback-loop-high-impact">Priority 2: First Feedback Loop 🔄 (High Impact)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../development/priority_queue.html#real-time-state-detection">2.1 Real-time State Detection</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/priority_queue.html#adaptive-entrainment">2.2 Adaptive Entrainment</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../development/priority_queue.html#priority-3-recovery-readiness-foundation">Priority 3: Recovery &amp; Readiness 🌙 (Foundation)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../development/priority_queue.html#sleep-quality-analysis">3.1 Sleep Quality Analysis</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/priority_queue.html#hrv-integration">3.2 HRV Integration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/priority_queue.html#recovery-and-integration">3.3 Recovery and Integration</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../development/priority_queue.html#priority-4-advanced-neural-optimization-enhancement">Priority 4: Advanced Neural Optimization 🌊 (Enhancement)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../development/priority_queue.html#entropy-based-flow-detection">4.1 Entropy-Based Flow Detection</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/priority_queue.html#cross-hemisphere-synchronization">4.2 Cross-Hemisphere Synchronization</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../development/priority_queue.html#priority-5-cognitive-enhancement-advanced-features">Priority 5: Cognitive Enhancement 🎯 (Advanced Features)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../development/priority_queue.html#cognitive-load-optimizer">5.1 Cognitive Load Optimizer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/priority_queue.html#attention-density-maximizer">5.2 Attention Density Maximizer</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../development/priority_queue.html#priority-6-environmental-optimization-supporting-systems">Priority 6: Environmental Optimization 🌟 (Supporting Systems)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../development/priority_queue.html#circadian-rhythm-synchronization">6.1 Circadian Rhythm Synchronization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/priority_queue.html#environmental-control-system">6.2 Environmental Control System</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../development/priority_queue.html#priority-7-long-term-optimization-future-enhancement">Priority 7: Long-term Optimization 📈 (Future Enhancement)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../development/priority_queue.html#machine-learning-flow-predictor">7.1 Machine Learning Flow Predictor</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/priority_queue.html#flow-state-analytics">7.2 Flow State Analytics</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../development/priority_queue.html#technical-implementation-notes">Technical Implementation Notes</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../development/priority_queue.html#core-systems">Core Systems</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/priority_queue.html#key-performance-indicators">Key Performance Indicators</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../development/priority_queue.html#research-foundation">Research Foundation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../development/priority_queue_2.html">Enhanced Flow State Optimization System</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../development/priority_queue_2.html#current-implementation-status-updated">Current Implementation Status (Updated)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../development/priority_queue_2.html#priority-queue-ranked-by-impact">Priority Queue (Ranked by Impact)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../development/priority_queue_2.html#immediate-priorities-high-impact-low-effort">Immediate Priorities (High Impact/Low Effort)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/priority_queue_2.html#medium-term-goals-high-impact-medium-effort">Medium-term Goals (High Impact/Medium Effort)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/priority_queue_2.html#long-term-vision-breakthrough-impact">Long-term Vision (Breakthrough Impact)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../development/priority_queue_2.html#enhancement-ideas">Enhancement Ideas</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../development/priority_queue_2.html#neuroscience-inspired-optimizations">Neuroscience-Inspired Optimizations</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/priority_queue_2.html#technical-optimizations">Technical Optimizations</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../development/priority_queue_2.html#research-integration-points">Research Integration Points</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../development/priority_queue_2.html#impact-metrics">Impact Metrics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../development/priority_queue_2.html#todo-high-priority-enhancements">TODO: High-Priority Enhancements</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../development/implementation_status.html">Implementation Status</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../development/implementation_status.html#core-systems">Core Systems</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../development/implementation_status.html#neural-entrainment">Neural Entrainment</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/implementation_status.html#biometric-integration">Biometric Integration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/implementation_status.html#flow-state-detection-flow-state-detector-py">Flow State Detection (<code class="docutils literal notranslate"><span class="pre">flow_state_detector.py</span></code>)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../development/implementation_status.html#frontend-integration">Frontend Integration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../development/implementation_status.html#upcoming-features">Upcoming Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../development/implementation_status.html#recent-updates">Recent Updates</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../development/completed.html">Completed Features</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../development/completed.html#core-systems">Core Systems</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../development/completed.html#neural-entrainment-system">1. Neural Entrainment System</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/completed.html#attention-density-maximizer">2. Attention Density Maximizer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/completed.html#flow-state-stability-system">3. Flow State Stability System</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/completed.html#recovery-and-integration-system">4. Recovery and Integration System</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/completed.html#research-system">5. Research System</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/completed.html#chaos-system">6. Chaos System</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../development/completed.html#integration-features">Integration Features</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../development/completed.html#hardware-integration">1. Hardware Integration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/completed.html#data-processing">2. Data Processing</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/completed.html#user-interface">3. User Interface</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../development/completed.html#technical-features">Technical Features</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../development/completed.html#performance-optimization">1. Performance Optimization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/completed.html#data-management">2. Data Management</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/completed.html#security">3. Security</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../development/completed.html#documentation">Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../development/planned.html">Planned Features</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../development/planned.html#core-systems">Core Systems</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../development/planned.html#advanced-neural-entrainment">1. Advanced Neural Entrainment</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/planned.html#enhanced-flow-detection">2. Enhanced Flow Detection</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/planned.html#cognitive-performance-optimization">3. Cognitive Performance Optimization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/planned.html#advanced-recovery-system">4. Advanced Recovery System</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../development/planned.html#integration-features">Integration Features</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../development/planned.html#extended-hardware-support">1. Extended Hardware Support</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/planned.html#advanced-data-processing">2. Advanced Data Processing</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/planned.html#enhanced-user-experience">3. Enhanced User Experience</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../development/planned.html#research-integration">Research Integration</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../development/planned.html#advanced-research-system">1. Advanced Research System</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/planned.html#knowledge-integration">2. Knowledge Integration</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../development/planned.html#performance-features">Performance Features</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../development/planned.html#system-optimization">1. System Optimization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/planned.html#advanced-analytics">2. Advanced Analytics</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/planned.html#integration-apis">3. Integration APIs</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../development/planned.html#user-personalization">User Personalization</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../development/planned.html#advanced-profiles">1. Advanced Profiles</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/planned.html#social-features">2. Social Features</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../development/planned.html#documentation-and-support">Documentation and Support</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../development/planned.html#enhanced-documentation">1. Enhanced Documentation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/planned.html#development-tools">2. Development Tools</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../development/FEATURES.html">FlowState Features &amp; Implementation Status</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../development/FEATURES.html#core-systems">Core Systems</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../development/FEATURES.html#neural-entrainment-system">1. Neural Entrainment System</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/FEATURES.html#flow-state-detection-stability">2. Flow State Detection &amp; Stability</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/FEATURES.html#attention-density-maximizer">3. Attention Density Maximizer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/FEATURES.html#recovery-and-integration-system">4. Recovery and Integration System</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/FEATURES.html#chaos-system">5. Chaos System</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/FEATURES.html#eeg-foundation">6. EEG Foundation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/FEATURES.html#id1">7. Attention Density Maximizer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/FEATURES.html#id2">8. Recovery and Integration System</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/FEATURES.html#research-system">9. Research System</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/FEATURES.html#biometric-integration">10. Biometric Integration</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../development/FEATURES.html#integration-features">Integration Features</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../development/FEATURES.html#hardware-integration">1. Hardware Integration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/FEATURES.html#data-processing">2. Data Processing</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/FEATURES.html#user-interface">3. User Interface</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../development/FEATURES.html#technical-features">Technical Features</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../development/FEATURES.html#performance-optimization">1. Performance Optimization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/FEATURES.html#data-management">2. Data Management</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../development/FEATURES.html#security">3. Security</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../development/FEATURES.html#documentation">Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../development/FEATURES.html#integration-status">Integration Status</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../development/FEATURES.html#data-flow">Data Flow</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../development/FEATURES.html#upcoming-features">Upcoming Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../development/FEATURES.html#version-history">Version History</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../development/in-line-docs-template.html">FlowState In-Line Documentation Standards</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../development/in-line-docs-template.html#module-level-documentation">Module Level Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../development/in-line-docs-template.html#class-level-documentation">Class Level Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../development/in-line-docs-template.html#method-level-documentation">Method Level Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../development/in-line-docs-template.html#documentation-guidelines">Documentation Guidelines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../development/in-line-docs-template.html#style-conventions">Style Conventions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Architecture</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="index.html">Architecture Documentation</a></li>
+</ul>
+
+						
+					
+				</div>
+				
+			</div>
+		</nav>
+
+		<section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+			
+			<nav class="wy-nav-top" aria-label="top navigation">
+			
+				<i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+				<a href="../index.html">
+					
+						FlowState
+					
+				</a>
+			
+			</nav>
+
+
+			<div class="wy-nav-content">
+				
+				<div class="rst-content">
+				
+					<div role="navigation" aria-label="breadcrumbs navigation">
+
+	<ul class="wy-breadcrumbs">
+		
+			
+				<li><a href="../index.html">FlowState</a> ⁄&nbsp;</li>
+				
+				<li><a href="">FlowState Relevant Variables Analysis</a></li>
+			
+		
+		
+			<li class="wy-breadcrumbs-aside">
+			
+			</li>
+		
+	</ul>
+
+</div>
+					<div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+					 <div itemprop="articleBody">
+						
+  <section class="tex2jax_ignore mathjax_ignore" id="flowstate-relevant-variables-analysis">
+<h1>FlowState Relevant Variables Analysis<a class="headerlink" href="#flowstate-relevant-variables-analysis" title="Link to this heading">¶</a></h1>
+<section id="data-architecture">
+<h2>1. Data Architecture<a class="headerlink" href="#data-architecture" title="Link to this heading">¶</a></h2>
+<section id="input-streams">
+<h3>1.1 Input Streams<a class="headerlink" href="#input-streams" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>EEG Data</strong></p>
+<ul>
+<li><p>Sampling Rate: 256 Hz</p></li>
+<li><p>Channels: TP9, AF7, AF8, TP10</p></li>
+<li><p>Key Metrics: Alpha/Theta ratio, coherence</p></li>
+<li><p>Latency Requirements: &lt;50ms</p></li>
+</ul>
+</li>
+<li><p><strong>HRV Data</strong></p>
+<ul>
+<li><p>Sampling: Continuous</p></li>
+<li><p>Key Metrics: RMSSD, coherence score</p></li>
+<li><p>Update Frequency: Beat-to-beat</p></li>
+</ul>
+</li>
+<li><p><strong>Sleep Metrics</strong></p>
+<ul>
+<li><p>Frequency: Daily</p></li>
+<li><p>Sources: Oura, Apple Health</p></li>
+<li><p>Key Metrics: Deep sleep, REM, recovery score</p></li>
+</ul>
+</li>
+<li><p><strong>Environmental Data</strong></p>
+<ul>
+<li><p>Temperature: ±0.5°C accuracy</p></li>
+<li><p>Light: Lux and spectrum</p></li>
+<li><p>Noise: dB levels and frequency analysis</p></li>
+<li><p>Update Rate: 1 Hz</p></li>
+</ul>
+</li>
+<li><p><strong>User Feedback</strong></p>
+<ul>
+<li><p>Subjective state reporting</p></li>
+<li><p>Performance metrics</p></li>
+<li><p>Comfort levels</p></li>
+<li><p>Collection: Pre/post session</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="output-controls">
+<h3>1.2 Output Controls<a class="headerlink" href="#output-controls" title="Link to this heading">¶</a></h3>
+<section id="real-time-controls">
+<h4>Real-time Controls<a class="headerlink" href="#real-time-controls" title="Link to this heading">¶</a></h4>
+<ul class="simple">
+<li><p><strong>Audio Entrainment</strong></p>
+<ul>
+<li><p>Carrier Frequency: 100-1000 Hz</p></li>
+<li><p>Beat Frequency: 0.5-40 Hz</p></li>
+<li><p>Volume: Adaptive based on environment</p></li>
+<li><p>Phase alignment with EEG</p></li>
+</ul>
+</li>
+<li><p><strong>Visual Stimulation</strong></p>
+<ul>
+<li><p>Frequency Range: 1-40 Hz</p></li>
+<li><p>Intensity: 0-100%</p></li>
+<li><p>Color Temperature: 2700K-6500K</p></li>
+<li><p>Duty Cycle: Adaptive</p></li>
+</ul>
+</li>
+<li><p><strong>Environmental</strong></p>
+<ul>
+<li><p>Temperature Control</p></li>
+<li><p>Lighting Conditions</p></li>
+<li><p>Acoustic Environment</p></li>
+<li><p>Air Quality</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="optimization-parameters">
+<h4>Optimization Parameters<a class="headerlink" href="#optimization-parameters" title="Link to this heading">¶</a></h4>
+<ul class="simple">
+<li><p><strong>Session Parameters</strong></p>
+<ul>
+<li><p>Duration</p></li>
+<li><p>Intensity Curves</p></li>
+<li><p>Recovery Periods</p></li>
+<li><p>Progression Rules</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+</section>
+<section id="processing-pipeline">
+<h2>2. Processing Pipeline<a class="headerlink" href="#processing-pipeline" title="Link to this heading">¶</a></h2>
+<section id="real-time-processing">
+<h3>2.1 Real-time Processing<a class="headerlink" href="#real-time-processing" title="Link to this heading">¶</a></h3>
+<ol class="arabic simple">
+<li><p><strong>Signal Acquisition</strong></p>
+<ul class="simple">
+<li><p>Hardware interfaces</p></li>
+<li><p>Data validation</p></li>
+<li><p>Artifact detection</p></li>
+</ul>
+</li>
+<li><p><strong>State Detection</strong></p>
+<ul class="simple">
+<li><p>Feature extraction</p></li>
+<li><p>State classification</p></li>
+<li><p>Transition detection</p></li>
+</ul>
+</li>
+<li><p><strong>Control Generation</strong></p>
+<ul class="simple">
+<li><p>Parameter calculation</p></li>
+<li><p>Safety bounds checking</p></li>
+<li><p>Output synchronization</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="offline-analysis">
+<h3>2.2 Offline Analysis<a class="headerlink" href="#offline-analysis" title="Link to this heading">¶</a></h3>
+<ol class="arabic simple">
+<li><p><strong>Pattern Recognition</strong></p>
+<ul class="simple">
+<li><p>Time-of-day effects</p></li>
+<li><p>Environmental correlations</p></li>
+<li><p>Individual response patterns</p></li>
+</ul>
+</li>
+<li><p><strong>Machine Learning</strong></p>
+<ul class="simple">
+<li><p>Feature engineering</p></li>
+<li><p>Model training</p></li>
+<li><p>Validation methods</p></li>
+</ul>
+</li>
+<li><p><strong>Optimization</strong></p>
+<ul class="simple">
+<li><p>Parameter tuning</p></li>
+<li><p>Protocol refinement</p></li>
+<li><p>Personalization</p></li>
+</ul>
+</li>
+</ol>
+</section>
+</section>
+<section id="feedback-loops">
+<h2>3. Feedback Loops<a class="headerlink" href="#feedback-loops" title="Link to this heading">¶</a></h2>
+<section id="primary-loop-eeg-based">
+<h3>3.1 Primary Loop (EEG-based)<a class="headerlink" href="#primary-loop-eeg-based" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Input</strong>: Raw EEG</p></li>
+<li><p><strong>Processing</strong>: Band power analysis</p></li>
+<li><p><strong>Output</strong>: Audio/Visual entrainment</p></li>
+<li><p><strong>Latency</strong>: &lt;100ms</p></li>
+<li><p><strong>Update Rate</strong>: 10 Hz</p></li>
+</ul>
+</section>
+<section id="secondary-loop-hrv-recovery">
+<h3>3.2 Secondary Loop (HRV/Recovery)<a class="headerlink" href="#secondary-loop-hrv-recovery" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Input</strong>: HRV data</p></li>
+<li><p><strong>Processing</strong>: Coherence analysis</p></li>
+<li><p><strong>Output</strong>: Session intensity</p></li>
+<li><p><strong>Latency</strong>: &lt;1s</p></li>
+<li><p><strong>Update Rate</strong>: 1 Hz</p></li>
+</ul>
+</section>
+<section id="tertiary-loop-environmental">
+<h3>3.3 Tertiary Loop (Environmental)<a class="headerlink" href="#tertiary-loop-environmental" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Input</strong>: Environmental sensors</p></li>
+<li><p><strong>Processing</strong>: Comfort analysis</p></li>
+<li><p><strong>Output</strong>: Environmental controls</p></li>
+<li><p><strong>Latency</strong>: &lt;5s</p></li>
+<li><p><strong>Update Rate</strong>: 0.2 Hz</p></li>
+</ul>
+</section>
+</section>
+<section id="implementation-phases">
+<h2>4. Implementation Phases<a class="headerlink" href="#implementation-phases" title="Link to this heading">¶</a></h2>
+<section id="phase-1-core-eeg">
+<h3>Phase 1: Core EEG<a class="headerlink" href="#phase-1-core-eeg" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Basic signal processing</p></li>
+<li><p>Simple feedback loop</p></li>
+<li><p>Manual parameter control</p></li>
+<li><p>Data collection</p></li>
+</ul>
+</section>
+<section id="phase-2-enhanced-processing">
+<h3>Phase 2: Enhanced Processing<a class="headerlink" href="#phase-2-enhanced-processing" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Advanced artifact rejection</p></li>
+<li><p>State detection</p></li>
+<li><p>Basic automation</p></li>
+<li><p>Initial optimization</p></li>
+</ul>
+</section>
+<section id="phase-3-multi-modal-integration">
+<h3>Phase 3: Multi-modal Integration<a class="headerlink" href="#phase-3-multi-modal-integration" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>HRV integration</p></li>
+<li><p>Environmental control</p></li>
+<li><p>Recovery tracking</p></li>
+<li><p>Pattern analysis</p></li>
+</ul>
+</section>
+<section id="phase-4-intelligence-layer">
+<h3>Phase 4: Intelligence Layer<a class="headerlink" href="#phase-4-intelligence-layer" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Machine learning integration</p></li>
+<li><p>Predictive modeling</p></li>
+<li><p>Advanced optimization</p></li>
+<li><p>Personalization</p></li>
+</ul>
+</section>
+</section>
+<section id="success-metrics">
+<h2>5. Success Metrics<a class="headerlink" href="#success-metrics" title="Link to this heading">¶</a></h2>
+<section id="technical-metrics">
+<h3>5.1 Technical Metrics<a class="headerlink" href="#technical-metrics" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Signal quality</p></li>
+<li><p>Processing latency</p></li>
+<li><p>Control accuracy</p></li>
+<li><p>System stability</p></li>
+</ul>
+</section>
+<section id="physiological-metrics">
+<h3>5.2 Physiological Metrics<a class="headerlink" href="#physiological-metrics" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Alpha/Theta ratio</p></li>
+<li><p>HRV coherence</p></li>
+<li><p>Recovery rates</p></li>
+<li><p>Adaptation speed</p></li>
+</ul>
+</section>
+<section id="performance-metrics">
+<h3>5.3 Performance Metrics<a class="headerlink" href="#performance-metrics" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Flow state duration</p></li>
+<li><p>Task performance</p></li>
+<li><p>Recovery efficiency</p></li>
+<li><p>User satisfaction</p></li>
+</ul>
+</section>
+</section>
+<section id="validation-framework">
+<h2>6. Validation Framework<a class="headerlink" href="#validation-framework" title="Link to this heading">¶</a></h2>
+<section id="technical-validation">
+<h3>6.1 Technical Validation<a class="headerlink" href="#technical-validation" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Unit tests</p></li>
+<li><p>Integration tests</p></li>
+<li><p>Performance benchmarks</p></li>
+<li><p>Stability testing</p></li>
+</ul>
+</section>
+<section id="scientific-validation">
+<h3>6.2 Scientific Validation<a class="headerlink" href="#scientific-validation" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Control studies</p></li>
+<li><p>A/B testing</p></li>
+<li><p>Statistical analysis</p></li>
+<li><p>Peer review</p></li>
+</ul>
+</section>
+<section id="user-validation">
+<h3>6.3 User Validation<a class="headerlink" href="#user-validation" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Usability testing</p></li>
+<li><p>Long-term tracking</p></li>
+<li><p>Feedback analysis</p></li>
+<li><p>Outcome measurement</p></li>
+</ul>
+</section>
+</section>
+</section>
+
+
+					 </div>
+					 
+					</div>
+					<footer>
+  
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2024, FlowState Team
+	  <br>
+      
+      
+      
+      Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+      
+      <a href="https://github.com/revitron/revitron-sphinx-theme">theme</a>
+      
+      provided by <a href="https://github.com/revitron">Revitron</a>.
+
+    </p>
+  </div> 
+
+</footer>
+
+				</div>
+			</div>
+
+		</section>
+
+	</div>
+	
+
+	<script type="text/javascript">
+			jQuery(function () {
+					SphinxRtdTheme.Navigation.enable(true);
+			});
+	</script>
+
+	
+	
+		
+	 
+
+ 
+</body>	
+</html>

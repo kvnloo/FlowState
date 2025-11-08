@@ -1,0 +1,14 @@
+backend.api.health namespace
+============================
+
+.. py:module:: backend.api.health
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   backend.api.health.repository
+   backend.api.health.schema
+   backend.api.health.types

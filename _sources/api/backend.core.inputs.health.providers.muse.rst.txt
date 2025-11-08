@@ -1,0 +1,7 @@
+backend.core.inputs.health.providers.muse module
+================================================
+
+.. automodule:: backend.core.inputs.health.providers.muse
+   :members:
+   :show-inheritance:
+   :undoc-members:

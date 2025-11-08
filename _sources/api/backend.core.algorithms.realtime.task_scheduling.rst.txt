@@ -1,0 +1,7 @@
+backend.core.algorithms.realtime.task\_scheduling module
+========================================================
+
+.. automodule:: backend.core.algorithms.realtime.task_scheduling
+   :members:
+   :show-inheritance:
+   :undoc-members:

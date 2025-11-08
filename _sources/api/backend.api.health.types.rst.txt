@@ -1,0 +1,7 @@
+backend.api.health.types module
+===============================
+
+.. automodule:: backend.api.health.types
+   :members:
+   :show-inheritance:
+   :undoc-members:
