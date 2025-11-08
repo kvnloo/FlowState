@@ -67,7 +67,7 @@ import numpy as np
 from muselsl import stream, list_muses, view, record
 from muselsl.muse import Muse
 from pylsl import StreamInlet, resolve_byprop
-import utils
+from . import utils  # Import utils module for EEG processing
 
 MUSE_SAMPLING_RATE = 256  # Hz
 MUSE_EEG_CHANNELS = 4     # 5 if AUX available

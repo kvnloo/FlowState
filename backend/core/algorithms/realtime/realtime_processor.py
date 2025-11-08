@@ -41,9 +41,16 @@ from scipy import signal
 import mne
 from collections import deque
 import logging
-from numba import jit
+# from numba import jit  # numba doesn't support Python 3.14 yet
 import asyncio
 from concurrent.futures import ThreadPoolExecutor
+
+# Dummy jit decorator for compatibility
+def jit(nopython=True):
+    """Dummy jit decorator since numba doesn't support Python 3.14"""
+    def decorator(func):
+        return func
+    return decorator
 
 @dataclass
 class EEGBuffer:

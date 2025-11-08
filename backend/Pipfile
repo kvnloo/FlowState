@@ -4,24 +4,33 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-pandas = "*"
-numpy = "*"
-google-auth-oauthlib = "*"
-google-auth = "*"
-google-api-python-client = "*"
-boto3 = "*"
 fastapi = "*"
 uvicorn = "*"
 python-dotenv = "*"
 pydantic = "*"
-requests = "*"
 sqlalchemy = "*"
 psycopg2-binary = "*"
 python-jose = {extras = ["cryptography"], version = "*"}
 passlib = {extras = ["bcrypt"], version = "*"}
 python-multipart = "*"
+pandas = "*"
+numpy = "*"
+scipy = "*"
+muselsl = "*"
+pylsl = "*"
+mne = "*"
 aiohttp = "*"
 asyncio = "*"
+websockets = "*"
+requests = "*"
+boto3 = "*"
+google-auth = "*"
+google-auth-oauthlib = "*"
+google-api-python-client = "*"
+sounddevice = "*"
+openai = "*"
+
+[dev-packages]
 pytest = "*"
 pytest-asyncio = "*"
 pytest-cov = "*"
@@ -30,26 +39,14 @@ isort = "*"
 mypy = "*"
 flake8 = "*"
 pre-commit = "*"
-websockets = "*"
-scipy = "*"
-muselsl = "*"
-pylsl = "*"
-mne = "*"
-numba = "*"
-
-# docs
+ipython = "*"
+jupyter = "*"
+notebook = "*"
 sphinx = "*"
-revitron-sphinx-theme = {git = "https://github.com/revitron/revitron-sphinx-theme.git"}
 sphinx-rtd-theme = "*"
 myst-parser = "*"
 sphinx-js = "*"
 sphinxcontrib-mermaid = "*"
 
-
-[dev-packages]
-ipython = "*"
-jupyter = "*"
-notebook = "*"
-
 [requires]
-python_version = "3.11"
+python_version = "3.14"

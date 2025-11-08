@@ -96,13 +96,20 @@ Configuration:
 """
 
 from dataclasses import dataclass, field
-from typing import Dict, List, Optional, Tuple, Literal
+from typing import Dict, List, Optional, Tuple, Literal, Any
 import numpy as np
-import sounddevice as sd
+try:
+    import sounddevice as sd
+    SOUNDDEVICE_AVAILABLE = True
+except (OSError, ImportError):
+    # PortAudio not installed or sounddevice not available
+    SOUNDDEVICE_AVAILABLE = False
+    sd = None
 import json
 import asyncio
 import logging
 from pathlib import Path
+from .task_scheduling import AIAdvisor
 
 @dataclass
 class UserState:
@@ -399,7 +406,7 @@ class AdaptiveAudioEngine:
         self.user_responses: List[FrequencyResponse] = []
         self.current_session: Optional[FrequencyResponse] = None
         self.session_start_time: float = 0
-        self.stream: Optional[sd.OutputStream] = None
+        self.stream: Optional[Any] = None  # sd.OutputStream when available
         self.volume = 0.1
         self.phase = 0
         self.phase_state = PhaseState()
@@ -567,7 +574,7 @@ class AdaptiveAudioEngine:
         return combined
 
     def _audio_callback(self, outdata: np.ndarray, frames: int, 
-                       time_info: Dict, status: sd.CallbackFlags) -> None:
+                       time_info: Dict, status: Any) -> None:  # sd.CallbackFlags when available
         """Generate audio samples for sounddevice output.
         
         This callback method is called by sounddevice to fill the audio buffer.
@@ -678,6 +685,10 @@ class AdaptiveAudioEngine:
         )
         
         # Configure and start audio stream
+        if not SOUNDDEVICE_AVAILABLE:
+            self.logger.warning("SoundDevice not available - audio output disabled")
+            return recommendation.strobe_freq
+
         self.stream = sd.OutputStream(
             channels=2,
             callback=self._audio_callback,
