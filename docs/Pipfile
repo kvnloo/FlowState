@@ -15,4 +15,4 @@ linkify-it-py = "*"
 [dev-packages]
 
 [requires]
-python_version = "3.14"
+python_version = "3.12"
