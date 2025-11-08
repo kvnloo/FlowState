@@ -3,7 +3,7 @@ FlowState Documentation
 
 .. image:: https://img.shields.io/badge/version-0.1.0-blue.svg
    :alt: Version
-.. image:: https://img.shields.io/badge/python-3.14+-green.svg
+.. image:: https://img.shields.io/badge/python-3.12+-green.svg
    :alt: Python Version
 .. image:: https://img.shields.io/badge/license-MIT-green.svg
    :alt: License
@@ -25,8 +25,15 @@ Key Features
    :maxdepth: 2
    :caption: Getting Started
 
-   README
+   getting_started
+   user_guide
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Development
+
    development/index
+   building_docs
 
 .. toctree::
    :maxdepth: 2
