@@ -1,6 +1,6 @@
-# FlowState Documentation
+# Building the Documentation
 
-This directory contains the unified documentation for the FlowState project, covering both Python backend and JavaScript frontend components.
+This guide explains how to build and maintain the FlowState documentation system using Sphinx.
 
 ## Building Documentation
 
