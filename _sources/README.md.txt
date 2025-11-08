@@ -93,8 +93,8 @@ After building, open `_build/html/index.html` in your browser to view the docume
 [Flow State Detection](api/python/flow_state_detector.rst)
 
 <!-- Link to the deployed version (GitHub Pages) -->
-[Online Documentation](https://flowstate.github.io/flowstate/)
-[Architecture Overview](https://flowstate.github.io/flowstate/architecture/index.html)
+[Online Documentation](https://kvnloo.github.io/FlowState/)
+[Architecture Overview](https://kvnloo.github.io/FlowState/architecture/index.html)
 ```
 
 ### In RST Files (.rst)
@@ -109,11 +109,11 @@ After building, open `_build/html/index.html` in your browser to view the docume
 :ref:`implementation-status`
 
 .. External link
-`FlowState Online Docs <https://flowstate.github.io/flowstate/>`_
+`FlowState Online Docs <https://kvnloo.github.io/FlowState/>`_
 ```
 
 ### Quick Links
-- [Main Index](https://flowstate.github.io/flowstate/_build/html/index.html)
+- [Main Index](https://kvnloo.github.io/FlowState/index.html)
 
 ## Contributing
 
@@ -127,4 +127,4 @@ After building, open `_build/html/index.html` in your browser to view the docume
 
 Documentation is automatically built and deployed to GitHub Pages when changes are pushed to the main branch. See `.github/workflows/docs.yml` for details.
 
-[View Documentation](https://flowstate.github.io/flowstate/)
+[View Documentation](https://kvnloo.github.io/FlowState/)
