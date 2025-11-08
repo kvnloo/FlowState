@@ -1,13 +1,23 @@
-# FlowState (name pending)
+# FlowState
 
 A proof of concept program that adjusts the playback speed of  the youtube video you are watching **based on how much you are paying attention**. If you are focused, it will speed up, as you are in the state of mind to acquire information at a faster rate. If you are unfocused, it will slow down, so you dont miss anything.
 ## This is a BCI Application
 
 To get started, you must have a [Muse headband](https://choosemuse.com/?gad=1)
 
-## Run
+## Installation
+
+### Backend Setup
+```bash
+cd backend
+pipenv install
+pipenv shell
 ```
-pip install -r requirements.txt
+
+### Frontend Setup
+```bash
+cd frontend
+npm install
 ```
 
 ## To connect
@@ -29,4 +39,4 @@ The Muse stream should now be flowing
 Run the program 👍
 
 
-[View Documentation](https://flowstate.github.io/flowstate/)
+[View Documentation](https://kvnloo.github.io/FlowState/)
