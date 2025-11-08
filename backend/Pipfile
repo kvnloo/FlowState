@@ -42,11 +42,6 @@ pre-commit = "*"
 ipython = "*"
 jupyter = "*"
 notebook = "*"
-sphinx = "*"
-sphinx-rtd-theme = "*"
-myst-parser = "*"
-sphinx-js = "*"
-sphinxcontrib-mermaid = "*"
 
 [requires]
 python_version = "3.14"
