@@ -108,6 +108,11 @@ log.txt
 # Testing
 coverage/
 .nyc_output/
+frontend/test-results/
+frontend/playwright-report/
+frontend/blob-report/
+test-results/
+playwright-report/
 
 # Database
 *.db
