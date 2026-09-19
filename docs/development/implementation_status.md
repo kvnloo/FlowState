@@ -3,7 +3,10 @@
 ## Core Systems
 
 ### Neural Entrainment
-#### Audio Engine (`adaptive_audio_engine.py`)
+#### Audio Engine
+Files:
+- [backend/core/algorithms/realtime/binaural_beats_generator.py](../../backend/core/algorithms/realtime/binaural_beats_generator.py)
+- [backend/core/algorithms/flow/audio_engine.py](../../backend/core/algorithms/flow/audio_engine.py)
 - ✓ Binaural beat generation (2025-11-08)
   - Carrier frequency management
   - Beat frequency adaptation
@@ -28,7 +31,8 @@
   - Multiple display coordination pending
 
 ### Biometric Integration
-#### Whoop Integration (`biometric/whoop_client.py`)
+#### Whoop Integration
+File: [backend/core/inputs/health/providers/whoop.py](../../backend/core/inputs/health/providers/whoop.py)
 - ✓ Real-time heart rate monitoring
 - ✓ HRV analysis
   - RMSSD calculation
@@ -38,7 +42,8 @@
   - Basic recovery score
   - Missing: detailed strain analysis
 
-#### Eye Tracking (`biometric/tobii_tracker.py`)
+#### Tobii Eye Tracking
+File: [backend/core/inputs/health/providers/tobii.py](../../backend/core/inputs/health/providers/tobii.py)
 - ✓ Gaze tracking
   - 3D position tracking
   - Validity checking
@@ -50,7 +55,8 @@
   - Combined metric calculation
   - Real-time updates
 
-### Flow State Detection (`flow_state_detector.py`)
+### Flow State Detection
+File: [backend/core/algorithms/realtime/flow_state_detector.py](../../backend/core/algorithms/realtime/flow_state_detector.py)
 - ✓ Multi-modal feature extraction
 - ✓ Real-time state classification
 - ⚠ ML model integration (partial)
@@ -62,6 +68,23 @@
 - ✓ User controls
 - ⚠ Advanced metrics display (partial)
 
+## Quantum Computing Integration
+### Quantum Optimization
+File: [backend/quantum/qaoa_optimization.py](../../backend/quantum/qaoa_optimization.py)
+- ✓ QAOA parameter optimization (2025-11-08)
+- ✓ Cost function design for flow metrics
+- ⚠ Hardware backend integration (partial)
+  - Simulator fully functional
+  - QPU integration pending
+
+### Quantum Fourier Transform
+File: [backend/quantum/quantum_fourier_transform.py](../../backend/quantum/quantum_fourier_transform.py)
+- ✓ QFT signal processing (2025-11-08)
+- ✓ Frequency analysis enhancement
+- ⚠ Real-time processing (partial)
+  - Batch processing complete
+  - Streaming integration pending
+
 ## Upcoming Features
 1. EEG Integration
    - Hardware selection pending
@@ -72,6 +95,9 @@
 3. Environmental Monitoring
    - Sensor selection in progress
    - Integration planning complete
+4. Quantum Hardware Integration
+   - QPU backend selection
+   - Hybrid classical-quantum workflows
 
 ## Recent Updates
 - 2025-11-08: Enhanced binaural beat synthesis

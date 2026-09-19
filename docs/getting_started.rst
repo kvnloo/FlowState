@@ -119,7 +119,7 @@ In a new terminal:
    cd frontend
    npm run dev
 
-Navigate to ``http://localhost:3000`` in your browser.
+Navigate to ``http://localhost:5173`` in your browser.
 
 3. Begin Your Session
 ~~~~~~~~~~~~~~~~~~~~~
