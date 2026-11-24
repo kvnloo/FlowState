@@ -1,0 +1,29 @@
+<!doctype html><html><head><meta charset=utf-8><title>FlowState e5ee0908 HeatMapGridV2+EnhancedWavelet 'still looks weird' (5x5, value-sorted blurred rings, black)</title><style>body{margin:0;font:12px sans-serif;background:#fff} .lbl{position:fixed;left:6px;bottom:4px;background:#fff;padding:2px 4px;z-index:99999;color:#000}</style><script>let __s=20241122;Math.random=()=>{__s|=0;__s=__s+0x6D2B79F5|0;let t=Math.imul(__s^__s>>>15,1|__s);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296};
+function el(tag,style,parent){const e=document.createElement(tag);Object.assign(e.style,style||{});(parent||document.body).appendChild(e);return e;}
+const C8={delta:"#dd0a0a",theta:"#ff8500",lowAlpha:"#fcea01",highAlpha:"#58ed14",lowBeta:"#16caf4",highBeta:"#022aba",lowGamma:"#6f5ba3",highGamma:"#e50cbc"};
+</script></head><body><div class=lbl>FlowState e5ee0908 HeatMapGridV2+EnhancedWavelet 'still looks weird' (5x5, value-sorted blurred rings, black)</div><script>
+function noise2D(x,y){const n=Math.sin(x*12.9898+y*78.233)*43758.5453;return n-Math.floor(n);}
+function smoothstep(e0,e1,x){const t=Math.max(0,Math.min(1,(x-e0)/(e1-e0)));return t*t*(3-2*t);}
+function genClusters(gs,n){const st=['theta_dominant','alpha_dominant','beta_dominant','gamma_dominant','mixed'];const o=[];for(let i=0;i<n;i++)o.push({x:Math.random()*gs,y:Math.random()*gs,intensity:.7+Math.random()*.3,state:st[Math.floor(Math.random()*5)]});return o;}
+function infl(x,y,cl,r){let tot=0;const sc={theta_dominant:0,alpha_dominant:0,beta_dominant:0,gamma_dominant:0,mixed:0};cl.forEach(c=>{const d=Math.hypot(x-c.x,y-c.y);if(d<r){const f=smoothstep(r,0,d)*c.intensity;tot+=f;sc[c.state]+=f;}});
+let ds='mixed',m=0;for(const k in sc)if(sc[k]>m){m=sc[k];ds=k;}return{intensity:Math.min(1,tot),state:ds};}
+const P={theta_dominant:[[.6,.4],[.8,.2],[.2,.3],[.1,.2],[.1,.1],[.05,.1],[.05,.1],[.05,.1]],alpha_dominant:[[.2,.3],[.3,.3],[.7,.3],[.8,.2],[.3,.2],[.2,.2],[.1,.1],[.1,.1]],
+beta_dominant:[[.1,.2],[.1,.2],[.2,.3],[.3,.3],[.7,.3],[.8,.2],[.4,.3],[.3,.2]],gamma_dominant:[[.05,.1],[.1,.1],[.2,.2],[.3,.2],[.4,.3],[.5,.3],[.7,.3],[.8,.2]],mixed:[[.3,.4],[.4,.4],[.4,.4],[.4,.4],[.4,.4],[.4,.4],[.3,.4],[.3,.4]]};
+const K=['delta','theta','lowAlpha','highAlpha','lowBeta','highBeta','lowGamma','highGamma'];
+function genPoint(x,y,cl,cfg){const {intensity,state}=infl(x,y,cl,cfg.clusterRadius);const n=noise2D(x*.1,y*.1);const fi=Math.max(0,Math.min(1,intensity+(n-.5)*cfg.noiseStrength));
+const o={};K.forEach((k,i)=>{const [a,b]=P[state][i];o[k]=(a+Math.random()*b)*fi;});return o;}
+const ENH={"delta": "#ff0d0d", "theta": "#ff9520", "lowAlpha": "#ffef1a", "highAlpha": "#6fff2a", "lowBeta": "#33d5ff", "highBeta": "#1a3dcc", "lowGamma": "#8670b8", "highGamma": "#ff1acc"};
+function buildV2(mode){const width=1000,height=1000,gs=5;const cl=genClusters(100,15),cfg={clusterRadius:10,noiseStrength:.2};const ws=[];
+for(let r=0;r<gs;r++)for(let c=0;c<gs;c++){const x=(c+.5)*(width/gs),y=(r+.5)*(height/gs);const d=genPoint(x/width*100,y/height*100,cl,cfg);
+const ti=K.reduce((a,k)=>a+d[k],0)/8;const size=300+Math.random()*100;const opacity=.6+Math.random()*.2;ws.push({x,y,size,opacity,zIndex:Math.floor(ti*100),d});}
+ws.sort((a,b)=>a.zIndex-b.zIndex);
+const outer=el('div',{position:'relative',width:width+'px',height:height+'px',overflow:'hidden',background:'radial-gradient(ellipse at center,#000 0%,#000 70%,transparent 100%)',margin:'20px'});
+const cont=el('div',{position:'absolute',inset:'0',mixBlendMode:'normal'},outer);
+ws.forEach(w=>{if(mode==='6eaa'){const dom=K.reduce((m,k)=>w.d[k]>w.d[m]?k:m,'delta');
+ const cs=el('div',{position:'absolute',left:w.x+'px',top:w.y+'px',width:w.size+'px',height:w.size+'px',transform:'translate(-50%,-50%)',zIndex:w.zIndex,mixBlendMode:'screen'},cont);
+ el('div',{background:ENH[dom],width:w.size+'px',height:w.size+'px',borderRadius:'50%',opacity:w.opacity},cs);}
+else{const cs=el('div',{position:'absolute',left:w.x+'px',top:w.y+'px',transform:'translate(-50%,-50%)'},cont);
+ const f=K.map(k=>({k,v:w.d[k]})).filter(f=>f.v>.05).sort((a,b)=>b.v-a.v);
+ f.forEach((q,i)=>{const s=w.size*(.2+q.v*.8);el('div',{position:'absolute',left:'50%',top:'50%',transform:'translate(-50%,-50%)',width:s+'px',height:s+'px',background:ENH[q.k],borderRadius:'50%',opacity:.6,zIndex:w.zIndex+(f.length-i),filter:'blur(20px)'},cs);});}});
+el('div',{position:'absolute',inset:'0',pointerEvents:'none',background:'radial-gradient(ellipse at center,transparent 60%,rgba(0,0,0,.5) 90%,rgba(0,0,0,.9) 100%)',mixBlendMode:'multiply'},outer);}
+</script><script>buildV2('e5ee')</script></body></html>

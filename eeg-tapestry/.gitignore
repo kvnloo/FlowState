@@ -1,0 +1,21 @@
+.venv*/
+node_modules/
+data/*.edf
+data/*.jsonl
+data/*.js
+.advisor-slots/
+forensics/src/
+loop/*/evals/
+loop/**/evals/
+perf/**/live*/
+*.raw.json
+data/eegmat/*.edf
+data/*.jsonl
+perf/shots/
+perf/live*/
+perf/ux*/
+
+# full forensic write-ups kept locally only; see forensics/POINTERS.md
+forensics/*.md
+!forensics/POINTERS.md
+forensics/renders/

@@ -1,0 +1,15 @@
+<!doctype html><html><head><meta charset=utf-8><title>Claude 2024-11-22 eeg-dashboard (canvas 200x80, iid random, color rotation)</title><style>body{margin:0;font:12px sans-serif;background:#fff} .lbl{position:fixed;left:6px;bottom:4px;background:#fff;padding:2px 4px;z-index:99999;color:#000}</style><script>let __s=20241122;Math.random=()=>{__s|=0;__s=__s+0x6D2B79F5|0;let t=Math.imul(__s^__s>>>15,1|__s);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296};
+function el(tag,style,parent){const e=document.createElement(tag);Object.assign(e.style,style||{});(parent||document.body).appendChild(e);return e;}
+const C8={delta:"#dd0a0a",theta:"#ff8500",lowAlpha:"#fcea01",highAlpha:"#58ed14",lowBeta:"#16caf4",highBeta:"#022aba",lowGamma:"#6f5ba3",highGamma:"#e50cbc"};
+</script></head><body><div class=lbl>Claude 2024-11-22 eeg-dashboard (canvas 200x80, iid random, color rotation)</div><canvas id=c></canvas><script>
+const COLORS=['#dd0a0a','#ff8500','#fcea01','#58ed14','#16caf4','#022aba','#6f5ba3','#e50cbc'];
+const data=[];for(let y=0;y<80;y++)for(let x=0;x<200;x++){const r=Math.random();const state=r>0.995?'mega-burst':r>0.97?'burst':'background';
+const intensity=state==='mega-burst'?15+Math.random()*10:state==='burst'?3+Math.random()*4:0.5+Math.random()*0.5;
+data.push({x:x+(Math.random()-.5)*.3,y:y+(Math.random()-.5)*.3,intensity,state,dominantWave:Math.floor(Math.random()*COLORS.length)});}
+const W=innerWidth,Hh=innerHeight,cv=document.getElementById('c');cv.width=W;cv.height=Hh;const ctx=cv.getContext('2d');
+ctx.fillStyle='white';ctx.fillRect(0,0,W,Hh);const sx=W/200,sy=Hh/80;
+const rank=p=>p.state==='mega-burst'?3:p.state==='burst'?2:1;[...data].sort((a,b)=>rank(a)-rank(b)).forEach(p=>{
+const x=p.x*sx,y=p.y*sy,base=p.state==='mega-burst'?100:p.state==='burst'?30:2,size=base*p.intensity;
+for(let i=0;i<8;i++){const r=size*(1-i/8);ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fillStyle=COLORS[(i+p.dominantWave)%8];
+const bo=p.state==='mega-burst'?.8:p.state==='burst'?.6:.3;ctx.globalAlpha=bo*(1-i/8);ctx.fill();}});ctx.globalAlpha=1;
+</script></body></html>

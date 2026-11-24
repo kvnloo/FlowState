@@ -1,0 +1,6 @@
+import { chromium } from "playwright-core"; import fs from "fs";
+const exe = fs.readdirSync(process.env.HOME + "/Library/Caches/ms-playwright").filter(d => d.startsWith("chromium-")).map(d => process.env.HOME + `/Library/Caches/ms-playwright/${d}/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing`).find(fs.existsSync);
+const b = await chromium.launch({ executablePath: exe, headless: true, args: ["--use-angle=metal", "--enable-gpu"] }); const p = await b.newPage({ viewport: { width: 1600, height: 1000 } });
+await p.goto("http://127.0.0.1:8765/web/app.html?speed=0&src=sim&simspeed=1");
+for (let k = 0; k < 4; k++) { await p.waitForTimeout(3000); console.log(JSON.stringify(await p.evaluate(() => { const S = __app.S; return { now: new Date().toTimeString().slice(0, 8), first: __app.clock(S.firstCell), last: __app.clock(__app.cells() - 1), sidebar: document.querySelector("#clock").textContent, count: document.querySelector("#count").textContent, late: __app.live && __app.live.stats.lateMs }; }))); }
+await b.close();

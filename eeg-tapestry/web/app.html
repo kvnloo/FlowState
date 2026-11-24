@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>EEG tapestry</title>
+ <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='7' fill='%23ff8500' fill-opacity='.5'/%3E%3Ccircle cx='8' cy='8' r='4' fill='%23022aba' fill-opacity='.6'/%3E%3Ccircle cx='8' cy='8' r='1.6' fill='%23e50cbc'/%3E%3C/svg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+  :root {
+    --stage:#efebe4; --paper:#fff; --ink:#1e1c19; --mute:#857f76; --hair:rgba(30,28,25,.12); --glass:rgba(255,255,255,.72);
+    --serif:"Iowan Old Style","New York","Palatino Linotype",Georgia,serif; --sans:-apple-system,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    --mono:ui-monospace,"SF Mono",Menlo,monospace; --ease:cubic-bezier(.2,.8,.2,1); --spring:cubic-bezier(.34,1.56,.64,1);
+  }
+  * { box-sizing:border-box } html,body { margin:0; height:100%; background:var(--stage); color:var(--ink); font:13px/1.45 var(--sans); overflow:hidden; -webkit-font-smoothing:antialiased }
+  button { font:inherit; color:inherit; cursor:pointer; border:1px solid var(--hair); background:var(--glass); border-radius:999px; padding:6px 12px; transition:transform .18s var(--spring), background .2s, border-color .2s }
+  button:hover { border-color:rgba(30,28,25,.35); background:#fff } button:active { transform:scale(.94) }
+  button.on { background:var(--ink); color:#fff; border-color:var(--ink) }
+  .mono { font-family:var(--mono); font-size:10.5px; letter-spacing:.06em; text-transform:uppercase; color:var(--mute) }
+  header { position:fixed; z-index:20; top:14px; left:16px; right:16px; display:flex; align-items:center; gap:10px; pointer-events:none }
+  header > * { pointer-events:auto }
+  .brand { display:flex; align-items:baseline; gap:10px; padding:7px 14px 7px 12px; border-radius:999px; background:var(--glass); backdrop-filter:blur(14px) saturate(1.4); border:1px solid var(--hair) }
+  .brand b { font:600 19px/1 var(--serif); letter-spacing:-.01em }
+  .chip { display:flex; align-items:center; gap:8px; padding:6px 12px; border-radius:999px; background:var(--glass); backdrop-filter:blur(14px) saturate(1.4); border:1px solid var(--hair) }
+  .dot { width:8px; height:8px; border-radius:50%; background:#bbb } .dot.live { background:#e50cbc }
+  @keyframes breathe { 0%{ box-shadow:0 0 0 0 rgba(229,12,188,.45) } 70%{ box-shadow:0 0 0 7px rgba(229,12,188,0) } 100%{ box-shadow:0 0 0 0 rgba(229,12,188,0) } }
+  .seg { display:flex; gap:2px; padding:3px; border-radius:999px; background:var(--glass); backdrop-filter:blur(14px); border:1px solid var(--hair) }
+  .seg button { border:0; background:transparent; padding:4px 10px } .seg button.on { background:var(--ink); color:#fff }
+  .q { display:flex; gap:4px } .q i { width:7px; height:7px; border-radius:50%; background:#d5d0c8; transition:background .3s } .q i.good{background:#58ed14} .q i.noisy{background:#ff8500} .q i.flat{background:#dd0a0a}
+  .spacer { flex:1 }
+  #stage { position:fixed; inset:0; right:340px; cursor:grab; touch-action:none } #stage.drag { cursor:grabbing }
+  #gl, #ov { position:absolute; inset:0; width:100%; height:100% } #ov { pointer-events:none }
+  /* compositor-only live elements: positioned with transform, animated with CSS */
+  .fx { position:absolute; left:0; top:0; pointer-events:none; will-change:transform }
+  #head { width:0; height:0 } /* the pen: an arc that fills with the current second's samples, and lets go once when the second lands. No timers. */
+  #head svg { position:absolute; left:-11px; top:-11px; width:22px; height:22px; overflow:visible; transform:rotate(-90deg) }
+  #head circle.track { fill:none; stroke:rgba(30,28,25,.12); stroke-width:1.5 }
+  #head circle.arc { fill:none; stroke:#e50cbc; stroke-width:1.8; stroke-linecap:round; stroke-dasharray:62.83; stroke-dashoffset:62.83 }
+  #head.noring svg { opacity:.0 } #head.noring b { opacity:.55 }
+  #head b { position:absolute; left:-2.5px; top:-2.5px; width:5px; height:5px; border-radius:50%; background:#e50cbc }
+  #head i { position:absolute; left:-11px; top:-11px; width:22px; height:22px; border-radius:50%; border:1.5px solid #e50cbc; opacity:0 }
+  #head.land i { animation:letgo .45s var(--ease) 1 }
+  @keyframes letgo { 0%{ transform:scale(1); opacity:.8 } 100%{ transform:scale(1.9); opacity:0 } }
+  #head.holding i { opacity:1; border-color:#1e1c19; animation:arm .42s linear forwards } @keyframes arm { from { transform:scale(.5); opacity:.2 } to { transform:scale(1.5); opacity:1 } }
+  .dot.flash { animation:flash .5s var(--ease) 1 }
+  @keyframes flash { 0%{ box-shadow:0 0 0 0 rgba(229,12,188,.5) } 100%{ box-shadow:0 0 0 7px rgba(229,12,188,0) } }
+  #trace { position:absolute; left:0; top:0; width:260px; height:164px; z-index:6; background:rgba(255,255,255,.88); border-radius:10px; box-shadow:0 6px 24px rgba(40,30,20,.12); opacity:0; pointer-events:none; transition:opacity .4s var(--ease) }
+  #trace.show { opacity:1 }
+  #contact { display:flex; gap:4px; align-items:center } #contact i { width:9px; height:9px; border-radius:50%; background:#d9d4cc; transition:background .3s }
+  #contact i.good { background:#1e1c19 } #contact i.ok { background:#9a948b } #contact i.flat, #contact i.dropped { background:transparent; box-shadow:inset 0 0 0 1.5px #9a948b } #contact i.noisy { background:#9a948b } #contact i.blink { background:#1e1c19 }
+  #tagrange { font:11px ui-monospace, Menlo, monospace; color:#5b564f; padding:0 6px; white-space:nowrap }
+  #hover { width:0; height:0; transition:opacity .15s } #hover i { position:absolute; border-radius:50%; border:1.5px solid var(--ink); box-shadow:0 0 0 3px rgba(255,255,255,.8); transition:transform .18s var(--spring) }
+  #card { position:absolute; left:0; top:0; z-index:15; width:220px; padding:12px 14px; border-radius:14px; background:rgba(255,255,255,.9); backdrop-filter:blur(16px) saturate(1.5); border:1px solid var(--hair);
+          box-shadow:0 10px 30px rgba(40,30,20,.12); pointer-events:none; opacity:0; transform-origin:0 0; transition:opacity .14s var(--ease); will-change:transform }
+  #card.show { opacity:1 } #card h4 { margin:0 0 2px; font:600 17px/1.1 var(--serif) } #card .bars { margin-top:8px; display:grid; grid-template-columns:62px 1fr 30px; gap:3px 8px; align-items:center; font-size:11px }
+  #card .bar { height:6px; border-radius:3px; background:#eee; overflow:hidden } #card .bar i { display:block; height:100%; border-radius:3px; transition:width .2s var(--ease) }
+  aside { position:fixed; top:0; right:0; bottom:0; width:340px; padding:76px 18px 18px; overflow-y:auto; background:linear-gradient(#f7f4ef,#f3efe8); border-left:1px solid var(--hair) }
+  aside h3 { margin:16px 0 8px; font:600 15px/1.2 var(--serif) }
+  .legend { display:grid; grid-template-columns:1fr 1fr; gap:4px }
+  .legend button { display:flex; align-items:center; gap:7px; border-radius:10px; padding:5px 8px; text-align:left; font-size:12px }
+  .legend button i { width:13px; height:13px; border-radius:50%; flex:none } .legend button.on { outline:2px solid var(--ink); background:#fff; color:var(--ink) }
+  #glyph { display:block; margin:6px auto 0 } .readout { display:flex; justify-content:space-between }
+  .note { position:relative; padding:9px 10px 9px 14px; margin:0 0 6px; border-radius:10px; cursor:pointer; transition:background .2s, transform .25s var(--spring); animation:enter .45s var(--spring) both }
+  .note::before { content:""; position:absolute; left:4px; top:10px; bottom:10px; width:2px; border-radius:2px; background:var(--c, #999) }
+  .note:hover { background:#fff; transform:translateX(-3px) } .note time { font:10.5px var(--mono); color:var(--mute) } .note b { display:block; font:600 14px/1.25 var(--serif) } .note p { margin:2px 0 0; color:#5b564f; font-size:12px }
+  .note.tag::before { background:var(--ink) }
+  .note.tag b { font-family:var(--serif, Georgia, serif); font-style:italic; font-weight:500; font-size:15px }
+  .note small { display:block; margin-top:4px; font:10px ui-monospace, Menlo, monospace; color:#9a948b; letter-spacing:.02em }
+  #away { position:fixed; z-index:20; left:calc((100% - 340px) / 2); bottom:72px; transform:translate(-50%, 8px); opacity:0; pointer-events:none; padding:7px 14px; border-radius:999px; background:#1e1c19; color:#fff; font-size:11px; transition:opacity .35s, transform .35s }
+  #away.show { opacity:1; transform:translate(-50%, 0) }
+  @keyframes enter { from { opacity:0; transform:translateY(8px) scale(.98) } }
+  #follow { position:fixed; z-index:20; left:calc((100% - 340px) / 2); bottom:22px; transform:translate(-50%, 20px); opacity:0; pointer-events:none; transition:transform .3s var(--spring), opacity .2s; background:var(--ink); color:#fff; border:0; padding:9px 16px; box-shadow:0 8px 24px rgba(0,0,0,.2) }
+  #follow.show { transform:translate(-50%,0); opacity:1; pointer-events:auto }
+  #zoom { position:fixed; z-index:20; left:16px; bottom:18px; display:flex; flex-direction:column; gap:6px } #zoom button { width:34px; height:34px; padding:0; border-radius:12px; background:var(--glass); backdrop-filter:blur(12px) }
+  #hud { position:fixed; z-index:20; left:62px; bottom:22px } 
+  #tagbox { position:fixed; z-index:30; left:0; top:0; display:none; gap:6px; padding:6px; border-radius:14px; background:#fff; border:1px solid var(--hair); box-shadow:0 12px 30px rgba(0,0,0,.15); animation:enter .3s var(--spring) }
+  #tagbox.show { display:flex } #tagbox input { border:0; outline:0; font:14px var(--sans); width:220px; padding:4px 8px }
+  .kbd { font:10px var(--mono); padding:1px 5px; border:1px solid var(--hair); border-radius:5px; color:var(--mute) }
+  @media (prefers-reduced-motion: reduce) { * { animation:none !important; transition:none !important } }
+</style></head>
+<body>
+<header>
+  <div class="brand"><b>EEG tapestry</b><span class="mono" id="src">replay</span></div>
+  <div class="chip"><span class="dot" id="live"></span><span id="state">loading…</span></div>
+  <div class="seg" id="speed" title="Replay speed"><button data-s="1">1×</button><button data-s="10">10×</button><button data-s="60" class="on">60×</button><button data-s="600">600×</button><button data-s="0">All</button></div>
+  <span class="spacer"></span>
+  <div class="chip" id="contact" title="Electrode contact: TP9 left ear · AF7 left brow · AF8 right brow · TP10 right ear"><i></i><i></i><i></i><i></i></div>
+  <button id="connect">Connect Muse</button><button id="sim" title="Real recorded EEG streamed like a Muse, with injected faults. For testing.">Test stream</button><button id="tag">Tag <span class="kbd">T</span></button><button id="save">Save poster</button>
+</header>
+<div id="stage"><canvas id="gl"></canvas><canvas id="ov"></canvas>
+  <div class="fx noring" id="head"><svg viewBox="0 0 22 22"><circle class="track" cx="11" cy="11" r="10"/><circle class="arc" id="ringArc" cx="11" cy="11" r="10"/></svg><i></i><b></b></div><canvas id="trace" width="480" height="224"></canvas><div class="fx" id="hover"><i></i></div></div>
+<div id="card"></div>
+<div id="zoom"><button id="zin" title="Zoom in (+)">+</button><button id="zout" title="Zoom out (−)">−</button><button id="zfit" title="Fit (0)">⤢</button></div>
+<div id="hud" class="mono"></div>
+<div id="away" class="mono"></div><button id="follow">Follow live ↓</button>
+<div id="tagbox"><span id="tagrange"></span><input id="tagin" placeholder="What are you doing? e.g. coffee, deep work"><button id="tagok">Add</button></div>
+<aside>
+  <div class="mono">now</div>
+  <canvas id="glyph" width="200" height="200"></canvas>
+  <div class="readout mono"><span id="clock">--:--:--</span><span id="count">0 s</span></div>
+  <h3>Bands</h3><div class="legend" id="legend"></div>
+  <p class="mono" style="margin-top:8px">hover to isolate · click to lock</p>
+  <h3>Notes</h3><div id="notes"><p style="color:var(--mute)">Notes appear after 10 minutes, compared with your previous 10 minutes.</p></div>
+  <p class="mono" style="margin-top:18px">1 point = 1 s · 8 circles · 1 row = 60 s<br>scroll pan · pinch / ⌘-scroll zoom · double-click zoom<br>drag pan · 0 fit · esc clear</p>
+</aside>
+<script src="tapestry.js"></script><script src="engine.js"></script><script src="gl.js"></script><script src="bands.js"></script><script type="module">import * as M from "./vendor/muse-js.mjs"; window.__museJs = M;</script><script src="sources.js"></script><script src="app.js"></script>
+</body></html>

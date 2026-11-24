@@ -1,0 +1,14 @@
+import { chromium } from "playwright-core"; import fs from "fs";
+const out = process.argv[2]; fs.mkdirSync(out, { recursive: true });
+const exe = fs.readdirSync(process.env.HOME + "/Library/Caches/ms-playwright").filter(d => d.startsWith("chromium-")).map(d => process.env.HOME + `/Library/Caches/ms-playwright/${d}/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing`).find(fs.existsSync);
+const b = await chromium.launch({ executablePath: exe, headless: true, args: ["--use-angle=metal", "--enable-gpu"] });
+const p = await b.newPage({ viewport: { width: 1600, height: 1000 }, deviceScaleFactor: 2 }); const errs = [];
+p.on("pageerror", e => errs.push(e.message));
+await p.addInitScript(() => { window.__hidden = false; Object.defineProperty(document, "hidden", { get: () => window.__hidden }); });
+await p.goto("http://127.0.0.1:8765/web/app.html?speed=600&src=sim&simspeed=20"); await p.waitForTimeout(3000);
+await p.evaluate(() => { window.__hidden = true; document.dispatchEvent(new Event("visibilitychange")); }); const n0 = await p.evaluate(() => __app.E.n);
+await p.waitForTimeout(6000); const n1 = await p.evaluate(() => __app.E.n);
+await p.evaluate(() => { window.__hidden = false; document.dispatchEvent(new Event("visibilitychange")); }); await p.waitForTimeout(700);
+await p.screenshot({ path: out + "/away-pour.png" }); const lab = await p.evaluate(() => [document.querySelector("#away").textContent, document.querySelector("#away").classList.contains("show")]);
+await p.waitForTimeout(3000); await p.screenshot({ path: out + "/away-done.png" });
+console.log(JSON.stringify({ recordedWhileHidden: n1 - n0, label: lab, errs })); await b.close();

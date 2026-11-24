@@ -1,0 +1,6 @@
+<!doctype html><html><head><meta charset=utf-8><style>html,body{margin:0;background:#fff}canvas{display:block}</style></head>
+<body><canvas id=c></canvas><script src="../data/sleep3h.js"></script><script src="tapestry.js"></script><script>
+const opts = location.hash ? JSON.parse(decodeURIComponent(location.hash.slice(1))) : {};
+const t0=performance.now(); const r = Tapestry.render(document.getElementById('c'), window.DATA, opts);
+document.title = 'rendered '+r.W+'x'+r.H+' in '+Math.round(performance.now()-t0)+'ms';
+</script></body></html>

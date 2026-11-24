@@ -1,0 +1,63 @@
+<!doctype html><html><head><meta charset="utf-8"><title>EEG tapestry · live</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+  :root { --ink:#222; --mute:#8a8a8a; }
+  html,body { margin:0; background:#fff; color:var(--ink); font:13px/1.4 "Helvetica Neue",Helvetica,Arial,sans-serif; }
+  header { position:sticky; top:0; z-index:5; display:flex; gap:14px; align-items:center; padding:10px 18px; background:rgba(255,255,255,.92); backdrop-filter:blur(6px); border-bottom:1px solid #eee; }
+  header b { letter-spacing:.02em } header .mute { color:var(--mute) }
+  button { font:inherit; border:1px solid #ddd; background:#fff; border-radius:999px; padding:5px 12px; cursor:pointer } button:hover { border-color:#999 }
+  .q { display:flex; gap:4px } .q i { width:9px; height:9px; border-radius:50%; background:#ddd; display:inline-block } .q i.good{background:#58ed14} .q i.noisy{background:#ff8500} .q i.flat{background:#dd0a0a}
+  main { display:flex; flex-wrap:wrap; gap:28px; padding:22px 18px; align-items:flex-start }
+  #field { flex:none } #notes { flex:none }
+  aside { width:240px; color:var(--mute); font-size:12px } aside h3 { color:var(--ink); font-size:12px; margin:0 0 6px }
+  .legend span { display:flex; align-items:center; gap:8px; margin:3px 0 } .legend i { width:12px; height:12px; border-radius:50%; display:inline-block }
+</style></head>
+<body>
+<header><b>EEG tapestry</b><span class="mute" id="state">idle</span>
+  <span class="q" id="q" title="electrode contact: TP9 AF7 AF8 TP10"><i></i><i></i><i></i><i></i></span>
+  <span style="flex:1"></span>
+  <button id="tag">Tag moment</button><button id="connect">Connect Muse</button><button id="replay">Replay sample day</button><button id="save">Save poster</button></header>
+<main><div id="field"></div><canvas id="notes"></canvas>
+<aside><h3>Reading it</h3><p>Each dot is one second, 60 per row. Each dot is 8 nested circles, one per frequency band, sized by its power relative to this session.</p><p>Notes on the right describe which colours grew, compared with your previous 10 minutes. Use <b>Tag moment</b> to add what you were doing.</p>
+<div class="legend" id="legend"></div><p id="stats"></p></aside></main>
+<script src="tapestry.js"></script><script src="bands.js"></script>
+<script type="module">
+const q = new URLSearchParams(location.search);
+const OPTS = await fetch("params.json").then(r => r.ok ? r.json() : {}).catch(() => ({}));
+const live = Tapestry.Live(document.getElementById("field"), OPTS);
+const stateEl = document.getElementById("state"), qEl = [...document.querySelectorAll("#q i")];
+document.getElementById("legend").innerHTML = Tapestry.BANDS.map(b => { const [r,g,bl] = Tapestry.COLOR[b]; return `<span><i style="background:rgba(${r},${g},${bl},${Tapestry.ALPHA[b]??.5});outline:1px solid rgb(${r},${g},${bl})"></i>${b.replace("_"," ")}</span>`; }).join("");
+const fmt = s => new Date(s * 1000).toISOString().slice(11, 19);
+const tags = JSON.parse(localStorage.getItem("eeg-tags") || "[]"); let t0 = null;
+const NW = 340, notesC = document.getElementById("notes");
+function drawNotesLive() { const n = live.points.length; const H = Math.ceil(Math.max(n, 60) / live.opts.cols) * live.opts.pitch + 400, d = devicePixelRatio || 1;
+  notesC.width = NW * d; notesC.height = H * d; notesC.style.width = NW + "px"; notesC.style.height = H + "px"; const ctx = notesC.getContext("2d"); ctx.scale(d, d);
+  const fmtI = i => new Date(((t0 ?? 0) + i) * 1000).toTimeString().slice(0, 8);
+  Tapestry.drawNotes(ctx, Tapestry.annotate(live.points, live.opts, tags), live.points, live.opts, 6, NW - 6, fmtI); }
+document.getElementById("tag").onclick = () => { const title = prompt("What are you doing? (e.g. coffee, deep work, meeting)"); if (!title) return;
+  tags.push({ i: Math.max(0, live.points.length - 1), title, text: "" }); localStorage.setItem("eeg-tags", JSON.stringify(tags)); drawNotesLive(); };
+function push(p) { if (t0 === null) t0 = p.src === "replay" ? Math.floor(Date.now() / 1000) - 0 : Math.floor(p.t); live.push(p); if (live.points.length % 30 === 0) drawNotesLive(); stateEl.textContent = `${p.src} · ${fmt(live.points.length)} recorded`; if (q.get("follow") !== "0") window.scrollTo({ top: document.body.scrollHeight }); }
+
+// --- Muse S over Web Bluetooth (Chrome / Edge). muse-js streams 12-sample packets per electrode at 256 Hz.
+document.getElementById("connect").onclick = async () => {
+  try {
+    stateEl.textContent = "pairing…"; const { MuseClient } = await import("https://esm.sh/muse-js@3.3.0");
+    const m = new MuseClient(); await m.connect(); await m.start(); stateEl.textContent = "connected · waiting for 1 s of data";
+    const FS = 256, buf = [[], [], [], []];
+    m.eegReadings.subscribe(r => { if (r.electrode > 3) return; buf[r.electrode].push(...r.samples);
+      if (buf.every(b => b.length >= FS)) { const chans = buf.map(b => b.splice(0, FS)); const { bands, quality } = EEGBands.bandPowers(chans, FS);
+        quality.forEach((s, i) => qEl[i].className = s); push({ t: Date.now() / 1000, src: "muse", bands, quality }); } });
+    m.connectionStatus.subscribe(ok => { if (!ok) stateEl.textContent = "disconnected"; });
+  } catch (e) { stateEl.textContent = "Muse error: " + e.message; }
+};
+// --- NeuroSkill / bridge websocket: ?ws=ws://host:port/live  (messages {type:"point", bands:{...}})
+if (q.get("ws")) { const ws = new WebSocket(q.get("ws")); ws.onmessage = e => { const m = JSON.parse(e.data); if (m.bands) push({ ...m, src: "neuroskill" }); }; }
+// --- Replay a real recorded night (PhysioNet Sleep-EDF SC4001) at ?speed=N seconds per frame
+async function replay() { const txt = await fetch(q.get("data") || "../data/day.jsonl").then(r => r.text()); const pts = txt.trim().split("\n").map(JSON.parse);
+  const sp = +(q.get("speed") || 30); let i = 0; (function tick() { for (let k = 0; k < sp && i < pts.length; k++) push({ ...pts[i++], src: "replay" }); if (i < pts.length) requestAnimationFrame(tick); })(); }
+document.getElementById("replay").onclick = replay; if (q.get("replay")) replay();
+document.getElementById("save").onclick = () => { drawNotesLive(); const f = live.snapshot(), d = devicePixelRatio || 1, c = document.createElement("canvas");
+  c.width = f.width + notesC.width + 40 * d; c.height = Math.max(f.height, 10); const x = c.getContext("2d"); x.fillStyle = "#fff"; x.fillRect(0, 0, c.width, c.height);
+  x.drawImage(f, 0, 0); x.drawImage(notesC, f.width + 40 * d, 0);
+  const a = document.createElement("a"); a.download = `eeg-tapestry-${new Date().toISOString().slice(0,16)}.png`; a.href = c.toDataURL("image/png"); a.click(); };
+</script></body></html>

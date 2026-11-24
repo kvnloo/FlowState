@@ -1,0 +1,20 @@
+<!doctype html><html><head><meta charset=utf-8><title>NeuroSkill index.html drawField (canvas, R=0.62*step, per-point, log-percentile) fed 1/f synthetic sleep data, 3600 s</title><style>body{margin:0;font:12px sans-serif;background:#fff} .lbl{position:fixed;left:6px;bottom:4px;background:#fff;padding:2px 4px;z-index:99999;color:#000}</style><script>let __s=20241122;Math.random=()=>{__s|=0;__s=__s+0x6D2B79F5|0;let t=Math.imul(__s^__s>>>15,1|__s);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296};
+function el(tag,style,parent){const e=document.createElement(tag);Object.assign(e.style,style||{});(parent||document.body).appendChild(e);return e;}
+const C8={delta:"#dd0a0a",theta:"#ff8500",lowAlpha:"#fcea01",highAlpha:"#58ed14",lowBeta:"#16caf4",highBeta:"#022aba",lowGamma:"#6f5ba3",highGamma:"#e50cbc"};
+</script></head><body><div class=lbl>NeuroSkill index.html drawField (canvas, R=0.62*step, per-point, log-percentile) fed 1/f synthetic sleep data, 3600 s</div><script>
+const BANDS=["delta","theta","low_alpha","high_alpha","low_beta","high_beta","low_gamma","high_gamma"];
+const COLOR={delta:"#dd0a0a",theta:"#ff8500",low_alpha:"#fcea01",high_alpha:"#58ed14",low_beta:"#16caf4",high_beta:"#022aba",low_gamma:"#6f5ba3",high_gamma:"#e50cbc"};const ALPHA={delta:.20,theta:.40};
+function rgba(hex,a){const n=parseInt(hex.slice(1),16);return `rgba(${n>>16},${n>>8&255},${n&255},${a})`;}
+function scaleFor(points){const v=[];for(const p of points)for(const b of BANDS){const x=p.bands[b];if(x>0)v.push(Math.log10(x));}if(!v.length)return()=>0;v.sort((a,b)=>a-b);
+const lo=v[Math.floor(v.length*.02)],hi=v[Math.ceil(v.length*.98)-1]||lo+1,span=Math.max(hi-lo,1e-6);return x=>x>0?Math.min(1.25,Math.max(0,(Math.log10(x)-lo)/span)):0;}
+function drawPoint(ctx,x,y,R,p,scale){for(const b of BANDS){const r=R*(.08+.92*scale(p.bands[b]));if(r<=.2)continue;ctx.fillStyle=rgba(COLOR[b],ALPHA[b]??.5);ctx.beginPath();ctx.arc(x,y,r,0,7);ctx.fill();}}
+function dotGrid(ctx,w,h,step,ox,oy){ctx.fillStyle="rgba(0,0,0,.28)";for(let y=oy;y<h;y+=step)for(let x=ox;x<w;x+=step)ctx.fillRect(x-.5,y-.5,1,1);}
+function drawField(points,width){const cols=60,step=Math.max(4,Math.floor(width/cols));const rows=Math.max(1,Math.ceil(points.length/cols)),w=cols*step,h=rows*step+step;
+const c=document.createElement('canvas');c.width=w;c.height=h;const ctx=c.getContext('2d');dotGrid(ctx,w,h,step,step/2,step/2);const scale=scaleFor(points);
+points.forEach((p,i)=>drawPoint(ctx,(i%cols)*step+step/2,Math.floor(i/cols)*step+step/2,step*.62,p,scale));return c;}
+// realistic-ish synthetic sleep EEG band power: 1/f profile * slow AR(1) state * occasional bursts (uV^2)
+function synth(n){const base={delta:60,theta:25,low_alpha:10,high_alpha:7,low_beta:5,high_beta:4,low_gamma:2,high_gamma:1.2};let s=0,out=[];const st={};BANDS.forEach(b=>st[b]=0);
+for(let i=0;i<n;i++){s=.995*s+.1*(Math.random()-.5);const rem=(i>n*.45&&i<n*.6);const p={bands:{}};
+for(const b of BANDS){st[b]=.9*st[b]+.45*(Math.random()-.5);let v=base[b]*Math.exp(st[b]+ (b==='delta'||b==='theta'? (rem?-1.2:s*3):(rem?.6:0)));
+if(Math.random()<.003)v*=30;p.bands[b]=v;}out.push(p);}return out;}
+document.body.appendChild(drawField(synth(3600),900));</script></body></html>

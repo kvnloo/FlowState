@@ -1,0 +1,17 @@
+<!doctype html><html><head><meta charset=utf-8><title>v0 wavelet.tsx/wavelet-demo.tsx (2024-11-23) default slider values, size=120</title><style>body{margin:0;font:12px sans-serif;background:#fff} .lbl{position:fixed;left:6px;bottom:4px;background:#fff;padding:2px 4px;z-index:99999;color:#000}</style><script>let __s=20241122;Math.random=()=>{__s|=0;__s=__s+0x6D2B79F5|0;let t=Math.imul(__s^__s>>>15,1|__s);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296};
+function el(tag,style,parent){const e=document.createElement(tag);Object.assign(e.style,style||{});(parent||document.body).appendChild(e);return e;}
+const C8={delta:"#dd0a0a",theta:"#ff8500",lowAlpha:"#fcea01",highAlpha:"#58ed14",lowBeta:"#16caf4",highBeta:"#022aba",lowGamma:"#6f5ba3",highGamma:"#e50cbc"};
+</script></head><body><div class=lbl>v0 wavelet.tsx/wavelet-demo.tsx (2024-11-23) default slider values, size=120</div><script>
+function v0Wavelet(parent,data,size,opacity){opacity=opacity??1;
+ const w=el('div',{position:'relative',width:size+'px',height:size+'px'},parent);
+ const circles=[['highGamma'],['lowGamma'],['highBeta'],['lowBeta'],['highAlpha'],['lowAlpha'],['theta'],['delta']];
+ circles.forEach(([k],index)=>{const base=size*0.9,min=base*0.1,max=base*(1-index*0.1);const d=min+data[k]*(max-min);
+  el('div',{position:'absolute',borderRadius:'50%',background:C8[k],width:d+'px',height:d+'px',left:'50%',top:'50%',transform:'translate(-50%,-50%)',zIndex:index+1,opacity:opacity},w);});
+ return w;}
+
+const card=el('div',{margin:'40px auto',width:'420px',padding:'24px',border:'1px solid #e5e5e5',borderRadius:'8px',display:'flex',justifyContent:'center'});
+v0Wavelet(card,{delta:.5,theta:.4,lowAlpha:.3,highAlpha:.6,lowBeta:.7,highBeta:.4,lowGamma:.2,highGamma:.1},120);
+const card2=el('div',{margin:'10px auto',width:'420px',padding:'24px',border:'1px solid #e5e5e5',borderRadius:'8px',display:'flex',justifyContent:'center'});
+v0Wavelet(card2,{delta:1,theta:1,lowAlpha:1,highAlpha:1,lowBeta:1,highBeta:1,lowGamma:1,highGamma:1},120);
+el('div',{textAlign:'center'}).textContent='top: defaults; bottom: "Set All to 100%"';
+</script></body></html>
