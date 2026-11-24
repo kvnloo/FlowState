@@ -4,6 +4,12 @@ A live EEG visualization: a large canvas of overlapping translucent concentric c
 one row per minute, drawn from 8 brainwave bands (delta, theta, low/high alpha, low/high beta, low/high gamma).
 It renders recorded EEG (EDF), a simulated source, or a live Muse headband over Web Bluetooth.
 
+## Visual target and credit
+The look this renderer aims for is Alexandra Szántai's 2015 master's project
+[Brainwaveit](https://www.behance.net/gallery/27100775/Brainwaveit-Brainwave-visualisation-%28Master-degree%29)
+(MOME, Budapest). Her band palette, opacities and poster layout are the reference; the images are in `inspo/`
+with per-image links in [`inspo/CREDITS.md`](inspo/CREDITS.md). Copyright stays with her.
+
 ## Run
 The replay view reads `data/day.jsonl`, which is generated, not committed. Build it from the public
 [PhysioNet EEGMAT](https://physionet.org/content/eegmat/1.0.0/) recordings listed in `data/eegmat/RECORDS`
